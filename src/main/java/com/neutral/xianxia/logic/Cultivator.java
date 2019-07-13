@@ -58,6 +58,10 @@ public abstract class Cultivator {
     public void levelQi() {
         qiLevel++;
     }
+    
+    public void grantExp(int amount){
+        this.exp += amount;
+    }
 
     public void attack(Cultivator cultivator) {
         cultivator.defend(this);

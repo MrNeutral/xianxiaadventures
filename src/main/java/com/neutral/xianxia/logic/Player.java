@@ -20,32 +20,13 @@ package com.neutral.xianxia.logic;
  *
  * @author Mr.Neutral
  */
-public class System {
-    private Player player;
+public class Player extends Cultivator{
 
-    public System(Player player) {
-        this.player = player;
+    public Player(){
+        super();
     }
-
     
     public void cultivate(){
-        player.cultivate();
+        grantExp((int) (Math.random()*10));
     }
-    
-    public int getPlayerExp(){
-       return player.getExp();
-    }
-    
-    public int getPlayerLevel(){
-       return player.getPowerLevel();
-    }
-    
-    public int getPlayerBody(){
-       return player.getBodyLevel();
-    }
-    
-    public int getPlayerQi(){
-       return player.getQiLevel();
-    }
-    
 }

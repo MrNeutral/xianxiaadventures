@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel2"/>
+      </Properties>
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="XianxiaAdventures"/>
@@ -42,7 +49,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="2"/>
-            <Property name="rows" type="int" value="3"/>
+            <Property name="rows" type="int" value="4"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="levelLabel">
@@ -53,7 +60,6 @@
             <Component class="javax.swing.JLabel" name="levelData">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="1"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="bodyLabel">
@@ -64,7 +70,6 @@
             <Component class="javax.swing.JLabel" name="bodyData">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="2"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="qiLabel">
@@ -75,7 +80,16 @@
             <Component class="javax.swing.JLabel" name="qiData">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="expLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Exp:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="expData">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="4"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -85,6 +99,9 @@
             <Property name="text" type="java.lang.String" value="Cultivate"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cultivateButtonActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="2" gridY="1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="22" weightX="0.0" weightY="0.0"/>

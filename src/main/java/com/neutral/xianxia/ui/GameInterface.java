@@ -1,5 +1,7 @@
 package com.neutral.xianxia.ui;
 
+import com.neutral.xianxia.logic.System;
+
 /*
  * Copyright (C) 2019 Mr.Neutral
  *
@@ -25,8 +27,12 @@ public class GameInterface extends javax.swing.JFrame {
     /**
      * Creates new form GameInterface
      */
-    public GameInterface() {
+    private System system;
+
+    public GameInterface(System system) {
+        this.system = system;
         initComponents();
+        updateData();
     }
 
     /**
@@ -39,6 +45,7 @@ public class GameInterface extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jLabel2 = new javax.swing.JLabel();
         actionPanel = new javax.swing.JPanel();
         playerInfoPanel = new javax.swing.JPanel();
         levelLabel = new javax.swing.JLabel();
@@ -47,9 +54,13 @@ public class GameInterface extends javax.swing.JFrame {
         bodyData = new javax.swing.JLabel();
         qiLabel = new javax.swing.JLabel();
         qiData = new javax.swing.JLabel();
+        expLabel = new javax.swing.JLabel();
+        expData = new javax.swing.JLabel();
         cultivateButton = new javax.swing.JButton();
         levelUpButton = new javax.swing.JButton();
         exploreButton = new javax.swing.JButton();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XianxiaAdventures");
@@ -57,28 +68,31 @@ public class GameInterface extends javax.swing.JFrame {
 
         actionPanel.setLayout(new java.awt.GridBagLayout());
 
-        playerInfoPanel.setLayout(new java.awt.GridLayout(3, 2));
+        playerInfoPanel.setLayout(new java.awt.GridLayout(4, 2));
 
         levelLabel.setText("Level:");
         playerInfoPanel.add(levelLabel);
 
         levelData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        levelData.setText("1");
         playerInfoPanel.add(levelData);
 
         bodyLabel.setText("Body:");
         playerInfoPanel.add(bodyLabel);
 
         bodyData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        bodyData.setText("2");
         playerInfoPanel.add(bodyData);
 
         qiLabel.setText("Qi:");
         playerInfoPanel.add(qiLabel);
 
         qiData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        qiData.setText("3");
         playerInfoPanel.add(qiData);
+
+        expLabel.setText("Exp:");
+        playerInfoPanel.add(expLabel);
+
+        expData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        playerInfoPanel.add(expData);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -89,6 +103,11 @@ public class GameInterface extends javax.swing.JFrame {
 
         cultivateButton.setText("Cultivate");
         cultivateButton.setFocusable(false);
+        cultivateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cultivateButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
@@ -119,39 +138,17 @@ public class GameInterface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void cultivateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cultivateButtonActionPerformed
+        // TODO add your handling code here:
+        system.cultivate();
+        expData.setText(String.valueOf(system.getPlayerExp()));
+    }//GEN-LAST:event_cultivateButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameInterface().setVisible(true);
-            }
-        });
+    private void updateData() {
+        levelData.setText(String.valueOf(system.getPlayerLevel()));
+        bodyData.setText(String.valueOf(system.getPlayerBody()));
+        qiData.setText(String.valueOf(system.getPlayerQi()));
+        expData.setText(String.valueOf(system.getPlayerExp()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -159,7 +156,10 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JLabel bodyData;
     private javax.swing.JLabel bodyLabel;
     private javax.swing.JButton cultivateButton;
+    private javax.swing.JLabel expData;
+    private javax.swing.JLabel expLabel;
     private javax.swing.JButton exploreButton;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel levelData;
     private javax.swing.JLabel levelLabel;
     private javax.swing.JButton levelUpButton;
