@@ -27,7 +27,7 @@ public class GameInterface extends javax.swing.JFrame {
     /**
      * Creates new form GameInterface
      */
-    private System system;
+    private final System system;
 
     public GameInterface(System system) {
         this.system = system;
@@ -45,7 +45,12 @@ public class GameInterface extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLabel2 = new javax.swing.JLabel();
+        upgradeDialog = new javax.swing.JDialog();
+        upgradePanel = new javax.swing.JPanel();
+        upgradeQiButton = new javax.swing.JButton();
+        upgradeBodyButton = new javax.swing.JButton();
+        cancelUpgradeButton = new javax.swing.JButton();
+        upgradeChoiceLabel = new javax.swing.JLabel();
         actionPanel = new javax.swing.JPanel();
         playerInfoPanel = new javax.swing.JPanel();
         levelLabel = new javax.swing.JLabel();
@@ -60,45 +65,176 @@ public class GameInterface extends javax.swing.JFrame {
         levelUpButton = new javax.swing.JButton();
         exploreButton = new javax.swing.JButton();
 
-        jLabel2.setText("jLabel2");
+        upgradeDialog.setTitle("XianxiaAdventures");
+        upgradeDialog.setResizable(false);
+        upgradeDialog.setSize(new java.awt.Dimension(300, 200));
+        upgradeDialog.setLocationRelativeTo(actionPanel);
+        upgradeDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                upgradeDialogComponentHidden(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                upgradeDialogComponentShown(evt);
+            }
+        });
+        upgradeDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("XianxiaAdventures");
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        upgradePanel.setMinimumSize(new java.awt.Dimension(250, 80));
+        upgradePanel.setPreferredSize(new java.awt.Dimension(250, 80));
+        upgradePanel.setLayout(new java.awt.GridBagLayout());
 
-        actionPanel.setLayout(new java.awt.GridBagLayout());
+        upgradeQiButton.setText("Qi");
+        upgradeQiButton.setFocusable(false);
+        upgradeQiButton.setMaximumSize(new java.awt.Dimension(100, 31));
+        upgradeQiButton.setMinimumSize(new java.awt.Dimension(75, 31));
+        upgradeQiButton.setPreferredSize(new java.awt.Dimension(75, 31));
+        upgradeQiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                upgradeQiButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        upgradePanel.add(upgradeQiButton, gridBagConstraints);
 
-        playerInfoPanel.setLayout(new java.awt.GridLayout(4, 2));
+        upgradeBodyButton.setText("Body");
+        upgradeBodyButton.setFocusable(false);
+        upgradeBodyButton.setMaximumSize(new java.awt.Dimension(100, 31));
+        upgradeBodyButton.setMinimumSize(new java.awt.Dimension(75, 31));
+        upgradeBodyButton.setPreferredSize(new java.awt.Dimension(75, 31));
+        upgradeBodyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                upgradeBodyButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        upgradePanel.add(upgradeBodyButton, gridBagConstraints);
 
-        levelLabel.setText("Level:");
-        playerInfoPanel.add(levelLabel);
+        cancelUpgradeButton.setText("Cancel");
+        cancelUpgradeButton.setFocusable(false);
+        cancelUpgradeButton.setMaximumSize(new java.awt.Dimension(100, 31));
+        cancelUpgradeButton.setMinimumSize(new java.awt.Dimension(75, 31));
+        cancelUpgradeButton.setPreferredSize(new java.awt.Dimension(75, 31));
+        cancelUpgradeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelUpgradeButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        upgradePanel.add(cancelUpgradeButton, gridBagConstraints);
 
-        levelData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        playerInfoPanel.add(levelData);
-
-        bodyLabel.setText("Body:");
-        playerInfoPanel.add(bodyLabel);
-
-        bodyData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        playerInfoPanel.add(bodyData);
-
-        qiLabel.setText("Qi:");
-        playerInfoPanel.add(qiLabel);
-
-        qiData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        playerInfoPanel.add(qiData);
-
-        expLabel.setText("Exp:");
-        playerInfoPanel.add(expLabel);
-
-        expData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        playerInfoPanel.add(expData);
-
+        upgradeChoiceLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        upgradeChoiceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        upgradeChoiceLabel.setText("What do you want to upgrade ?");
+        upgradeChoiceLabel.setPreferredSize(new java.awt.Dimension(220, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        upgradePanel.add(upgradeChoiceLabel, gridBagConstraints);
+
+        upgradeDialog.getContentPane().add(upgradePanel, new java.awt.GridBagConstraints());
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("XianxiaAdventures");
+        setResizable(false);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
+
+        actionPanel.setMinimumSize(new java.awt.Dimension(300, 110));
+        actionPanel.setPreferredSize(new java.awt.Dimension(300, 120));
+        java.awt.GridBagLayout actionPanelLayout = new java.awt.GridBagLayout();
+        actionPanelLayout.columnWidths = new int[] {0, 22, 0, 22, 0};
+        actionPanelLayout.rowHeights = new int[] {0, 5, 0};
+        actionPanel.setLayout(actionPanelLayout);
+
+        java.awt.GridBagLayout playerInfoPanelLayout = new java.awt.GridBagLayout();
+        playerInfoPanelLayout.columnWidths = new int[] {0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0};
+        playerInfoPanelLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
+        playerInfoPanel.setLayout(playerInfoPanelLayout);
+
+        levelLabel.setText("Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerInfoPanel.add(levelLabel, gridBagConstraints);
+
+        levelData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        levelData.setMaximumSize(new java.awt.Dimension(100, 100));
+        levelData.setMinimumSize(new java.awt.Dimension(98, 15));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerInfoPanel.add(levelData, gridBagConstraints);
+
+        bodyLabel.setText("Body:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerInfoPanel.add(bodyLabel, gridBagConstraints);
+
+        bodyData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerInfoPanel.add(bodyData, gridBagConstraints);
+
+        qiLabel.setText("Qi:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerInfoPanel.add(qiLabel, gridBagConstraints);
+
+        qiData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerInfoPanel.add(qiData, gridBagConstraints);
+
+        expLabel.setText("Exp:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerInfoPanel.add(expLabel, gridBagConstraints);
+
+        expData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerInfoPanel.add(expData, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         actionPanel.add(playerInfoPanel, gridBagConstraints);
 
         cultivateButton.setText("Cultivate");
@@ -109,23 +245,29 @@ public class GameInterface extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         actionPanel.add(cultivateButton, gridBagConstraints);
 
         levelUpButton.setText("Level Up");
         levelUpButton.setFocusable(false);
+        levelUpButton.setEnabled(false);
+        levelUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                levelUpButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
         actionPanel.add(levelUpButton, gridBagConstraints);
 
         exploreButton.setText("Explore");
         exploreButton.setFocusable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         actionPanel.add(exploreButton, gridBagConstraints);
 
@@ -136,18 +278,64 @@ public class GameInterface extends javax.swing.JFrame {
         getContentPane().add(actionPanel, gridBagConstraints);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cultivateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cultivateButtonActionPerformed
         // TODO add your handling code here:
         system.cultivate();
+        levelUpButton.setEnabled(system.canLevel());
         expData.setText(String.valueOf(system.getPlayerExp()));
     }//GEN-LAST:event_cultivateButtonActionPerformed
 
+    private void levelUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_levelUpButtonActionPerformed
+        // TODO add your handling code here:
+        exploreButton.setEnabled(false);
+        cultivateButton.setEnabled(false);
+        levelUpButton.setEnabled(false);
+        upgradeDialog.setVisible(true);
+    }//GEN-LAST:event_levelUpButtonActionPerformed
+
+    private void upgradeBodyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upgradeBodyButtonActionPerformed
+        // TODO add your handling code here:
+        system.attemptLevelUp("Body");
+        closeUpgradeDialog();
+    }//GEN-LAST:event_upgradeBodyButtonActionPerformed
+
+    private void upgradeQiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upgradeQiButtonActionPerformed
+        // TODO add your handling code here:
+        system.attemptLevelUp("Qi");
+        closeUpgradeDialog();
+    }//GEN-LAST:event_upgradeQiButtonActionPerformed
+
+    private void cancelUpgradeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelUpgradeButtonActionPerformed
+        // TODO add your handling code here:
+        closeUpgradeDialog();
+    }//GEN-LAST:event_cancelUpgradeButtonActionPerformed
+
+    private void upgradeDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_upgradeDialogComponentShown
+        // TODO add your handling code here:
+        upgradeBodyButton.setEnabled(system.canLevel("Body"));
+        upgradeQiButton.setEnabled(system.canLevel("Qi"));
+    }//GEN-LAST:event_upgradeDialogComponentShown
+
+    private void upgradeDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_upgradeDialogComponentHidden
+        // TODO add your handling code here:
+                closeUpgradeDialog();
+    }//GEN-LAST:event_upgradeDialogComponentHidden
+
+    public void closeUpgradeDialog() {
+        upgradeDialog.setVisible(false);
+        exploreButton.setEnabled(true);
+        cultivateButton.setEnabled(true);
+        levelUpButton.setEnabled(system.canLevel());
+        updateData();
+    }
+
     private void updateData() {
-        levelData.setText(String.valueOf(system.getPlayerLevel()));
-        bodyData.setText(String.valueOf(system.getPlayerBody()));
-        qiData.setText(String.valueOf(system.getPlayerQi()));
+        levelData.setText(system.getPlayerRealm().getName());
+        bodyData.setText(system.getPlayerBody().getName());
+        qiData.setText(system.getPlayerQi().getName());
         expData.setText(String.valueOf(system.getPlayerExp()));
     }
 
@@ -155,16 +343,21 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JPanel actionPanel;
     private javax.swing.JLabel bodyData;
     private javax.swing.JLabel bodyLabel;
+    private javax.swing.JButton cancelUpgradeButton;
     private javax.swing.JButton cultivateButton;
     private javax.swing.JLabel expData;
     private javax.swing.JLabel expLabel;
     private javax.swing.JButton exploreButton;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel levelData;
     private javax.swing.JLabel levelLabel;
     private javax.swing.JButton levelUpButton;
     private javax.swing.JPanel playerInfoPanel;
     private javax.swing.JLabel qiData;
     private javax.swing.JLabel qiLabel;
+    private javax.swing.JButton upgradeBodyButton;
+    private javax.swing.JLabel upgradeChoiceLabel;
+    private javax.swing.JDialog upgradeDialog;
+    private javax.swing.JPanel upgradePanel;
+    private javax.swing.JButton upgradeQiButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,20 +20,8 @@ package com.neutral.xianxia.logic;
  *
  * @author Mr.Neutral
  */
-import static com.neutral.xianxia.logic.System.CULTIVATION_LEVEL.getRealm;
-
-public class Player extends Cultivator {
-
-    public Player() {
-        super();
-    }
-
-    public void cultivate() {
-        grantExp((int) ((Math.random() + 0.1) * 10));
-    }
-
-    void checkRealm() {
-        setCultivationRealm((getBodyLevel().getRank() > getQiLevel().getRank()) ? getRealm(getBodyLevel().getRank()) : getRealm(getQiLevel().getRank()));
-    }
-
+public interface Level {
+    String getName();
+    int getRank();
+    abstract int getCost();
 }

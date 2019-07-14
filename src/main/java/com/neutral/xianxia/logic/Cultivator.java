@@ -16,6 +16,10 @@
  */
 package com.neutral.xianxia.logic;
 
+import com.neutral.xianxia.logic.System.BODY_LEVEL;
+import com.neutral.xianxia.logic.System.CULTIVATION_LEVEL;
+import com.neutral.xianxia.logic.System.QI_LEVEL;
+
 /**
  *
  * @author Mr.Neutral
@@ -26,54 +30,65 @@ public abstract class Cultivator {
     private int spirit;
     private int exp;
     private int powerLevel;
-    private int bodyLevel;
-    private int qiLevel;
+    private BODY_LEVEL bodyLevel;
+    private QI_LEVEL qiLevel;
+    private CULTIVATION_LEVEL cultivationRealm;
 
     public Cultivator() {
         this.health = 10;
         this.spirit = 0;
         this.exp = 0;
         this.powerLevel = 1;
-        this.bodyLevel = 1;
-        this.qiLevel = 0;
+        this.bodyLevel = BODY_LEVEL.MORTAL_BODY;
+        this.qiLevel = QI_LEVEL.MORTAL_SPIRIT;
+        this.cultivationRealm = CULTIVATION_LEVEL.MORTAL_REALM;
     }
 
-    public Cultivator(int health, int spirit, int exp, int powerLevel, int bodyLevel, int qiLevel) {
+    public Cultivator(int health, int spirit, int exp, int powerLevel, BODY_LEVEL bodyLevel, QI_LEVEL qiLevel) {
         this.health = health;
         this.spirit = spirit;
         this.exp = exp;
         this.powerLevel = powerLevel;
         this.bodyLevel = bodyLevel;
         this.qiLevel = qiLevel;
+        this.cultivationRealm = CULTIVATION_LEVEL.MORTAL_REALM;
+    }
+
+    public CULTIVATION_LEVEL getCultivationRealm() {
+        return cultivationRealm;
     }
 
     public double getAttack() {
-        return getBodyLevel() * 1.5 + getQiLevel() * 2;
+        return getBodyLevel().getRank() * 1.5 + getQiLevel().getRank() * 2;
     }
 
     public void levelBody() {
-        bodyLevel++;
+        bodyLevel = System.getNextLevel(bodyLevel);
+    }
+
+    public void setCultivationRealm(CULTIVATION_LEVEL cultivationRealm) {
+        this.cultivationRealm = cultivationRealm;
     }
 
     public void levelQi() {
-        qiLevel++;
+        qiLevel = System.getNextLevel(qiLevel);
     }
-    
-    public void grantExp(int amount){
+
+    public void grantExp(int amount) {
         this.exp += amount;
     }
 
     public void attack(Cultivator cultivator) {
         cultivator.defend(this);
     }
-    
+
     public void defend(Cultivator cultivator) {
-        double potentialDamage = bodyLevel - cultivator.getAttack();
+        double potentialDamage = bodyLevel.getRank() - cultivator.getAttack();
         health -= (potentialDamage > 0) ? Math.round(potentialDamage) : 0;
     }
 
     public void updatePowerLevel() {
-        this.powerLevel = bodyLevel + qiLevel;
+        this.powerLevel = bodyLevel.getRank() + qiLevel.getRank();
     }
 
     /**
@@ -107,14 +122,14 @@ public abstract class Cultivator {
     /**
      * @return the bodyLevel
      */
-    public int getBodyLevel() {
+    public BODY_LEVEL getBodyLevel() {
         return bodyLevel;
     }
 
     /**
      * @return the qiLevel
      */
-    public int getQiLevel() {
+    public QI_LEVEL getQiLevel() {
         return qiLevel;
     }
 
