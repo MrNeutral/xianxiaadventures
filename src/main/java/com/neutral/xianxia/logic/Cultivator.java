@@ -60,10 +60,17 @@ public abstract class Cultivator {
 
     public double getAttack() {
         return getBodyLevel().getRank() * 1.5 + getQiLevel().getRank() * 2;
+        //Base defence at 1/1 is 3.5
+    }
+
+    public double getDefence() {
+        return getBodyLevel().getRank() * 2 + getQiLevel().getRank() * 1.25;
+        //Base attack at 1/1 is 3.25
     }
 
     public void levelBody() {
-        bodyLevel = System.getNextLevel(bodyLevel);
+        setHealth(health + System.getNextLevel(bodyLevel).getRank() * 10);
+        setBodyLevel(System.getNextLevel(bodyLevel));
     }
 
     public void setCultivationRealm(CULTIVATION_LEVEL cultivationRealm) {
@@ -71,7 +78,8 @@ public abstract class Cultivator {
     }
 
     public void levelQi() {
-        qiLevel = System.getNextLevel(qiLevel);
+        setSpirit(spirit + System.getNextLevel(qiLevel).getRank() * 5);
+        setQiLevel(System.getNextLevel(qiLevel));
     }
 
     public void grantExp(int amount) {
@@ -83,8 +91,8 @@ public abstract class Cultivator {
     }
 
     public void defend(Cultivator cultivator) {
-        double potentialDamage = bodyLevel.getRank() - cultivator.getAttack();
-        health -= (potentialDamage > 0) ? Math.round(potentialDamage) : 0;
+        double potentialDamage = getDefence() - cultivator.getAttack();
+        setHealth((int) ((health - potentialDamage > 0) ? Math.round(potentialDamage) : 0));
     }
 
     public void updatePowerLevel() {
@@ -131,6 +139,34 @@ public abstract class Cultivator {
      */
     public QI_LEVEL getQiLevel() {
         return qiLevel;
+    }
+
+    /**
+     * @param health the health to set
+     */
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    /**
+     * @param spirit the spirit to set
+     */
+    public void setSpirit(int spirit) {
+        this.spirit = spirit;
+    }
+
+    /**
+     * @param bodyLevel the bodyLevel to set
+     */
+    public void setBodyLevel(BODY_LEVEL bodyLevel) {
+        this.bodyLevel = bodyLevel;
+    }
+
+    /**
+     * @param qiLevel the qiLevel to set
+     */
+    public void setQiLevel(QI_LEVEL qiLevel) {
+        this.qiLevel = qiLevel;
     }
 
 }

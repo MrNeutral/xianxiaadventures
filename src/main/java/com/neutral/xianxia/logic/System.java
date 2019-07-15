@@ -59,7 +59,7 @@ public final class System {
                     return level;
                 }
             }
-            return null;
+            return QI_LEVEL.SAGE_SPIRIT;
         }
 
     }
@@ -99,7 +99,7 @@ public final class System {
                     return level;
                 }
             }
-            return null;
+            return BODY_LEVEL.SAGE_BODY;
         }
 
     }
@@ -137,7 +137,7 @@ public final class System {
                     return level;
                 }
             }
-            return null;
+            return CULTIVATION_LEVEL.SAGE_REALM;
         }
 
     }
@@ -173,7 +173,7 @@ public final class System {
     final static QI_LEVEL getNextLevel(QI_LEVEL currLevel) {
         QI_LEVEL[] levels = QI_LEVEL.values();
         for (int i = 0; i < levels.length; ++i) {
-            if (currLevel == levels[i] && levels[i + 1] != null) {
+            if (currLevel == levels[i] && i + 1 < levels.length) {
                 return levels[i + 1];
             }
         }
@@ -183,7 +183,7 @@ public final class System {
     final static CULTIVATION_LEVEL getNextLevel(CULTIVATION_LEVEL currLevel) {
         CULTIVATION_LEVEL[] levels = CULTIVATION_LEVEL.values();
         for (int i = 0; i < levels.length; ++i) {
-            if (currLevel == levels[i] && levels[i + 1] != null) {
+            if (currLevel == levels[i] && i + 1 < levels.length) {
                 return levels[i + 1];
             }
         }
@@ -226,6 +226,46 @@ public final class System {
 
     public int getPlayerExp() {
         return player.getExp();
+    }
+
+    public int getPlayerHealth() {
+        return player.getHealth();
+    }
+
+    public int getPlayerSpirit() {
+        return player.getSpirit();
+    }
+
+    public double getPlayerAttack() {
+        return player.getAttack();
+    }
+
+    public double getPlayerDefence() {
+        return player.getDefence();
+    }
+
+    public double getPlayerExpMultiplier() {
+        return player.getExpMultiplier();
+    }
+
+    public void setPlayerHealth(int health) {
+        player.setHealth(health);
+    }
+
+    public void setPlayerSpirit(int spirit) {
+        player.setSpirit(spirit);
+    }
+
+    public void setPlayerExpMultiplier(double multiplier) {
+        player.setExpMultiplier(multiplier);
+    }
+
+    public void setPlayerBody(int level) {
+        player.setBodyLevel(BODY_LEVEL.getRealm(level));
+    }
+
+    public void setPlayerQi(int level) {
+        player.setQiLevel(QI_LEVEL.getRealm(level));
     }
 
     public CULTIVATION_LEVEL getPlayerRealm() {

@@ -24,16 +24,30 @@ import static com.neutral.xianxia.logic.System.CULTIVATION_LEVEL.getRealm;
 
 public class Player extends Cultivator {
 
+    private double expMultiplier = 1.0;
+
     public Player() {
         super();
     }
 
     public void cultivate() {
-        grantExp((int) ((Math.random() + 0.1) * 10));
+        grantExp((int) (((Math.random() + 0.1) * 10) * expMultiplier));
     }
 
     void checkRealm() {
         setCultivationRealm((getBodyLevel().getRank() > getQiLevel().getRank()) ? getRealm(getBodyLevel().getRank()) : getRealm(getQiLevel().getRank()));
+    }
+
+    public double getExpMultiplier() {
+        return this.expMultiplier;
+    }
+
+    public void changeExpMultiplier(double amount) {
+        this.expMultiplier += amount;
+    }
+
+    public void setExpMultiplier(double expMultiplier) {
+        this.expMultiplier = expMultiplier;
     }
 
 }

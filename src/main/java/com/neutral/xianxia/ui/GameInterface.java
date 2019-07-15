@@ -51,8 +51,9 @@ public class GameInterface extends javax.swing.JFrame {
         upgradeBodyButton = new javax.swing.JButton();
         cancelUpgradeButton = new javax.swing.JButton();
         upgradeChoiceLabel = new javax.swing.JLabel();
+        mainTabbedPane = new javax.swing.JTabbedPane();
         actionPanel = new javax.swing.JPanel();
-        playerInfoPanel = new javax.swing.JPanel();
+        playerStatusPanel = new javax.swing.JPanel();
         levelLabel = new javax.swing.JLabel();
         levelData = new javax.swing.JLabel();
         bodyLabel = new javax.swing.JLabel();
@@ -64,8 +65,34 @@ public class GameInterface extends javax.swing.JFrame {
         cultivateButton = new javax.swing.JButton();
         levelUpButton = new javax.swing.JButton();
         exploreButton = new javax.swing.JButton();
+        dataPanel = new javax.swing.JPanel();
+        playerDataPanel = new javax.swing.JPanel();
+        healthLabel = new javax.swing.JLabel();
+        spiritLabel = new javax.swing.JLabel();
+        attackLabel = new javax.swing.JLabel();
+        defenceLabel = new javax.swing.JLabel();
+        multiplierLabel = new javax.swing.JLabel();
+        healthData = new javax.swing.JLabel();
+        spiritData = new javax.swing.JLabel();
+        attackData = new javax.swing.JLabel();
+        defenceData = new javax.swing.JLabel();
+        multiplierData = new javax.swing.JLabel();
+        debugPanel = new javax.swing.JPanel();
+        playerDebugPanel = new javax.swing.JPanel();
+        healthDebugLabel = new javax.swing.JLabel();
+        spiritDebugLabel = new javax.swing.JLabel();
+        qiDebugLabel = new javax.swing.JLabel();
+        bodyDebugLabel = new javax.swing.JLabel();
+        multiplierDebugLabel = new javax.swing.JLabel();
+        healthDebug = new javax.swing.JTextField();
+        spiritDebug = new javax.swing.JTextField();
+        qiDebug = new javax.swing.JTextField();
+        bodyDebug = new javax.swing.JTextField();
+        multiplierDebug = new javax.swing.JTextField();
 
         upgradeDialog.setTitle("XianxiaAdventures");
+        upgradeDialog.setMaximumSize(getPreferredSize());
+        upgradeDialog.setMinimumSize(getPreferredSize());
         upgradeDialog.setResizable(false);
         upgradeDialog.setSize(new java.awt.Dimension(300, 200));
         upgradeDialog.setLocationRelativeTo(actionPanel);
@@ -145,20 +172,31 @@ public class GameInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XianxiaAdventures");
+        setMaximumSize(getPreferredSize());
+        setMinimumSize(getPreferredSize());
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        actionPanel.setMinimumSize(new java.awt.Dimension(300, 110));
+        mainTabbedPane.setToolTipText("");
+        mainTabbedPane.setMaximumSize(getPreferredSize());
+        mainTabbedPane.setMinimumSize(getPreferredSize());
+        mainTabbedPane.setPreferredSize(new java.awt.Dimension(300, 215));
+
+        actionPanel.setMaximumSize(getPreferredSize());
+        actionPanel.setMinimumSize(getPreferredSize());
         actionPanel.setPreferredSize(new java.awt.Dimension(300, 120));
         java.awt.GridBagLayout actionPanelLayout = new java.awt.GridBagLayout();
         actionPanelLayout.columnWidths = new int[] {0, 22, 0, 22, 0};
         actionPanelLayout.rowHeights = new int[] {0, 5, 0};
         actionPanel.setLayout(actionPanelLayout);
 
+        playerStatusPanel.setMaximumSize(getPreferredSize());
+        playerStatusPanel.setMinimumSize(getPreferredSize());
+        playerStatusPanel.setPreferredSize(new java.awt.Dimension(285, 125));
         java.awt.GridBagLayout playerInfoPanelLayout = new java.awt.GridBagLayout();
         playerInfoPanelLayout.columnWidths = new int[] {0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0};
-        playerInfoPanelLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
-        playerInfoPanel.setLayout(playerInfoPanelLayout);
+        playerInfoPanelLayout.rowHeights = new int[] {0, 17, 0, 17, 0, 17, 0, 17, 0};
+        playerStatusPanel.setLayout(playerInfoPanelLayout);
 
         levelLabel.setText("Level:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -166,7 +204,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        playerInfoPanel.add(levelLabel, gridBagConstraints);
+        playerStatusPanel.add(levelLabel, gridBagConstraints);
 
         levelData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         levelData.setMaximumSize(new java.awt.Dimension(100, 100));
@@ -177,7 +215,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        playerInfoPanel.add(levelData, gridBagConstraints);
+        playerStatusPanel.add(levelData, gridBagConstraints);
 
         bodyLabel.setText("Body:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -185,7 +223,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        playerInfoPanel.add(bodyLabel, gridBagConstraints);
+        playerStatusPanel.add(bodyLabel, gridBagConstraints);
 
         bodyData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -194,7 +232,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        playerInfoPanel.add(bodyData, gridBagConstraints);
+        playerStatusPanel.add(bodyData, gridBagConstraints);
 
         qiLabel.setText("Qi:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -202,7 +240,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        playerInfoPanel.add(qiLabel, gridBagConstraints);
+        playerStatusPanel.add(qiLabel, gridBagConstraints);
 
         qiData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -211,7 +249,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        playerInfoPanel.add(qiData, gridBagConstraints);
+        playerStatusPanel.add(qiData, gridBagConstraints);
 
         expLabel.setText("Exp:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -219,7 +257,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        playerInfoPanel.add(expLabel, gridBagConstraints);
+        playerStatusPanel.add(expLabel, gridBagConstraints);
 
         expData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -228,14 +266,14 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        playerInfoPanel.add(expData, gridBagConstraints);
+        playerStatusPanel.add(expData, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        actionPanel.add(playerInfoPanel, gridBagConstraints);
+        actionPanel.add(playerStatusPanel, gridBagConstraints);
 
         cultivateButton.setText("Cultivate");
         cultivateButton.setFocusable(false);
@@ -271,11 +309,259 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         actionPanel.add(exploreButton, gridBagConstraints);
 
+        mainTabbedPane.addTab("Main", actionPanel);
+
+        dataPanel.setMaximumSize(getPreferredSize());
+        dataPanel.setMinimumSize(getPreferredSize());
+        dataPanel.setPreferredSize(new java.awt.Dimension(300, 120));
+        dataPanel.setLayout(new java.awt.BorderLayout());
+
+        playerDataPanel.setMaximumSize(getPreferredSize());
+        playerDataPanel.setMinimumSize(getPreferredSize());
+        playerDataPanel.setPreferredSize(new java.awt.Dimension(285, 200));
+        java.awt.GridBagLayout playerDataPanelLayout = new java.awt.GridBagLayout();
+        playerDataPanelLayout.columnWidths = new int[] {0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0};
+        playerDataPanelLayout.rowHeights = new int[] {0, 20, 0, 20, 0, 20, 0, 20, 0};
+        playerDataPanel.setLayout(playerDataPanelLayout);
+
+        healthLabel.setText("Health:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        getContentPane().add(actionPanel, gridBagConstraints);
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDataPanel.add(healthLabel, gridBagConstraints);
+
+        spiritLabel.setText("Spirit:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDataPanel.add(spiritLabel, gridBagConstraints);
+
+        attackLabel.setText("Attack:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDataPanel.add(attackLabel, gridBagConstraints);
+
+        defenceLabel.setText("Defence:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDataPanel.add(defenceLabel, gridBagConstraints);
+
+        multiplierLabel.setText("Exp. Multiplier:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDataPanel.add(multiplierLabel, gridBagConstraints);
+
+        healthData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerDataPanel.add(healthData, gridBagConstraints);
+
+        spiritData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerDataPanel.add(spiritData, gridBagConstraints);
+
+        attackData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerDataPanel.add(attackData, gridBagConstraints);
+
+        defenceData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerDataPanel.add(defenceData, gridBagConstraints);
+
+        multiplierData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        playerDataPanel.add(multiplierData, gridBagConstraints);
+
+        dataPanel.add(playerDataPanel, java.awt.BorderLayout.CENTER);
+
+        mainTabbedPane.addTab("Data", dataPanel);
+
+        debugPanel.setMaximumSize(getPreferredSize());
+        debugPanel.setMinimumSize(getPreferredSize());
+        debugPanel.setPreferredSize(new java.awt.Dimension(300, 200));
+        debugPanel.setLayout(new java.awt.BorderLayout());
+
+        playerDebugPanel.setMaximumSize(getPreferredSize());
+        playerDebugPanel.setMinimumSize(getPreferredSize());
+        playerDebugPanel.setPreferredSize(new java.awt.Dimension(285, 200));
+        java.awt.GridBagLayout playerDataPanel1Layout1 = new java.awt.GridBagLayout();
+        playerDataPanel1Layout1.columnWidths = new int[] {0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0};
+        playerDataPanel1Layout1.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0, 10, 0};
+        playerDebugPanel.setLayout(playerDataPanel1Layout1);
+
+        healthDebugLabel.setText("Health:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDebugPanel.add(healthDebugLabel, gridBagConstraints);
+
+        spiritDebugLabel.setText("Spirit:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDebugPanel.add(spiritDebugLabel, gridBagConstraints);
+
+        qiDebugLabel.setText("Qi Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDebugPanel.add(qiDebugLabel, gridBagConstraints);
+
+        bodyDebugLabel.setText("Body Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDebugPanel.add(bodyDebugLabel, gridBagConstraints);
+
+        multiplierDebugLabel.setText("Exp. Multiplier:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        playerDebugPanel.add(multiplierDebugLabel, gridBagConstraints);
+
+        healthDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        healthDebug.setMaximumSize(getPreferredSize());
+        healthDebug.setMinimumSize(new java.awt.Dimension(0, 25));
+        healthDebug.setPreferredSize(new java.awt.Dimension(0, 25));
+        healthDebug.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                healthDebugKeyPressed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDebugPanel.add(healthDebug, gridBagConstraints);
+
+        spiritDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        spiritDebug.setMaximumSize(getPreferredSize());
+        spiritDebug.setMinimumSize(new java.awt.Dimension(0, 25));
+        spiritDebug.setPreferredSize(new java.awt.Dimension(0, 25));
+        spiritDebug.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                spiritDebugKeyPressed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDebugPanel.add(spiritDebug, gridBagConstraints);
+
+        qiDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        qiDebug.setMaximumSize(getPreferredSize());
+        qiDebug.setMinimumSize(new java.awt.Dimension(0, 25));
+        qiDebug.setPreferredSize(new java.awt.Dimension(0, 25));
+        qiDebug.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                qiDebugKeyPressed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDebugPanel.add(qiDebug, gridBagConstraints);
+
+        bodyDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        bodyDebug.setMaximumSize(getPreferredSize());
+        bodyDebug.setMinimumSize(new java.awt.Dimension(0, 25));
+        bodyDebug.setPreferredSize(new java.awt.Dimension(0, 25));
+        bodyDebug.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                bodyDebugKeyPressed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDebugPanel.add(bodyDebug, gridBagConstraints);
+
+        multiplierDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        multiplierDebug.setMaximumSize(getPreferredSize());
+        multiplierDebug.setMinimumSize(new java.awt.Dimension(0, 0));
+        multiplierDebug.setPreferredSize(new java.awt.Dimension(0, 25));
+        multiplierDebug.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                multiplierDebugKeyPressed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDebugPanel.add(multiplierDebug, gridBagConstraints);
+
+        debugPanel.add(playerDebugPanel, java.awt.BorderLayout.CENTER);
+
+        mainTabbedPane.addTab("Debug", debugPanel);
+
+        getContentPane().add(mainTabbedPane, new java.awt.GridBagConstraints());
+        mainTabbedPane.getAccessibleContext().setAccessibleDescription("");
 
         pack();
         setLocationRelativeTo(null);
@@ -321,8 +607,68 @@ public class GameInterface extends javax.swing.JFrame {
 
     private void upgradeDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_upgradeDialogComponentHidden
         // TODO add your handling code here:
-                closeUpgradeDialog();
+        closeUpgradeDialog();
     }//GEN-LAST:event_upgradeDialogComponentHidden
+
+    private void healthDebugKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_healthDebugKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            try {
+                system.setPlayerHealth(Integer.valueOf(healthDebug.getText()));
+                updateData();
+            } catch (NumberFormatException e) {
+                healthDebug.setText("Invalid");
+            }
+        }
+    }//GEN-LAST:event_healthDebugKeyPressed
+
+    private void spiritDebugKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spiritDebugKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            try {
+                system.setPlayerSpirit(Integer.valueOf(spiritDebug.getText()));
+                updateData();
+            } catch (NumberFormatException e) {
+                spiritDebug.setText("Invalid");
+            }
+        }
+    }//GEN-LAST:event_spiritDebugKeyPressed
+
+    private void qiDebugKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qiDebugKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            try {
+                system.setPlayerQi(Integer.valueOf(qiDebug.getText()));
+                updateData();
+            } catch (NumberFormatException e) {
+                qiDebug.setText("Invalid");
+            }
+        }
+    }//GEN-LAST:event_qiDebugKeyPressed
+
+    private void bodyDebugKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bodyDebugKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            try {
+                system.setPlayerBody(Integer.valueOf(bodyDebug.getText()));
+                updateData();
+            } catch (NumberFormatException e) {
+                bodyDebug.setText("Invalid");
+            }
+        }
+    }//GEN-LAST:event_bodyDebugKeyPressed
+
+    private void multiplierDebugKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_multiplierDebugKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            try {
+                system.setPlayerExpMultiplier(Integer.valueOf(multiplierDebug.getText()));
+                updateData();
+            } catch (NumberFormatException e) {
+                multiplierDebug.setText("Invalid");
+            }
+        }
+    }//GEN-LAST:event_multiplierDebugKeyPressed
 
     public void closeUpgradeDialog() {
         upgradeDialog.setVisible(false);
@@ -337,23 +683,58 @@ public class GameInterface extends javax.swing.JFrame {
         bodyData.setText(system.getPlayerBody().getName());
         qiData.setText(system.getPlayerQi().getName());
         expData.setText(String.valueOf(system.getPlayerExp()));
+        healthData.setText(String.valueOf(system.getPlayerHealth()));
+        spiritData.setText(String.valueOf(system.getPlayerSpirit()));
+        attackData.setText(String.valueOf(system.getPlayerAttack()));
+        defenceData.setText(String.valueOf(system.getPlayerDefence()));
+        multiplierData.setText(String.valueOf(system.getPlayerExpMultiplier()));
+        healthDebug.setText(String.valueOf(system.getPlayerHealth()));
+        spiritDebug.setText(String.valueOf(system.getPlayerSpirit()));
+        qiDebug.setText(String.valueOf(system.getPlayerQi().getRank()));
+        bodyDebug.setText(String.valueOf(system.getPlayerBody().getRank()));
+        multiplierDebug.setText(String.valueOf(system.getPlayerExpMultiplier()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionPanel;
+    private javax.swing.JLabel attackData;
+    private javax.swing.JLabel attackLabel;
     private javax.swing.JLabel bodyData;
+    private javax.swing.JTextField bodyDebug;
+    private javax.swing.JLabel bodyDebugLabel;
     private javax.swing.JLabel bodyLabel;
     private javax.swing.JButton cancelUpgradeButton;
     private javax.swing.JButton cultivateButton;
+    private javax.swing.JPanel dataPanel;
+    private javax.swing.JPanel debugPanel;
+    private javax.swing.JLabel defenceData;
+    private javax.swing.JLabel defenceLabel;
     private javax.swing.JLabel expData;
     private javax.swing.JLabel expLabel;
     private javax.swing.JButton exploreButton;
+    private javax.swing.JLabel healthData;
+    private javax.swing.JTextField healthDebug;
+    private javax.swing.JLabel healthDebugLabel;
+    private javax.swing.JLabel healthLabel;
     private javax.swing.JLabel levelData;
     private javax.swing.JLabel levelLabel;
     private javax.swing.JButton levelUpButton;
-    private javax.swing.JPanel playerInfoPanel;
+    private javax.swing.JTabbedPane mainTabbedPane;
+    private javax.swing.JLabel multiplierData;
+    private javax.swing.JTextField multiplierDebug;
+    private javax.swing.JLabel multiplierDebugLabel;
+    private javax.swing.JLabel multiplierLabel;
+    private javax.swing.JPanel playerDataPanel;
+    private javax.swing.JPanel playerDebugPanel;
+    private javax.swing.JPanel playerStatusPanel;
     private javax.swing.JLabel qiData;
+    private javax.swing.JTextField qiDebug;
+    private javax.swing.JLabel qiDebugLabel;
     private javax.swing.JLabel qiLabel;
+    private javax.swing.JLabel spiritData;
+    private javax.swing.JTextField spiritDebug;
+    private javax.swing.JLabel spiritDebugLabel;
+    private javax.swing.JLabel spiritLabel;
     private javax.swing.JButton upgradeBodyButton;
     private javax.swing.JLabel upgradeChoiceLabel;
     private javax.swing.JDialog upgradeDialog;
