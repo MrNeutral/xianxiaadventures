@@ -46,13 +46,13 @@ public class GameInterface extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        upgradeDialog = new javax.swing.JDialog();
+        upgradeDialog = new javax.swing.JDialog(this);
         upgradePanel = new javax.swing.JPanel();
         upgradeQiButton = new javax.swing.JButton();
         upgradeBodyButton = new javax.swing.JButton();
         cancelUpgradeButton = new javax.swing.JButton();
         upgradeChoiceLabel = new javax.swing.JLabel();
-        eventDialog = new javax.swing.JDialog();
+        eventDialog = new javax.swing.JDialog(this);
         eventPanel = new javax.swing.JPanel();
         eventTitle = new javax.swing.JLabel();
         eventText = new javax.swing.JLabel();
@@ -100,7 +100,6 @@ public class GameInterface extends javax.swing.JFrame {
 
         upgradeDialog.setTitle("XianxiaAdventures");
         upgradeDialog.setAlwaysOnTop(true);
-        upgradeDialog.setMaximumSize(getPreferredSize());
         upgradeDialog.setMinimumSize(getPreferredSize());
         upgradeDialog.setModal(true);
         upgradeDialog.setPreferredSize(new java.awt.Dimension(250, 120));
@@ -180,9 +179,8 @@ public class GameInterface extends javax.swing.JFrame {
 
         upgradeDialog.getContentPane().add(upgradePanel, java.awt.BorderLayout.CENTER);
 
-        upgradeDialog.getAccessibleContext().setAccessibleParent(actionPanel);
-
-        eventDialog.setMaximumSize(getPreferredSize());
+        eventDialog.setTitle("XianxiaAdventures");
+        eventDialog.setAlwaysOnTop(true);
         eventDialog.setMinimumSize(getPreferredSize());
         eventDialog.setModal(true);
         eventDialog.setPreferredSize(new java.awt.Dimension(300, 215));
@@ -251,8 +249,6 @@ public class GameInterface extends javax.swing.JFrame {
         eventPanel.add(newEvent, gridBagConstraints);
 
         eventDialog.getContentPane().add(eventPanel, java.awt.BorderLayout.CENTER);
-
-        eventDialog.getAccessibleContext().setAccessibleParent(actionPanel);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XianxiaAdventures");
