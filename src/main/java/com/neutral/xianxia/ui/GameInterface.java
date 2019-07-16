@@ -1,5 +1,6 @@
 package com.neutral.xianxia.ui;
 
+import com.neutral.xianxia.logic.EventManager.EVENT;
 import com.neutral.xianxia.logic.System;
 
 /*
@@ -51,6 +52,13 @@ public class GameInterface extends javax.swing.JFrame {
         upgradeBodyButton = new javax.swing.JButton();
         cancelUpgradeButton = new javax.swing.JButton();
         upgradeChoiceLabel = new javax.swing.JLabel();
+        eventDialog = new javax.swing.JDialog();
+        eventPanel = new javax.swing.JPanel();
+        eventTitle = new javax.swing.JLabel();
+        eventText = new javax.swing.JLabel();
+        eventExp = new javax.swing.JLabel();
+        closeEventFrame = new javax.swing.JButton();
+        newEvent = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         actionPanel = new javax.swing.JPanel();
         playerStatusPanel = new javax.swing.JPanel();
@@ -91,10 +99,13 @@ public class GameInterface extends javax.swing.JFrame {
         multiplierDebug = new javax.swing.JTextField();
 
         upgradeDialog.setTitle("XianxiaAdventures");
+        upgradeDialog.setAlwaysOnTop(true);
         upgradeDialog.setMaximumSize(getPreferredSize());
         upgradeDialog.setMinimumSize(getPreferredSize());
+        upgradeDialog.setModal(true);
+        upgradeDialog.setPreferredSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setResizable(false);
-        upgradeDialog.setSize(new java.awt.Dimension(300, 200));
+        upgradeDialog.setSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setLocationRelativeTo(actionPanel);
         upgradeDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
@@ -104,7 +115,6 @@ public class GameInterface extends javax.swing.JFrame {
                 upgradeDialogComponentShown(evt);
             }
         });
-        upgradeDialog.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         upgradePanel.setMinimumSize(new java.awt.Dimension(250, 80));
         upgradePanel.setPreferredSize(new java.awt.Dimension(250, 80));
@@ -168,7 +178,81 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 3;
         upgradePanel.add(upgradeChoiceLabel, gridBagConstraints);
 
-        upgradeDialog.getContentPane().add(upgradePanel, new java.awt.GridBagConstraints());
+        upgradeDialog.getContentPane().add(upgradePanel, java.awt.BorderLayout.CENTER);
+
+        upgradeDialog.getAccessibleContext().setAccessibleParent(actionPanel);
+
+        eventDialog.setMaximumSize(getPreferredSize());
+        eventDialog.setMinimumSize(getPreferredSize());
+        eventDialog.setModal(true);
+        eventDialog.setPreferredSize(new java.awt.Dimension(300, 215));
+        eventDialog.setSize(new java.awt.Dimension(300, 215));
+        eventDialog.setLocationRelativeTo(actionPanel);
+        eventDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                eventDialogComponentHidden(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                eventDialogComponentShown(evt);
+            }
+        });
+
+        eventPanel.setMaximumSize(getPreferredSize());
+        eventPanel.setMinimumSize(getPreferredSize());
+        eventPanel.setPreferredSize(new java.awt.Dimension(300, 220));
+        java.awt.GridBagLayout eventPanelLayout = new java.awt.GridBagLayout();
+        eventPanelLayout.columnWidths = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        eventPanelLayout.rowHeights = new int[] {0, 25, 0, 25, 0, 25, 0, 25, 0};
+        eventPanel.setLayout(eventPanelLayout);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        eventPanel.add(eventTitle, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        eventPanel.add(eventText, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        eventPanel.add(eventExp, gridBagConstraints);
+
+        closeEventFrame.setText("Return to The Sect");
+        closeEventFrame.setFocusable(false);
+        closeEventFrame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeEventFrameActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        eventPanel.add(closeEventFrame, gridBagConstraints);
+
+        newEvent.setText("Keep exploring");
+        newEvent.setFocusable(false);
+        newEvent.setPreferredSize(new java.awt.Dimension(144, 31));
+        newEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newEventActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        eventPanel.add(newEvent, gridBagConstraints);
+
+        eventDialog.getContentPane().add(eventPanel, java.awt.BorderLayout.CENTER);
+
+        eventDialog.getAccessibleContext().setAccessibleParent(actionPanel);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XianxiaAdventures");
@@ -303,6 +387,11 @@ public class GameInterface extends javax.swing.JFrame {
 
         exploreButton.setText("Explore");
         exploreButton.setFocusable(false);
+        exploreButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exploreButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -561,7 +650,6 @@ public class GameInterface extends javax.swing.JFrame {
         mainTabbedPane.addTab("Debug", debugPanel);
 
         getContentPane().add(mainTabbedPane, new java.awt.GridBagConstraints());
-        mainTabbedPane.getAccessibleContext().setAccessibleDescription("");
 
         pack();
         setLocationRelativeTo(null);
@@ -585,18 +673,18 @@ public class GameInterface extends javax.swing.JFrame {
     private void upgradeBodyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upgradeBodyButtonActionPerformed
         // TODO add your handling code here:
         system.attemptLevelUp("Body");
-        closeUpgradeDialog();
+        closePopUpDialog();
     }//GEN-LAST:event_upgradeBodyButtonActionPerformed
 
     private void upgradeQiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upgradeQiButtonActionPerformed
         // TODO add your handling code here:
         system.attemptLevelUp("Qi");
-        closeUpgradeDialog();
+        closePopUpDialog();
     }//GEN-LAST:event_upgradeQiButtonActionPerformed
 
     private void cancelUpgradeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelUpgradeButtonActionPerformed
         // TODO add your handling code here:
-        closeUpgradeDialog();
+        closePopUpDialog();
     }//GEN-LAST:event_cancelUpgradeButtonActionPerformed
 
     private void upgradeDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_upgradeDialogComponentShown
@@ -607,7 +695,7 @@ public class GameInterface extends javax.swing.JFrame {
 
     private void upgradeDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_upgradeDialogComponentHidden
         // TODO add your handling code here:
-        closeUpgradeDialog();
+        closePopUpDialog();
     }//GEN-LAST:event_upgradeDialogComponentHidden
 
     private void healthDebugKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_healthDebugKeyPressed
@@ -670,7 +758,43 @@ public class GameInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_multiplierDebugKeyPressed
 
-    public void closeUpgradeDialog() {
+    private void closeEventFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeEventFrameActionPerformed
+        // TODO add your handling code here:
+        eventDialog.setVisible(false);
+    }//GEN-LAST:event_closeEventFrameActionPerformed
+
+    private void exploreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exploreButtonActionPerformed
+        // TODO add your handling code here:
+        exploreButton.setEnabled(false);
+        cultivateButton.setEnabled(false);
+        levelUpButton.setEnabled(false);
+        eventDialog.setVisible(true);
+    }//GEN-LAST:event_exploreButtonActionPerformed
+
+    private void eventDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_eventDialogComponentHidden
+        // TODO add your handling code here:
+        closePopUpDialog();
+    }//GEN-LAST:event_eventDialogComponentHidden
+
+    private void eventDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_eventDialogComponentShown
+        // TODO add your handling code here:
+        EVENT event = system.getEvent();
+        eventTitle.setText(event.getEventTitle());
+        eventText.setText(event.getEventText());
+        eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
+        system.grantExp(event.getExpEffect());
+    }//GEN-LAST:event_eventDialogComponentShown
+
+    private void newEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEventActionPerformed
+        // TODO add your handling code here:
+        EVENT event = system.getEvent();
+        eventTitle.setText(event.getEventTitle());
+        eventText.setText(event.getEventText());
+        eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
+        system.grantExp(event.getExpEffect());
+    }//GEN-LAST:event_newEventActionPerformed
+
+    public void closePopUpDialog() {
         upgradeDialog.setVisible(false);
         exploreButton.setEnabled(true);
         cultivateButton.setEnabled(true);
@@ -704,11 +828,17 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JLabel bodyDebugLabel;
     private javax.swing.JLabel bodyLabel;
     private javax.swing.JButton cancelUpgradeButton;
+    private javax.swing.JButton closeEventFrame;
     private javax.swing.JButton cultivateButton;
     private javax.swing.JPanel dataPanel;
     private javax.swing.JPanel debugPanel;
     private javax.swing.JLabel defenceData;
     private javax.swing.JLabel defenceLabel;
+    private javax.swing.JDialog eventDialog;
+    private javax.swing.JLabel eventExp;
+    private javax.swing.JPanel eventPanel;
+    private javax.swing.JLabel eventText;
+    private javax.swing.JLabel eventTitle;
     private javax.swing.JLabel expData;
     private javax.swing.JLabel expLabel;
     private javax.swing.JButton exploreButton;
@@ -724,6 +854,7 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JTextField multiplierDebug;
     private javax.swing.JLabel multiplierDebugLabel;
     private javax.swing.JLabel multiplierLabel;
+    private javax.swing.JButton newEvent;
     private javax.swing.JPanel playerDataPanel;
     private javax.swing.JPanel playerDebugPanel;
     private javax.swing.JPanel playerStatusPanel;

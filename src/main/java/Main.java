@@ -1,4 +1,5 @@
 
+import com.neutral.xianxia.logic.EventManager;
 import com.neutral.xianxia.logic.Player;
 import com.neutral.xianxia.logic.System;
 import com.neutral.xianxia.ui.GameInterface;
@@ -55,8 +56,9 @@ public class Main {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new GameInterface(new System(new Player())).setVisible(true);
+                new GameInterface(new System(new Player(), new EventManager())).setVisible(true);
             }
         });
     }

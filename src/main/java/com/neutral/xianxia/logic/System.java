@@ -16,6 +16,7 @@
  */
 package com.neutral.xianxia.logic;
 
+import com.neutral.xianxia.logic.EventManager.EVENT;
 import com.neutral.xianxia.logic.System.QI_LEVEL;
 
 /**
@@ -39,18 +40,22 @@ public final class System {
         }
 
         @Override
-        public int getRank() {
+        public final int getRank() {
             return this.rank;
         }
 
         @Override
-        public int getCost() {
+        public final int getCost() {
             return this.cost;
         }
 
         @Override
-        public String getName() {
+        public final String getName() {
             return this.name;
+        }
+
+        public final static QI_LEVEL getFinalRealm() {
+            return QI_LEVEL.values()[QI_LEVEL.values().length - 1];
         }
 
         public final static QI_LEVEL getRealm(int rank) {
@@ -59,7 +64,7 @@ public final class System {
                     return level;
                 }
             }
-            return QI_LEVEL.SAGE_SPIRIT;
+            return getFinalRealm();
         }
 
     }
@@ -93,13 +98,17 @@ public final class System {
             return this.name;
         }
 
+        public final static BODY_LEVEL getFinalRealm() {
+            return BODY_LEVEL.values()[BODY_LEVEL.values().length - 1];
+        }
+        
         public final static BODY_LEVEL getRealm(int rank) {
             for (BODY_LEVEL level : BODY_LEVEL.values()) {
                 if (level.getRank() == rank) {
                     return level;
                 }
             }
-            return BODY_LEVEL.SAGE_BODY;
+            return getFinalRealm();
         }
 
     }
@@ -131,25 +140,35 @@ public final class System {
             return 1;
         }
 
+        public final static CULTIVATION_LEVEL getFinalRealm() {
+            return CULTIVATION_LEVEL.values()[CULTIVATION_LEVEL.values().length - 1];
+        }
+        
         public final static CULTIVATION_LEVEL getRealm(int rank) {
             for (CULTIVATION_LEVEL level : CULTIVATION_LEVEL.values()) {
                 if (level.getRank() == rank) {
                     return level;
                 }
             }
-            return CULTIVATION_LEVEL.SAGE_REALM;
+            return getFinalRealm();
         }
 
     }
 
     private final Player player;
+    private final EventManager eventManager;
 
-    public System(Player player) {
+    public System(Player player, EventManager eventManager) {
         this.player = player;
+        this.eventManager = eventManager;
     }
 
-    public void cultivate() {
+    public final void cultivate() {
         player.cultivate();
+    }
+    
+    public final EVENT getEvent(){
+        return eventManager.getEvent();
     }
 
     public final static QI_LEVEL[] getQiLevels() {
@@ -190,7 +209,7 @@ public final class System {
         return null;
     }
 
-    public void attemptLevelUp(String target) {
+    public final void attemptLevelUp(String target) {
 
         int cost;
         if (getUpgradeCost(target) == null) {
@@ -208,7 +227,7 @@ public final class System {
         }
     }
 
-    public Integer getUpgradeCost(String target) {
+    public final Integer getUpgradeCost(String target) {
         switch (target) {
             case "Body":
                 if (getNextLevel(player.getBodyLevel()) == null) {
@@ -224,63 +243,67 @@ public final class System {
         return null;
     }
 
-    public int getPlayerExp() {
+    public final int getPlayerExp() {
         return player.getExp();
     }
 
-    public int getPlayerHealth() {
+    public final int getPlayerHealth() {
         return player.getHealth();
     }
 
-    public int getPlayerSpirit() {
+    public final int getPlayerSpirit() {
         return player.getSpirit();
     }
 
-    public double getPlayerAttack() {
+    public final double getPlayerAttack() {
         return player.getAttack();
     }
 
-    public double getPlayerDefence() {
+    public final double getPlayerDefence() {
         return player.getDefence();
     }
 
-    public double getPlayerExpMultiplier() {
+    public final double getPlayerExpMultiplier() {
         return player.getExpMultiplier();
     }
 
-    public void setPlayerHealth(int health) {
+    public final void setPlayerHealth(int health) {
         player.setHealth(health);
     }
 
-    public void setPlayerSpirit(int spirit) {
+    public final void setPlayerSpirit(int spirit) {
         player.setSpirit(spirit);
     }
 
-    public void setPlayerExpMultiplier(double multiplier) {
+    public final void setPlayerExpMultiplier(double multiplier) {
         player.setExpMultiplier(multiplier);
     }
 
-    public void setPlayerBody(int level) {
+    public final void setPlayerBody(int level) {
         player.setBodyLevel(BODY_LEVEL.getRealm(level));
     }
 
-    public void setPlayerQi(int level) {
+    public final void setPlayerQi(int level) {
         player.setQiLevel(QI_LEVEL.getRealm(level));
     }
 
-    public CULTIVATION_LEVEL getPlayerRealm() {
+    public final CULTIVATION_LEVEL getPlayerRealm() {
         return player.getCultivationRealm();
     }
 
-    public BODY_LEVEL getPlayerBody() {
+    public final BODY_LEVEL getPlayerBody() {
         return player.getBodyLevel();
     }
 
-    public QI_LEVEL getPlayerQi() {
+    public final QI_LEVEL getPlayerQi() {
         return player.getQiLevel();
     }
+    
+    public void grantExp(int exp){
+        player.grantExp(exp);
+    }
 
-    public boolean canLevel() {
+    public final boolean canLevel() {
         if (getUpgradeCost("Body") != null) {
             if (player.getBodyLevel().getRank() > player.getQiLevel().getRank()) {
                 return getUpgradeCost("Qi") <= player.getExp();
@@ -297,7 +320,7 @@ public final class System {
         return false;
     }
 
-    public boolean canLevel(String target) {
+    public final boolean canLevel(String target) {
         if (getUpgradeCost(target) != null) {
             return getUpgradeCost(target) <= player.getExp();
         }

@@ -83,7 +83,11 @@ public abstract class Cultivator {
     }
 
     public void grantExp(int amount) {
-        this.exp += amount;
+        if (amount < 0 && (exp + amount) < 0) {
+            this.exp = 0;
+        } else {
+            this.exp += amount;
+        }
     }
 
     public void attack(Cultivator cultivator) {
