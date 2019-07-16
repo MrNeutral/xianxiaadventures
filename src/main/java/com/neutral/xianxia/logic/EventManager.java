@@ -57,13 +57,7 @@ public final class EventManager {
             List<EVENT> events = Arrays.asList(EVENT.values());
             Collections.shuffle(events);
 
-            for (EVENT event : events) {
-                if (event.getLuck() == chance) {
-                    return event;
-                }
-            }
-
-            for (double i = -0.1; i <= chance; i -= 0.1) {
+            for (double i = 0.0; i <= chance; i -= 0.1) {
                 for (EVENT event : events) {
                     if (event.getLuck() == chance - i) {
                         return event;
