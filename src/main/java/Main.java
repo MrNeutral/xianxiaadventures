@@ -1,5 +1,4 @@
 
-import com.neutral.xianxia.logic.EventManager;
 import com.neutral.xianxia.logic.Player;
 import com.neutral.xianxia.logic.System;
 import com.neutral.xianxia.ui.GameInterface;
@@ -21,12 +20,12 @@ import com.neutral.xianxia.ui.GameInterface;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 /**
  *
  * @author Mr.Neutral
  */
 public class Main {
+
     /**
      * @param args the command line arguments
      */
@@ -58,7 +57,7 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new GameInterface(new System(new Player(), new EventManager())).setVisible(true);
+                new GameInterface(new System(new Player())).setVisible(true);
             }
         });
     }

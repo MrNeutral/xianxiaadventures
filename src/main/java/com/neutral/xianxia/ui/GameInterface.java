@@ -2,6 +2,7 @@ package com.neutral.xianxia.ui;
 
 import com.neutral.xianxia.logic.EventManager.EVENT;
 import com.neutral.xianxia.logic.System;
+import java.awt.Color;
 
 /*
  * Copyright (C) 2019 Mr.Neutral
@@ -55,7 +56,7 @@ public class GameInterface extends javax.swing.JFrame {
         eventDialog = new javax.swing.JDialog(this);
         eventPanel = new javax.swing.JPanel();
         eventTitle = new javax.swing.JLabel();
-        eventText = new javax.swing.JLabel();
+        eventText = new javax.swing.JTextArea();
         eventExp = new javax.swing.JLabel();
         closeEventFrame = new javax.swing.JButton();
         newEvent = new javax.swing.JButton();
@@ -102,6 +103,7 @@ public class GameInterface extends javax.swing.JFrame {
         upgradeDialog.setAlwaysOnTop(true);
         upgradeDialog.setMinimumSize(getPreferredSize());
         upgradeDialog.setModal(true);
+        upgradeDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         upgradeDialog.setPreferredSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setResizable(false);
         upgradeDialog.setSize(new java.awt.Dimension(250, 120));
@@ -181,10 +183,13 @@ public class GameInterface extends javax.swing.JFrame {
 
         eventDialog.setTitle("XianxiaAdventures");
         eventDialog.setAlwaysOnTop(true);
+        eventDialog.setMaximumSize(getPreferredSize());
         eventDialog.setMinimumSize(getPreferredSize());
         eventDialog.setModal(true);
-        eventDialog.setPreferredSize(new java.awt.Dimension(300, 215));
-        eventDialog.setSize(new java.awt.Dimension(300, 215));
+        eventDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        eventDialog.setPreferredSize(new java.awt.Dimension(300, 300));
+        eventDialog.setResizable(false);
+        eventDialog.setSize(new java.awt.Dimension(300, 300));
         eventDialog.setLocationRelativeTo(actionPanel);
         eventDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
@@ -197,7 +202,7 @@ public class GameInterface extends javax.swing.JFrame {
 
         eventPanel.setMaximumSize(getPreferredSize());
         eventPanel.setMinimumSize(getPreferredSize());
-        eventPanel.setPreferredSize(new java.awt.Dimension(300, 220));
+        eventPanel.setPreferredSize(new java.awt.Dimension(300, 300));
         java.awt.GridBagLayout eventPanelLayout = new java.awt.GridBagLayout();
         eventPanelLayout.columnWidths = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         eventPanelLayout.rowHeights = new int[] {0, 25, 0, 25, 0, 25, 0, 25, 0};
@@ -208,15 +213,30 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         eventPanel.add(eventTitle, gridBagConstraints);
+
+        eventText.setEditable(false);
+        eventText.setColumns(20);
+        eventText.setLineWrap(true);
+        eventText.setRows(6);
+        eventText.setWrapStyleWord(true);
+        eventText.setBorder(null);
+        eventText.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        eventText.setFocusable(false);
+        eventText.setMaximumSize(new java.awt.Dimension(240, 140));
+        eventText.setMinimumSize(new java.awt.Dimension(240, 140));
+        eventText.setOpaque(false);
+        eventText.setBackground(new Color(0 ,0 ,0 ,0));
+        eventText.setPreferredSize(new java.awt.Dimension(240, 125));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         eventPanel.add(eventText, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         eventPanel.add(eventExp, gridBagConstraints);
@@ -254,6 +274,7 @@ public class GameInterface extends javax.swing.JFrame {
         setTitle("XianxiaAdventures");
         setMaximumSize(getPreferredSize());
         setMinimumSize(getPreferredSize());
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -775,7 +796,7 @@ public class GameInterface extends javax.swing.JFrame {
     private void eventDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_eventDialogComponentShown
         // TODO add your handling code here:
         EVENT event = system.getEvent();
-        eventTitle.setText(event.getEventTitle());
+        eventTitle.setText(event.getEventName());
         eventText.setText(event.getEventText());
         eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
         system.grantExp(event.getExpEffect());
@@ -784,7 +805,7 @@ public class GameInterface extends javax.swing.JFrame {
     private void newEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEventActionPerformed
         // TODO add your handling code here:
         EVENT event = system.getEvent();
-        eventTitle.setText(event.getEventTitle());
+        eventTitle.setText(event.getEventName());
         eventText.setText(event.getEventText());
         eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
         system.grantExp(event.getExpEffect());
@@ -833,7 +854,7 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JDialog eventDialog;
     private javax.swing.JLabel eventExp;
     private javax.swing.JPanel eventPanel;
-    private javax.swing.JLabel eventText;
+    private javax.swing.JTextArea eventText;
     private javax.swing.JLabel eventTitle;
     private javax.swing.JLabel expData;
     private javax.swing.JLabel expLabel;

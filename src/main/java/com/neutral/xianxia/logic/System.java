@@ -101,7 +101,7 @@ public final class System {
         public final static BODY_LEVEL getFinalRealm() {
             return BODY_LEVEL.values()[BODY_LEVEL.values().length - 1];
         }
-        
+
         public final static BODY_LEVEL getRealm(int rank) {
             for (BODY_LEVEL level : BODY_LEVEL.values()) {
                 if (level.getRank() == rank) {
@@ -143,7 +143,7 @@ public final class System {
         public final static CULTIVATION_LEVEL getFinalRealm() {
             return CULTIVATION_LEVEL.values()[CULTIVATION_LEVEL.values().length - 1];
         }
-        
+
         public final static CULTIVATION_LEVEL getRealm(int rank) {
             for (CULTIVATION_LEVEL level : CULTIVATION_LEVEL.values()) {
                 if (level.getRank() == rank) {
@@ -156,19 +156,17 @@ public final class System {
     }
 
     private final Player player;
-    private final EventManager eventManager;
 
-    public System(Player player, EventManager eventManager) {
+    public System(Player player) {
         this.player = player;
-        this.eventManager = eventManager;
     }
 
     public final void cultivate() {
         player.cultivate();
     }
-    
-    public final EVENT getEvent(){
-        return eventManager.getEvent();
+
+    public final EVENT getEvent() {
+        return EventManager.getRandomEvent();
     }
 
     public final static QI_LEVEL[] getQiLevels() {
@@ -298,8 +296,8 @@ public final class System {
     public final QI_LEVEL getPlayerQi() {
         return player.getQiLevel();
     }
-    
-    public void grantExp(int exp){
+
+    public void grantExp(int exp) {
         player.grantExp(exp);
     }
 
