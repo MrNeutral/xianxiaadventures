@@ -3,6 +3,8 @@ package com.neutral.xianxia.ui;
 import com.neutral.xianxia.logic.EventManager.EVENT;
 import com.neutral.xianxia.logic.System;
 import java.awt.Color;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /*
  * Copyright (C) 2019 Mr.Neutral
@@ -30,6 +32,7 @@ public class GameInterface extends javax.swing.JFrame {
      * Creates new form GameInterface
      */
     private final System system;
+    private static Timer timer = null;
 
     public GameInterface(System system) {
         this.system = system;
@@ -58,8 +61,7 @@ public class GameInterface extends javax.swing.JFrame {
         eventTitle = new javax.swing.JLabel();
         eventText = new javax.swing.JTextArea();
         eventExp = new javax.swing.JLabel();
-        closeEventFrame = new javax.swing.JButton();
-        newEvent = new javax.swing.JButton();
+        closeEventDialog = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         actionPanel = new javax.swing.JPanel();
         playerStatusPanel = new javax.swing.JPanel();
@@ -104,7 +106,6 @@ public class GameInterface extends javax.swing.JFrame {
         upgradeDialog.setMinimumSize(getPreferredSize());
         upgradeDialog.setModal(true);
         upgradeDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        upgradeDialog.setPreferredSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setResizable(false);
         upgradeDialog.setSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setLocationRelativeTo(actionPanel);
@@ -172,6 +173,7 @@ public class GameInterface extends javax.swing.JFrame {
         upgradeChoiceLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         upgradeChoiceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         upgradeChoiceLabel.setText("What do you want to upgrade ?");
+        upgradeChoiceLabel.setToolTipText(null);
         upgradeChoiceLabel.setPreferredSize(new java.awt.Dimension(220, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -187,7 +189,6 @@ public class GameInterface extends javax.swing.JFrame {
         eventDialog.setMinimumSize(getPreferredSize());
         eventDialog.setModal(true);
         eventDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        eventDialog.setPreferredSize(new java.awt.Dimension(300, 300));
         eventDialog.setResizable(false);
         eventDialog.setSize(new java.awt.Dimension(300, 300));
         eventDialog.setLocationRelativeTo(actionPanel);
@@ -204,13 +205,14 @@ public class GameInterface extends javax.swing.JFrame {
         eventPanel.setMinimumSize(getPreferredSize());
         eventPanel.setPreferredSize(new java.awt.Dimension(300, 300));
         java.awt.GridBagLayout eventPanelLayout = new java.awt.GridBagLayout();
-        eventPanelLayout.columnWidths = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        eventPanelLayout.columnWidths = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
         eventPanelLayout.rowHeights = new int[] {0, 25, 0, 25, 0, 25, 0, 25, 0};
         eventPanel.setLayout(eventPanelLayout);
+
+        eventTitle.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         eventPanel.add(eventTitle, gridBagConstraints);
 
@@ -230,43 +232,32 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         eventPanel.add(eventText, gridBagConstraints);
+
+        eventExp.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         eventPanel.add(eventExp, gridBagConstraints);
 
-        closeEventFrame.setText("Return to The Sect");
-        closeEventFrame.setFocusable(false);
-        closeEventFrame.addActionListener(new java.awt.event.ActionListener() {
+        closeEventDialog.setText("Return");
+        closeEventDialog.setFocusable(false);
+        closeEventDialog.setMaximumSize(new java.awt.Dimension(144, 31));
+        closeEventDialog.setMinimumSize(new java.awt.Dimension(144, 31));
+        closeEventDialog.setPreferredSize(new java.awt.Dimension(144, 31));
+        closeEventDialog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeEventFrameActionPerformed(evt);
+                closeEventDialogActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        eventPanel.add(closeEventFrame, gridBagConstraints);
-
-        newEvent.setText("Keep exploring");
-        newEvent.setFocusable(false);
-        newEvent.setPreferredSize(new java.awt.Dimension(144, 31));
-        newEvent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newEventActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        eventPanel.add(newEvent, gridBagConstraints);
+        eventPanel.add(closeEventDialog, gridBagConstraints);
 
         eventDialog.getContentPane().add(eventPanel, java.awt.BorderLayout.CENTER);
 
@@ -300,6 +291,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.setLayout(playerInfoPanelLayout);
 
         levelLabel.setText("Level:");
+        levelLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -308,6 +300,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.add(levelLabel, gridBagConstraints);
 
         levelData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        levelData.setToolTipText(null);
         levelData.setMaximumSize(new java.awt.Dimension(100, 100));
         levelData.setMinimumSize(new java.awt.Dimension(98, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -319,6 +312,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.add(levelData, gridBagConstraints);
 
         bodyLabel.setText("Body:");
+        bodyLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -327,6 +321,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.add(bodyLabel, gridBagConstraints);
 
         bodyData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        bodyData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -336,6 +331,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.add(bodyData, gridBagConstraints);
 
         qiLabel.setText("Qi:");
+        qiLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -344,6 +340,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.add(qiLabel, gridBagConstraints);
 
         qiData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        qiData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -353,6 +350,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.add(qiData, gridBagConstraints);
 
         expLabel.setText("Exp:");
+        expLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -361,6 +359,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerStatusPanel.add(expLabel, gridBagConstraints);
 
         expData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        expData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
@@ -431,6 +430,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.setLayout(playerDataPanelLayout);
 
         healthLabel.setText("Health:");
+        healthLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -440,6 +440,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(healthLabel, gridBagConstraints);
 
         spiritLabel.setText("Spirit:");
+        spiritLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -449,6 +450,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(spiritLabel, gridBagConstraints);
 
         attackLabel.setText("Attack:");
+        attackLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -458,6 +460,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(attackLabel, gridBagConstraints);
 
         defenceLabel.setText("Defence:");
+        defenceLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -467,6 +470,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(defenceLabel, gridBagConstraints);
 
         multiplierLabel.setText("Exp. Multiplier:");
+        multiplierLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -476,6 +480,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(multiplierLabel, gridBagConstraints);
 
         healthData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        healthData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -485,6 +490,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(healthData, gridBagConstraints);
 
         spiritData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        spiritData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
@@ -494,6 +500,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(spiritData, gridBagConstraints);
 
         attackData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        attackData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
@@ -503,6 +510,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(attackData, gridBagConstraints);
 
         defenceData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        defenceData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
@@ -512,6 +520,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataPanel.add(defenceData, gridBagConstraints);
 
         multiplierData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        multiplierData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 8;
@@ -538,6 +547,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.setLayout(playerDataPanel1Layout1);
 
         healthDebugLabel.setText("Health:");
+        healthDebugLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -547,6 +557,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(healthDebugLabel, gridBagConstraints);
 
         spiritDebugLabel.setText("Spirit:");
+        spiritDebugLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -556,6 +567,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(spiritDebugLabel, gridBagConstraints);
 
         qiDebugLabel.setText("Qi Level:");
+        qiDebugLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -565,6 +577,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(qiDebugLabel, gridBagConstraints);
 
         bodyDebugLabel.setText("Body Level:");
+        bodyDebugLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -574,6 +587,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(bodyDebugLabel, gridBagConstraints);
 
         multiplierDebugLabel.setText("Exp. Multiplier:");
+        multiplierDebugLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -775,10 +789,11 @@ public class GameInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_multiplierDebugKeyPressed
 
-    private void closeEventFrameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeEventFrameActionPerformed
+    private void closeEventDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeEventDialogActionPerformed
         // TODO add your handling code here:
         eventDialog.setVisible(false);
-    }//GEN-LAST:event_closeEventFrameActionPerformed
+        exploreButtonTimer();
+    }//GEN-LAST:event_closeEventDialogActionPerformed
 
     private void exploreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exploreButtonActionPerformed
         // TODO add your handling code here:
@@ -795,25 +810,46 @@ public class GameInterface extends javax.swing.JFrame {
 
     private void eventDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_eventDialogComponentShown
         // TODO add your handling code here:
-        EVENT event = system.getEvent();
-        eventTitle.setText(event.getEventName());
-        eventText.setText(event.getEventText());
-        eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
-        system.grantExp(event.getExpEffect());
+        getEvent();
     }//GEN-LAST:event_eventDialogComponentShown
 
-    private void newEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newEventActionPerformed
-        // TODO add your handling code here:
+    public void getEvent() {
         EVENT event = system.getEvent();
+        while (event.getEventName().equals(eventTitle.getText())) {
+            event = system.getEvent();
+        }
         eventTitle.setText(event.getEventName());
         eventText.setText(event.getEventText());
         eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
         system.grantExp(event.getExpEffect());
-    }//GEN-LAST:event_newEventActionPerformed
+    }
+    
+//    public void resetTimer(){
+//        timer.cancel();
+//        exploreButtonTimer();
+//    }
+    
+    public Timer exploreButtonTimer() {
+        TimerTask timerTask = new TimerTask() {
+
+            @Override
+            public void run() {
+                exploreButton.setEnabled(true);
+                timer = null;
+            }
+        };
+
+        Timer localTimer = new Timer();
+        localTimer.schedule(timerTask, 10 * 1000);
+        
+        timer = localTimer;
+        
+        return localTimer;
+    }
 
     public void closePopUpDialog() {
         upgradeDialog.setVisible(false);
-        exploreButton.setEnabled(true);
+        exploreButton.setEnabled((timer == null));
         cultivateButton.setEnabled(true);
         levelUpButton.setEnabled(system.canLevel());
         updateData();
@@ -845,7 +881,7 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JLabel bodyDebugLabel;
     private javax.swing.JLabel bodyLabel;
     private javax.swing.JButton cancelUpgradeButton;
-    private javax.swing.JButton closeEventFrame;
+    private javax.swing.JButton closeEventDialog;
     private javax.swing.JButton cultivateButton;
     private javax.swing.JPanel dataPanel;
     private javax.swing.JPanel debugPanel;
@@ -871,7 +907,6 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JTextField multiplierDebug;
     private javax.swing.JLabel multiplierDebugLabel;
     private javax.swing.JLabel multiplierLabel;
-    private javax.swing.JButton newEvent;
     private javax.swing.JPanel playerDataPanel;
     private javax.swing.JPanel playerDebugPanel;
     private javax.swing.JPanel playerStatusPanel;

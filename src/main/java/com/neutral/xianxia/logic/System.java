@@ -155,18 +155,15 @@ public final class System {
 
     }
 
-    private final Player player;
-
-    public System(Player player) {
-        this.player = player;
-    }
+    private final EventManager eventManager = new EventManager(this);
+    private final Player player = new Player();
 
     public final void cultivate() {
         player.cultivate();
     }
 
     public final EVENT getEvent() {
-        return EventManager.getRandomEvent();
+        return eventManager.getRandomEvent();
     }
 
     public final static QI_LEVEL[] getQiLevels() {

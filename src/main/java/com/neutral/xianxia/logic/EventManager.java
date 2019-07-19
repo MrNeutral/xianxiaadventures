@@ -28,15 +28,47 @@ import java.util.Random;
  */
 public final class EventManager {
 
+    private final System SYSTEM;
     private final static Random RANDOM = new Random();
+
+    public EventManager(System system) {
+        this.SYSTEM = system;
+    }
+
+    public static enum EVENT_FLAG {
+        JOINED_SECT(false),
+        CRIPPLED(false),
+        HAS_PET(false),
+        FOUND_INHERITANCE(false),
+        PASSED_TRIBULATION(false),
+        FAILED_TRIBULATION(false);
+
+        private boolean triggered;
+
+        private EVENT_FLAG(boolean triggered) {
+            this.triggered = triggered;
+        }
+
+        public boolean isTriggered() {
+            return triggered;
+        }
+
+        public void setTriggered(boolean triggered) {
+            this.triggered = triggered;
+        }
+
+    }
 
     public static enum EVENT {
         //<editor-fold defaultstate="collapsed" desc="Events">
         SECT_MEMBER_DIES(0.2, -300, "While you were exploring a member of the Immortal Sect you were close to died.\nYou cough blood in grief.", "Sect Member Dies"),
         SECT_DESTOYED(0, -1000, "While you were exploring, the Immortal Sect got destroyed by the Demon Sect.\nYou cough out blood in helplessness.", "Sect Destroyed"),
-        BITTEN_BY_PET(0.5, -50, "Your mystical beast you and you cough blood.", "Bitten by pet"),
-        PET_DIED(0.3, -200, "Your mystical beast died for unknown reasons, you cough blood out of sadness and anger.", "Pet died"),
-        PET_KILLED(0.3, -250, "Your mystical beast got killed by someone while you weren't with it.\nYou cough blood.", "Pet killed"),
+        JOIN_SECT(0.4, 50, "While you were exploring, you met a mysterious cultivator. After debating with him about the dao, he revealed himself to be a member of the Immortal Sect and invited you to join.", "Sect Joined"),
+        BITTEN_BY_PET(0.5, -50, "Your mystical beast bit you and you cough blood.", "Bitten by pet"),
+        PET_FINDS_TREASURE(0.7, 100, "Your mystical beast found a mystical treasure while you were wandering.", "Pet finds treasure"),
+        GOT_PET(0.8, 100, "During your travels you managed to tame a mystical beast and make it your pet.", "Tamed beast"),
+        PET_DIED(0.2, -200, "Your mystical beast died for unknown reasons, you cough blood out of sadness and anger.", "Pet died"),
+        PET_KILLED(0.2, -250, "Your mystical beast got killed by someone while you weren't with it.\nYou cough blood.", "Pet killed"),
         PET_POISONED(0.3, -275, "You fed your mystical beast something and it died, you cough blood in anger and grief.", "Pet poisoned"),
         PET_FOUND_MATE(0.4, -150, "Your mystical beast found their special someone and ran away.\nYou cough blood in anger.", "Pet left"),
         PET_STOLEN(0.3, -150, "Your mystical beast got stolen.\nYou try your best to find it, but you fail.\nIn the end you cough blood and faint.", "Pet stolen"),
@@ -168,7 +200,8 @@ public final class EventManager {
                 PROMISSORY_NOTE,
                 SLIP_BANANA,
                 HOT_HOTPOT,
-                CRASH_BOAT
+                CRASH_BOAT,
+                JOIN_SECT
         ),
         CULTIVATION_CAVE(
                 DRAGON_IN_CAVE,
@@ -211,30 +244,80 @@ public final class EventManager {
             return events.get(EventManager.RANDOM.nextInt((events.size() - 1 > 0) ? events.size() - 1 : 1));
         }
 
+        public List<EVENT> getEvents() {
+            return this.events;
+        }
+
     }
 
-    public static EVENT getRandomEvent() {
-        try {
-            double chance = Double.valueOf(String.format("%.1f", RANDOM.nextDouble()));
-            EVENT_TYPE eventType = EVENT_TYPE.values()[RANDOM.nextInt(EVENT_TYPE.values().length - 1)];
-            EVENT event = eventType.getRandomEvent();
-            while (event.getRarity() != chance) {
-                chance = (Double.valueOf(String.format("%.1f", chance - 0.1)) > 0) ? Double.valueOf(String.format("%.1f", chance - 0.1)) : 0;
-                eventType = EVENT_TYPE.values()[RANDOM.nextInt(EVENT_TYPE.values().length - 1)];
-                event = eventType.getRandomEvent();
+    public static boolean getFlag(EVENT_FLAG flag) {
+        for (EVENT_FLAG eventFlag : EVENT_FLAG.values()) {
+            if (flag == eventFlag) {
+                return eventFlag.triggered;
             }
-
-            //        for (double i = 0.0; i <= chance; i -= 0.1) {
-            //            for (EVENT event : events) {
-            //                if (event.getLuck() == chance - i) {
-            //                    return event;
-            //                }
-            //            }
-            //        }
-            return (event == null) ? EVENT_TYPE.RANDOM.getRandomEvent() : event;
-        } catch (Exception e) {
-            return EVENT_TYPE.RANDOM.getRandomEvent();
         }
+        return false;
+    }
+
+    public void checkAllowedEventTypes(List<EVENT_TYPE> eventTypes) {
+        if (!EVENT_FLAG.JOINED_SECT.isTriggered()) {
+            eventTypes.remove(EVENT_TYPE.SECT);
+            eventTypes.remove(EVENT_TYPE.DISCIPLE);
+        }
+
+        if (!EVENT_FLAG.HAS_PET.isTriggered()) {
+            eventTypes.remove(EVENT_TYPE.MYSTICAL_BEAST);
+        }
+    }
+
+    public void checkAllowedEvents(List<EVENT> events) {
+        if (SYSTEM.getPlayerRealm().getRank() < 6) {
+            events.remove(SYSTEM_DESTROYED);
+        }
+
+        if (EVENT_FLAG.JOINED_SECT.isTriggered()) {
+            events.remove(JOIN_SECT);
+        }
+    }
+
+    public void triggerEventFlags(EVENT event) {
+        if (event == JOIN_SECT) {
+            EVENT_FLAG.JOINED_SECT.setTriggered(true);
+        }
+
+        if (event == GOT_PET) {
+            EVENT_FLAG.HAS_PET.setTriggered(true);
+        }
+
+        if (event == PET_DIED || event == PET_POISONED || event == PET_FOUND_MATE || event == PET_KILLED || event == PET_STOLEN || event == PET_TAMED_BY_OTHER) {
+            EVENT_FLAG.HAS_PET.setTriggered(false);
+        }
+    }
+
+    public EVENT getRandomEvent() {
+        List<EVENT_TYPE> allowedEventTypes = new ArrayList<>();
+        allowedEventTypes.addAll(Arrays.asList(EVENT_TYPE.values()));
+
+        List<EVENT> allowedEvents = new ArrayList<>();
+        allowedEventTypes.forEach(eventType -> allowedEvents.addAll(eventType.getEvents()));
+
+        double chance = Double.valueOf(String.format("%.1f", RANDOM.nextDouble()));
+        
+        EVENT_TYPE eventType;
+        EVENT event;
+        
+        do {
+            eventType = EVENT_TYPE.values()[RANDOM.nextInt(EVENT_TYPE.values().length - 1)];
+            event = eventType.getRandomEvent();
+
+            chance = (Double.valueOf(String.format("%.1f", chance - 0.1)) > 0) ? Double.valueOf(String.format("%.1f", chance - 0.1)) : 0;
+            
+        } while (event.getRarity() <= Double.valueOf(String.format("%.1f", chance + 0.1)));
+
+        triggerEventFlags(event);
+
+        return event;
+
     }
 
 }
