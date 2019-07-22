@@ -185,7 +185,6 @@ public class GameInterface extends javax.swing.JFrame {
 
         eventDialog.setTitle("XianxiaAdventures");
         eventDialog.setAlwaysOnTop(true);
-        eventDialog.setMaximumSize(getPreferredSize());
         eventDialog.setMinimumSize(getPreferredSize());
         eventDialog.setModal(true);
         eventDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
@@ -263,32 +262,32 @@ public class GameInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XianxiaAdventures");
-        setMaximumSize(getPreferredSize());
-        setMinimumSize(getPreferredSize());
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        setPreferredSize(new java.awt.Dimension(325, 230));
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setSize(getPreferredSize());
 
-        mainTabbedPane.setToolTipText("");
+        mainTabbedPane.setToolTipText(null);
         mainTabbedPane.setMaximumSize(getPreferredSize());
         mainTabbedPane.setMinimumSize(getPreferredSize());
-        mainTabbedPane.setPreferredSize(new java.awt.Dimension(300, 215));
+        mainTabbedPane.setPreferredSize(new java.awt.Dimension(325, 205));
 
         actionPanel.setMaximumSize(getPreferredSize());
         actionPanel.setMinimumSize(getPreferredSize());
-        actionPanel.setPreferredSize(new java.awt.Dimension(300, 120));
+        actionPanel.setPreferredSize(new java.awt.Dimension(325, 190));
+        actionPanel.setRequestFocusEnabled(false);
         java.awt.GridBagLayout actionPanelLayout = new java.awt.GridBagLayout();
-        actionPanelLayout.columnWidths = new int[] {0, 22, 0, 22, 0};
-        actionPanelLayout.rowHeights = new int[] {0, 5, 0};
+        actionPanelLayout.columnWidths = new int[] {0, 40, 0, 40, 0};
+        actionPanelLayout.rowHeights = new int[] {0, 1, 0};
         actionPanel.setLayout(actionPanelLayout);
 
         playerStatusPanel.setMaximumSize(getPreferredSize());
         playerStatusPanel.setMinimumSize(getPreferredSize());
-        playerStatusPanel.setPreferredSize(new java.awt.Dimension(285, 125));
-        java.awt.GridBagLayout playerInfoPanelLayout = new java.awt.GridBagLayout();
-        playerInfoPanelLayout.columnWidths = new int[] {0, 50, 0, 50, 0, 50, 0, 50, 0, 50, 0};
-        playerInfoPanelLayout.rowHeights = new int[] {0, 17, 0, 17, 0, 17, 0, 17, 0};
-        playerStatusPanel.setLayout(playerInfoPanelLayout);
+        playerStatusPanel.setPreferredSize(new java.awt.Dimension(310, 130));
+        java.awt.GridBagLayout playerStatusPanelLayout = new java.awt.GridBagLayout();
+        playerStatusPanelLayout.columnWidths = new int[] {0, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0};
+        playerStatusPanelLayout.rowHeights = new int[] {0, 21, 0, 21, 0, 21, 0};
+        playerStatusPanel.setLayout(playerStatusPanelLayout);
 
         levelLabel.setText("Level:");
         levelLabel.setToolTipText(null);
@@ -302,7 +301,8 @@ public class GameInterface extends javax.swing.JFrame {
         levelData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         levelData.setToolTipText(null);
         levelData.setMaximumSize(new java.awt.Dimension(100, 100));
-        levelData.setMinimumSize(new java.awt.Dimension(98, 15));
+        levelData.setMinimumSize(new java.awt.Dimension(256, 15));
+        levelData.setPreferredSize(new java.awt.Dimension(260, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -322,6 +322,8 @@ public class GameInterface extends javax.swing.JFrame {
 
         bodyData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         bodyData.setToolTipText(null);
+        bodyData.setMinimumSize(new java.awt.Dimension(260, 15));
+        bodyData.setPreferredSize(new java.awt.Dimension(260, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -341,6 +343,8 @@ public class GameInterface extends javax.swing.JFrame {
 
         qiData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         qiData.setToolTipText(null);
+        qiData.setMinimumSize(new java.awt.Dimension(260, 15));
+        qiData.setPreferredSize(new java.awt.Dimension(260, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -360,6 +364,8 @@ public class GameInterface extends javax.swing.JFrame {
 
         expData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         expData.setToolTipText(null);
+        expData.setMinimumSize(new java.awt.Dimension(256, 15));
+        expData.setPreferredSize(new java.awt.Dimension(260, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
@@ -418,15 +424,15 @@ public class GameInterface extends javax.swing.JFrame {
 
         dataPanel.setMaximumSize(getPreferredSize());
         dataPanel.setMinimumSize(getPreferredSize());
-        dataPanel.setPreferredSize(new java.awt.Dimension(300, 120));
-        dataPanel.setLayout(new java.awt.BorderLayout());
+        dataPanel.setPreferredSize(new java.awt.Dimension(325, 190));
+        dataPanel.setLayout(new java.awt.GridBagLayout());
 
         playerDataPanel.setMaximumSize(getPreferredSize());
         playerDataPanel.setMinimumSize(getPreferredSize());
-        playerDataPanel.setPreferredSize(new java.awt.Dimension(285, 200));
+        playerDataPanel.setPreferredSize(new java.awt.Dimension(310, 160));
         java.awt.GridBagLayout playerDataPanelLayout = new java.awt.GridBagLayout();
-        playerDataPanelLayout.columnWidths = new int[] {0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0};
-        playerDataPanelLayout.rowHeights = new int[] {0, 20, 0, 20, 0, 20, 0, 20, 0};
+        playerDataPanelLayout.columnWidths = new int[] {0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0};
+        playerDataPanelLayout.rowHeights = new int[] {0, 19, 0, 19, 0, 19, 0, 19, 0};
         playerDataPanel.setLayout(playerDataPanelLayout);
 
         healthLabel.setText("Health:");
@@ -529,21 +535,23 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         playerDataPanel.add(multiplierData, gridBagConstraints);
 
-        dataPanel.add(playerDataPanel, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        dataPanel.add(playerDataPanel, gridBagConstraints);
 
         mainTabbedPane.addTab("Data", dataPanel);
 
         debugPanel.setMaximumSize(getPreferredSize());
         debugPanel.setMinimumSize(getPreferredSize());
-        debugPanel.setPreferredSize(new java.awt.Dimension(300, 200));
-        debugPanel.setLayout(new java.awt.BorderLayout());
+        debugPanel.setPreferredSize(new java.awt.Dimension(325, 190));
+        debugPanel.setLayout(new java.awt.GridBagLayout());
 
         playerDebugPanel.setMaximumSize(getPreferredSize());
         playerDebugPanel.setMinimumSize(getPreferredSize());
-        playerDebugPanel.setPreferredSize(new java.awt.Dimension(285, 200));
+        playerDebugPanel.setPreferredSize(new java.awt.Dimension(310, 165));
         java.awt.GridBagLayout playerDataPanel1Layout1 = new java.awt.GridBagLayout();
-        playerDataPanel1Layout1.columnWidths = new int[] {0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0, 38, 0};
-        playerDataPanel1Layout1.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0, 10, 0};
+        playerDataPanel1Layout1.columnWidths = new int[] {0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0};
+        playerDataPanel1Layout1.rowHeights = new int[] {0, 9, 0, 9, 0, 9, 0, 9, 0};
         playerDebugPanel.setLayout(playerDataPanel1Layout1);
 
         healthDebugLabel.setText("Health:");
@@ -662,7 +670,7 @@ public class GameInterface extends javax.swing.JFrame {
 
         multiplierDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         multiplierDebug.setMaximumSize(getPreferredSize());
-        multiplierDebug.setMinimumSize(new java.awt.Dimension(0, 0));
+        multiplierDebug.setMinimumSize(new java.awt.Dimension(0, 25));
         multiplierDebug.setPreferredSize(new java.awt.Dimension(0, 25));
         multiplierDebug.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -676,11 +684,13 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         playerDebugPanel.add(multiplierDebug, gridBagConstraints);
 
-        debugPanel.add(playerDebugPanel, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        debugPanel.add(playerDebugPanel, gridBagConstraints);
 
         mainTabbedPane.addTab("Debug", debugPanel);
 
-        getContentPane().add(mainTabbedPane, new java.awt.GridBagConstraints());
+        getContentPane().add(mainTabbedPane, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -758,6 +768,7 @@ public class GameInterface extends javax.swing.JFrame {
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
                 system.setPlayerQi(Integer.valueOf(qiDebug.getText()));
+                system.checkPlayerRealm();
                 updateData();
             } catch (NumberFormatException e) {
                 qiDebug.setText("Invalid");
@@ -770,6 +781,7 @@ public class GameInterface extends javax.swing.JFrame {
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
                 system.setPlayerBody(Integer.valueOf(bodyDebug.getText()));
+                system.checkPlayerRealm();
                 updateData();
             } catch (NumberFormatException e) {
                 bodyDebug.setText("Invalid");
@@ -823,12 +835,11 @@ public class GameInterface extends javax.swing.JFrame {
         eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
         system.grantExp(event.getExpEffect());
     }
-    
+
 //    public void resetTimer(){
 //        timer.cancel();
 //        exploreButtonTimer();
 //    }
-    
     public Timer exploreButtonTimer() {
         TimerTask timerTask = new TimerTask() {
 
@@ -841,9 +852,9 @@ public class GameInterface extends javax.swing.JFrame {
 
         Timer localTimer = new Timer();
         localTimer.schedule(timerTask, 10 * 1000);
-        
+
         timer = localTimer;
-        
+
         return localTimer;
     }
 

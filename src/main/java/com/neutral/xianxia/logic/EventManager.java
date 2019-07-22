@@ -271,7 +271,7 @@ public final class EventManager {
     }
 
     public void checkAllowedEvents(List<EVENT> events) {
-        if (SYSTEM.getPlayerRealm().getRank() < 6) {
+        if (SYSTEM.getPlayerRealm().getRank() < 19) {
             events.remove(SYSTEM_DESTROYED);
         }
 
@@ -297,10 +297,12 @@ public final class EventManager {
     public EVENT getRandomEvent() {
         List<EVENT_TYPE> allowedEventTypes = new ArrayList<>();
         allowedEventTypes.addAll(Arrays.asList(EVENT_TYPE.values()));
-
+        checkAllowedEventTypes(allowedEventTypes);
+        
         List<EVENT> allowedEvents = new ArrayList<>();
         allowedEventTypes.forEach(eventType -> allowedEvents.addAll(eventType.getEvents()));
-
+        checkAllowedEvents(allowedEvents);
+        
         double chance = Double.valueOf(String.format("%.1f", RANDOM.nextDouble()));
         
         EVENT_TYPE eventType;
