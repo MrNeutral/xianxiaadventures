@@ -1,0 +1,111 @@
+/*
+   * Copyright (C) 2019 Mr.Neutral
+   *
+   * This program is free software: you can redistribute it and/or modify
+   * it under the terms of the GNU General Public License as published by
+   * the Free Software Foundation, either version 3 of the License, or
+   * (at your option) any later version.
+   *
+   * This program is distributed in the hope that it will be useful,
+   * but WITHOUT ANY WARRANTY; without even the implied warranty of
+   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   * GNU General Public License for more details.
+   *
+   * You should have received a copy of the GNU General Public License
+   * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.neutral.xianxia.logic.events;
+
+import com.neutral.xianxia.logic.System;
+import static com.neutral.xianxia.logic.events.Event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
+/**
+ *
+ * @author Mr.Neutral
+ */
+public final class EventManager {
+
+    private final System SYSTEM;
+     final static Random RANDOM = new Random();
+
+    public EventManager(System system) {
+        this.SYSTEM = system;
+    }
+
+    public static boolean getFlag(EventFlag flag) {
+        for (EventFlag eventFlag : EventFlag.values()) {
+            if (flag == eventFlag) {
+                return eventFlag.isTriggered();
+            }
+        }
+        return false;
+    }
+
+    public void checkAllowedEventTypes(List<EventType> eventTypes) {
+        if (!EventFlag.JOINED_SECT.isTriggered()) {
+            eventTypes.remove(EventType.SECT);
+            eventTypes.remove(EventType.DISCIPLE);
+        }
+
+        if (!EventFlag.HAS_PET.isTriggered()) {
+            eventTypes.remove(EventType.MYSTICAL_BEAST);
+        }
+    }
+
+    public void checkAllowedEvents(List<Event> events) {
+        if (SYSTEM.getPlayerRealm().getRank() < 19) {
+            events.remove(SYSTEM_DESTROYED);
+        }
+
+        if (EventFlag.JOINED_SECT.isTriggered()) {
+            events.remove(JOIN_SECT);
+        }
+    }
+
+    public void triggerEventFlags(Event event) {
+        if (event == JOIN_SECT) {
+            EventFlag.JOINED_SECT.setTriggered(true);
+        }
+
+        if (event == GOT_PET) {
+            EventFlag.HAS_PET.setTriggered(true);
+        }
+
+        if (event == PET_DIED || event == PET_POISONED || event == PET_FOUND_MATE || event == PET_KILLED || event == PET_STOLEN || event == PET_TAMED_BY_OTHER) {
+            EventFlag.HAS_PET.setTriggered(false);
+        }
+    }
+
+    public Event getRandomEvent() {
+        List<EventType> allowedEventTypes = new ArrayList<>();
+        allowedEventTypes.addAll(Arrays.asList(EventType.values()));
+        checkAllowedEventTypes(allowedEventTypes);
+
+        List<Event> allowedEvents = new ArrayList<>();
+        allowedEventTypes.forEach(eventType -> allowedEvents.addAll(eventType.getEvents()));
+        checkAllowedEvents(allowedEvents);
+
+        double chance = Double.valueOf(String.format("%.1f", RANDOM.nextDouble()));
+
+        EventType eventType;
+        Event event;
+
+        do {
+            eventType = EventType.values()[RANDOM.nextInt(EventType.values().length - 1)];
+            event = eventType.getRandomEvent();
+
+            chance = (Double.valueOf(String.format("%.1f", chance - 0.1)) > 0) ? Double.valueOf(String.format("%.1f", chance - 0.1)) : 0;
+
+        } while (event.getRarity() <= Double.valueOf(String.format("%.1f", chance + 0.1)));
+
+        triggerEventFlags(event);
+
+        return event;
+
+    }
+
+}

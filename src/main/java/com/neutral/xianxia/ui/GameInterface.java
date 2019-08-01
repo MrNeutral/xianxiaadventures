@@ -1,7 +1,7 @@
 package com.neutral.xianxia.ui;
 
-import com.neutral.xianxia.logic.EventManager.EVENT;
 import com.neutral.xianxia.logic.System;
+import com.neutral.xianxia.logic.events.Event;
 import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -826,7 +826,7 @@ public class GameInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_eventDialogComponentShown
 
     public void getEvent() {
-        EVENT event = system.getEvent();
+        Event event = system.getEvent();
         while (event.getEventName().equals(eventTitle.getText())) {
             event = system.getEvent();
         }

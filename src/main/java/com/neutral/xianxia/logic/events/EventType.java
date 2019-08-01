@@ -1,0 +1,125 @@
+/*
+ * Copyright (C) 2019 Mr.Neutral
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.neutral.xianxia.logic.events;
+
+import static com.neutral.xianxia.logic.events.Event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ *
+ * @author Mr.Neutral
+ */
+public enum EventType {
+    //<editor-fold defaultstate="collapsed" desc="Event types">
+    SECT(
+            SECT_MEMBER_DIES,
+            SECT_DESTOYED
+    ),
+    MYSTICAL_BEAST(
+            BITTEN_BY_PET,
+            PET_DIED,
+            PET_KILLED,
+            PET_POISONED,
+            PET_FOUND_MATE,
+            PET_STOLEN,
+            PET_ATE_TREASURE,
+            FAILED_TO_TAME_PET,
+            PET_TAMED_BY_OTHER
+    ),
+    PILL_CONSUMPTION(
+            PILL_COUGH_BLOOD,
+            PILL_IMPURE_CURE,
+            PILL_FAINT,
+            PILL_SHRINK,
+            PILL_GROW,
+            PILL_BUNNY,
+            PILL_DREAM
+    ),
+    GAMBLING(
+            GAMBLING_FAIL,
+            CASINO_CHEAT_FOUND
+    ),
+    AMBUSH(
+            ASSASSIN_SNEAK_ATTACK,
+            CUSTOMER_MOB
+    ),
+    SLAVES(
+            SLAVES_STEAL_MONEY
+    ),
+    SHOP(
+            SHOP_ROBBED,
+            SHOPKEEPER_STEALS_EVERYTHING
+    ),
+    CHOSEN_ONE(
+            CHOSEN_KILLS_GRANDSON,
+            CHOSEN_DESTROYS_PAVILION
+    ),
+    RANDOM(
+            PROMISSORY_NOTE,
+            SLIP_BANANA,
+            HOT_HOTPOT,
+            CRASH_BOAT,
+            JOIN_SECT
+    ),
+    CULTIVATION_CAVE(
+            DRAGON_IN_CAVE,
+            CAVE_DESTROYED,
+            CAVE_ROBBED,
+            CAVE_STOLEN
+    ),
+    INHERITANCE(
+            INHERITANCE_CLAIMED
+    ),
+    DISCIPLE(
+            DISCIPLE_BETRAYS
+    ),
+    CULTIVATION(
+            SYSTEM_DESTROYED
+    ),
+    ALCHEMY(
+            CAULDRON_EXPLODES,
+            PILL_RUINED
+    ),
+    CULTIVATORS(
+            NEIGHBOR_BBQ
+    ),
+    AUCTION(
+            AUCTION_BEAT_UP
+    ),
+    USERS(
+            PRAY_EXP_SUCCESS,
+            PRAY_EXP_FAILURE
+    );
+    //</editor-fold>
+
+    List<Event> events = new ArrayList<>();
+
+    private EventType(Event... event) {
+        this.events.addAll(Arrays.asList(event));
+    }
+
+    Event getRandomEvent() {
+        return events.get(EventManager.RANDOM.nextInt((events.size() - 1 > 0) ? events.size() - 1 : 1));
+    }
+
+    List<Event> getEvents() {
+        return this.events;
+    }
+
+}

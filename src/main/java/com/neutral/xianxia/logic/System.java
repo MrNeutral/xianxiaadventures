@@ -16,8 +16,9 @@
  */
 package com.neutral.xianxia.logic;
 
-import com.neutral.xianxia.logic.EventManager.EVENT;
 import com.neutral.xianxia.logic.System.QI_LEVEL;
+import com.neutral.xianxia.logic.events.Event;
+import com.neutral.xianxia.logic.events.EventManager;
 
 /**
  *
@@ -275,7 +276,7 @@ public final class System {
         player.cultivate();
     }
 
-    public final EVENT getEvent() {
+    public final Event getEvent() {
         return eventManager.getRandomEvent();
     }
 
