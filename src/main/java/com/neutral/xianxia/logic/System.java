@@ -21,6 +21,7 @@ import com.neutral.xianxia.logic.events.EventManager;
 import com.neutral.xianxia.logic.levels.BodyLevel;
 import com.neutral.xianxia.logic.levels.CultivationLevel;
 import com.neutral.xianxia.logic.levels.QiLevel;
+import java.util.Timer;
 
 /**
  *
@@ -30,6 +31,10 @@ public final class System {
 
     private final EventManager eventManager = new EventManager(this);
     private final Player player = new Player();
+    private boolean tribulationDue = false;
+    private boolean toggleQiUpgrade = false;
+    private boolean toggleBodyUpgrade = false;
+    private Timer timer = null;
 
     public final void cultivate() {
         player.cultivate();
@@ -171,8 +176,26 @@ public final class System {
         player.setBodyLevel(BodyLevel.getRealm(level));
     }
 
+    public final void upgradePlayerBody(int level) {
+        while (level > player.getBodyLevel().getRank()) {
+            player.levelBody();
+            if (getNextLevel(player.getBodyLevel()) == null) {
+                break;
+            }
+        }
+    }
+
     public final void setPlayerQi(int level) {
         player.setQiLevel(QiLevel.getRealm(level));
+    }
+
+    public final void upgradePlayerQi(int level) {
+        while (level > player.getQiLevel().getRank()) {
+            player.levelQi();
+            if (getNextLevel(player.getQiLevel()) == null) {
+                break;
+            }
+        }
     }
 
     public final CultivationLevel getPlayerRealm() {
@@ -191,28 +214,115 @@ public final class System {
         player.grantExp(exp);
     }
 
+    public final boolean canTribulationUpgrade(String target) {
+        if (!tribulationDue && getUpgradeCost(target) != null) {
+            switch (target) {
+                case "Body":
+                    if (player.getCultivationRealm() == CultivationLevel.CORE_FORMATION_REALM && player.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9) {
+                        return false;
+                    } else if (player.getCultivationRealm() == CultivationLevel.SAGE_REALM && player.getBodyLevel() == BodyLevel.SAGE_BODY_STAGE_9) {
+                        return false;
+                    }
+                    return true;
+                case "Qi":
+                    if (player.getCultivationRealm() == CultivationLevel.CORE_FORMATION_REALM && player.getQiLevel() == QiLevel.CORE_FORMATION_SPIRIT_STAGE_9) {
+                        return false;
+                    } else if (player.getCultivationRealm() == CultivationLevel.SAGE_REALM && player.getQiLevel() == QiLevel.SAGE_SPIRIT_STAGE_9) {
+                        return false;
+                    }
+                    return true;
+                default:
+                    return true;
+            }
+        }
+        return true;
+    }
+
     public final boolean canLevel() {
-        if (getUpgradeCost("Body") != null) {
-            if (player.getBodyLevel().getRank() > player.getQiLevel().getRank()) {
-                return getUpgradeCost("Qi") <= player.getExp();
-            } else {
-                return getUpgradeCost("Body") <= player.getExp();
-            }
-        } else if (getUpgradeCost("Qi") != null) {
-            if (player.getBodyLevel().getRank() < player.getQiLevel().getRank()) {
-                return getUpgradeCost("Body") <= player.getExp();
-            } else {
-                return getUpgradeCost("Qi") <= player.getExp();
-            }
+        if (getUpgradeCost("Body") != null || getUpgradeCost("Qi") != null) {
+            return (canTribulationUpgrade("Body")) ? true : canTribulationUpgrade("Qi");
         }
         return false;
     }
 
     public final boolean canLevel(String target) {
         if (getUpgradeCost(target) != null) {
-            return getUpgradeCost(target) <= player.getExp();
+            return (canTribulationUpgrade(target)) ? getUpgradeCost(target) <= player.getExp() : false;
         }
         return false;
     }
-    
+
+    public final boolean checkTribulation() {
+        CultivationLevel realm = player.getCultivationRealm();
+        if (realm == CultivationLevel.CORE_FORMATION_REALM) {
+            if (player.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9 && player.getQiLevel() == QiLevel.CORE_FORMATION_SPIRIT_STAGE_9) {
+                tribulationDue = true;
+                return true;
+            }
+        } else if (realm == CultivationLevel.SAGE_REALM) {
+            if (player.getBodyLevel() == BodyLevel.SAGE_BODY_STAGE_9 && player.getQiLevel() == QiLevel.SAGE_SPIRIT_STAGE_9) {
+                tribulationDue = true;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public final String triggerTribulation() {
+        return eventManager.triggerTribulation();
+    }
+
+    public final boolean isTribulationDue() {
+        return tribulationDue;
+    }
+
+    /**
+     * @param tribulationDue the tribulationDue to set
+     */
+    public void setTribulationDue(boolean tribulationDue) {
+        this.tribulationDue = tribulationDue;
+    }
+
+    /**
+     * @return the toggleQiUpgrade
+     */
+    public boolean isToggleQiUpgrade() {
+        return toggleQiUpgrade;
+    }
+
+    /**
+     * @param toggleQiUpgrade the toggleQiUpgrade to set
+     */
+    public void setToggleQiUpgrade(boolean toggleQiUpgrade) {
+        this.toggleQiUpgrade = toggleQiUpgrade;
+    }
+
+    /**
+     * @return the toggleBodyUpgrade
+     */
+    public boolean isToggleBodyUpgrade() {
+        return toggleBodyUpgrade;
+    }
+
+    /**
+     * @param toggleBodyUpgrade the toggleBodyUpgrade to set
+     */
+    public void setToggleBodyUpgrade(boolean toggleBodyUpgrade) {
+        this.toggleBodyUpgrade = toggleBodyUpgrade;
+    }
+
+    /**
+     * @return the timer
+     */
+    public Timer getTimer() {
+        return timer;
+    }
+
+    /**
+     * @param timer the timer to set
+     */
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
 }

@@ -1,3 +1,5 @@
+package com.neutral.xianxia;
+
 
 import com.neutral.xianxia.logic.System;
 import com.neutral.xianxia.ui.GameInterface;

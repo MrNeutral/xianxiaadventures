@@ -75,9 +75,11 @@ public abstract class Cultivator {
     }
 
     public void levelBody() {
-        setMaxHealth(maxHealth + System.getNextLevel(bodyLevel).getRank() * 10);
-        setHealth(maxHealth);
-        setBodyLevel(System.getNextLevel(bodyLevel));
+        if (System.getNextLevel(bodyLevel) != null) {
+            setMaxHealth(maxHealth + System.getNextLevel(bodyLevel).getRank() * 10);
+            setHealth(maxHealth);
+            setBodyLevel(System.getNextLevel(bodyLevel));
+        }
     }
 
     public void setCultivationRealm(CultivationLevel cultivationRealm) {
@@ -85,9 +87,11 @@ public abstract class Cultivator {
     }
 
     public void levelQi() {
-        setSpirit(maxSpirit + System.getNextLevel(qiLevel).getRank() * 5);
-        setSpirit(maxSpirit);
-        setQiLevel(System.getNextLevel(qiLevel));
+        if (System.getNextLevel(qiLevel) != null) {
+            setMaxSpirit(maxSpirit + System.getNextLevel(qiLevel).getRank() * 5);
+            setSpirit(maxSpirit);
+            setQiLevel(System.getNextLevel(qiLevel));
+        }
     }
 
     public void grantExp(int amount) {
@@ -132,7 +136,7 @@ public abstract class Cultivator {
     public int getSpirit() {
         return spirit;
     }
-    
+
     public int getMaxSpirit() {
         return maxSpirit;
     }

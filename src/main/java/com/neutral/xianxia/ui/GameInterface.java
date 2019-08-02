@@ -2,6 +2,7 @@ package com.neutral.xianxia.ui;
 
 import com.neutral.xianxia.logic.System;
 import com.neutral.xianxia.logic.events.Event;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,7 +33,6 @@ public class GameInterface extends javax.swing.JFrame {
      * Creates new form GameInterface
      */
     private final System system;
-    private static Timer timer = null;
 
     public GameInterface(System system) {
         this.system = system;
@@ -62,6 +62,13 @@ public class GameInterface extends javax.swing.JFrame {
         eventText = new javax.swing.JTextArea();
         eventExp = new javax.swing.JLabel();
         closeEventDialog = new javax.swing.JButton();
+        tribulationDialog = new javax.swing.JDialog(this);
+        tribulationPanel = new javax.swing.JPanel();
+        noAscendButton = new javax.swing.JButton();
+        yesAscendButton = new javax.swing.JButton();
+        ascendChoiceLabel = new javax.swing.JLabel();
+        tribulationResultPanel = new javax.swing.JPanel();
+        tribulationResultLabel = new javax.swing.JLabel();
         mainTabbedPane = new javax.swing.JTabbedPane();
         actionPanel = new javax.swing.JPanel();
         playerStatusPanel = new javax.swing.JPanel();
@@ -100,12 +107,15 @@ public class GameInterface extends javax.swing.JFrame {
         qiDebug = new javax.swing.JTextField();
         bodyDebug = new javax.swing.JTextField();
         multiplierDebug = new javax.swing.JTextField();
+        toggleUpgradeQi = new javax.swing.JToggleButton();
+        toggleUpgradeBody = new javax.swing.JToggleButton();
 
         upgradeDialog.setTitle("XianxiaAdventures");
         upgradeDialog.setAlwaysOnTop(true);
         upgradeDialog.setMinimumSize(getPreferredSize());
         upgradeDialog.setModal(true);
         upgradeDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        upgradeDialog.setPreferredSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setResizable(false);
         upgradeDialog.setSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setLocationRelativeTo(actionPanel);
@@ -133,9 +143,10 @@ public class GameInterface extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         upgradePanel.add(upgradeQiButton, gridBagConstraints);
 
         upgradeBodyButton.setText("Body");
@@ -149,9 +160,10 @@ public class GameInterface extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         upgradePanel.add(upgradeBodyButton, gridBagConstraints);
 
         cancelUpgradeButton.setText("Cancel");
@@ -260,21 +272,109 @@ public class GameInterface extends javax.swing.JFrame {
 
         eventDialog.getContentPane().add(eventPanel, java.awt.BorderLayout.CENTER);
 
+        tribulationDialog.setTitle("XianxiaAdventures");
+        tribulationDialog.setAlwaysOnTop(true);
+        tribulationDialog.setMinimumSize(new java.awt.Dimension(340, 120));
+        tribulationDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        tribulationDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        tribulationDialog.setPreferredSize(new java.awt.Dimension(340, 120));
+        tribulationDialog.setResizable(false);
+        tribulationDialog.setSize(new java.awt.Dimension(350, 120));
+        tribulationDialog.setLocationRelativeTo(actionPanel);
+        tribulationDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                tribulationDialogComponentHidden(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                tribulationDialogComponentShown(evt);
+            }
+        });
+        tribulationDialog.getContentPane().setLayout(new java.awt.CardLayout());
+
+        tribulationPanel.setMinimumSize(new java.awt.Dimension(250, 80));
+        tribulationPanel.setPreferredSize(new java.awt.Dimension(250, 80));
+        java.awt.GridBagLayout upgradePanel1Layout = new java.awt.GridBagLayout();
+        upgradePanel1Layout.columnWidths = new int[] {0, 23, 0, 23, 0};
+        upgradePanel1Layout.rowHeights = new int[] {0, 20, 0};
+        tribulationPanel.setLayout(upgradePanel1Layout);
+
+        noAscendButton.setText("No");
+        noAscendButton.setFocusable(false);
+        noAscendButton.setMaximumSize(new java.awt.Dimension(75, 31));
+        noAscendButton.setMinimumSize(new java.awt.Dimension(75, 31));
+        noAscendButton.setPreferredSize(new java.awt.Dimension(75, 31));
+        noAscendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noAscendButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        tribulationPanel.add(noAscendButton, gridBagConstraints);
+
+        yesAscendButton.setText("Yes");
+        yesAscendButton.setFocusable(false);
+        yesAscendButton.setMaximumSize(new java.awt.Dimension(75, 31));
+        yesAscendButton.setMinimumSize(new java.awt.Dimension(75, 31));
+        yesAscendButton.setPreferredSize(new java.awt.Dimension(75, 31));
+        yesAscendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yesAscendButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        tribulationPanel.add(yesAscendButton, gridBagConstraints);
+
+        ascendChoiceLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        ascendChoiceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ascendChoiceLabel.setText("Do you want to try Ascending ?");
+        ascendChoiceLabel.setToolTipText(null);
+        ascendChoiceLabel.setPreferredSize(new java.awt.Dimension(220, 15));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        tribulationPanel.add(ascendChoiceLabel, gridBagConstraints);
+
+        tribulationDialog.getContentPane().add(tribulationPanel, "card2");
+
+        tribulationResultPanel.setMinimumSize(new java.awt.Dimension(330, 120));
+        tribulationResultPanel.setPreferredSize(new java.awt.Dimension(330, 120));
+        tribulationResultPanel.setLayout(new java.awt.GridBagLayout());
+
+        tribulationResultLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tribulationResultLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tribulationResultLabel.setToolTipText(null);
+        tribulationResultLabel.setMaximumSize(new java.awt.Dimension(330, 15));
+        tribulationResultLabel.setMinimumSize(new java.awt.Dimension(330, 15));
+        tribulationResultLabel.setPreferredSize(new java.awt.Dimension(345, 15));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        tribulationResultPanel.add(tribulationResultLabel, gridBagConstraints);
+
+        tribulationDialog.getContentPane().add(tribulationResultPanel, "card2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XianxiaAdventures");
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        setPreferredSize(new java.awt.Dimension(325, 230));
+        setPreferredSize(new java.awt.Dimension(330, 230));
         setResizable(false);
         setSize(getPreferredSize());
 
         mainTabbedPane.setToolTipText(null);
         mainTabbedPane.setMaximumSize(getPreferredSize());
         mainTabbedPane.setMinimumSize(getPreferredSize());
-        mainTabbedPane.setPreferredSize(new java.awt.Dimension(325, 205));
+        mainTabbedPane.setPreferredSize(new java.awt.Dimension(330, 205));
 
         actionPanel.setMaximumSize(getPreferredSize());
         actionPanel.setMinimumSize(getPreferredSize());
-        actionPanel.setPreferredSize(new java.awt.Dimension(325, 190));
+        actionPanel.setPreferredSize(new java.awt.Dimension(330, 190));
         actionPanel.setRequestFocusEnabled(false);
         java.awt.GridBagLayout actionPanelLayout = new java.awt.GridBagLayout();
         actionPanelLayout.columnWidths = new int[] {0, 40, 0, 40, 0};
@@ -283,7 +383,7 @@ public class GameInterface extends javax.swing.JFrame {
 
         playerStatusPanel.setMaximumSize(getPreferredSize());
         playerStatusPanel.setMinimumSize(getPreferredSize());
-        playerStatusPanel.setPreferredSize(new java.awt.Dimension(310, 130));
+        playerStatusPanel.setPreferredSize(new java.awt.Dimension(320, 130));
         java.awt.GridBagLayout playerStatusPanelLayout = new java.awt.GridBagLayout();
         playerStatusPanelLayout.columnWidths = new int[] {0, 18, 0, 18, 0, 18, 0, 18, 0, 18, 0};
         playerStatusPanelLayout.rowHeights = new int[] {0, 21, 0, 21, 0, 21, 0};
@@ -322,8 +422,9 @@ public class GameInterface extends javax.swing.JFrame {
 
         bodyData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         bodyData.setToolTipText(null);
-        bodyData.setMinimumSize(new java.awt.Dimension(260, 15));
-        bodyData.setPreferredSize(new java.awt.Dimension(260, 15));
+        bodyData.setMaximumSize(new java.awt.Dimension(263, 15));
+        bodyData.setMinimumSize(new java.awt.Dimension(263, 15));
+        bodyData.setPreferredSize(new java.awt.Dimension(263, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -343,8 +444,9 @@ public class GameInterface extends javax.swing.JFrame {
 
         qiData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         qiData.setToolTipText(null);
-        qiData.setMinimumSize(new java.awt.Dimension(260, 15));
-        qiData.setPreferredSize(new java.awt.Dimension(260, 15));
+        qiData.setMaximumSize(new java.awt.Dimension(263, 15));
+        qiData.setMinimumSize(new java.awt.Dimension(263, 15));
+        qiData.setPreferredSize(new java.awt.Dimension(263, 15));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -424,12 +526,12 @@ public class GameInterface extends javax.swing.JFrame {
 
         dataPanel.setMaximumSize(getPreferredSize());
         dataPanel.setMinimumSize(getPreferredSize());
-        dataPanel.setPreferredSize(new java.awt.Dimension(325, 190));
+        dataPanel.setPreferredSize(new java.awt.Dimension(330, 190));
         dataPanel.setLayout(new java.awt.GridBagLayout());
 
         playerDataPanel.setMaximumSize(getPreferredSize());
         playerDataPanel.setMinimumSize(getPreferredSize());
-        playerDataPanel.setPreferredSize(new java.awt.Dimension(310, 160));
+        playerDataPanel.setPreferredSize(new java.awt.Dimension(310, 165));
         java.awt.GridBagLayout playerDataPanelLayout = new java.awt.GridBagLayout();
         playerDataPanelLayout.columnWidths = new int[] {0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0};
         playerDataPanelLayout.rowHeights = new int[] {0, 19, 0, 19, 0, 19, 0, 19, 0};
@@ -543,14 +645,14 @@ public class GameInterface extends javax.swing.JFrame {
 
         debugPanel.setMaximumSize(getPreferredSize());
         debugPanel.setMinimumSize(getPreferredSize());
-        debugPanel.setPreferredSize(new java.awt.Dimension(325, 190));
+        debugPanel.setPreferredSize(new java.awt.Dimension(330, 190));
         debugPanel.setLayout(new java.awt.GridBagLayout());
 
         playerDebugPanel.setMaximumSize(getPreferredSize());
         playerDebugPanel.setMinimumSize(getPreferredSize());
         playerDebugPanel.setPreferredSize(new java.awt.Dimension(310, 165));
         java.awt.GridBagLayout playerDataPanel1Layout1 = new java.awt.GridBagLayout();
-        playerDataPanel1Layout1.columnWidths = new int[] {0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0, 44, 0};
+        playerDataPanel1Layout1.columnWidths = new int[] {0, 24, 0, 24, 0, 24, 0, 24, 0, 24, 0};
         playerDataPanel1Layout1.rowHeights = new int[] {0, 9, 0, 9, 0, 9, 0, 9, 0};
         playerDebugPanel.setLayout(playerDataPanel1Layout1);
 
@@ -616,7 +718,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         playerDebugPanel.add(healthDebug, gridBagConstraints);
 
@@ -632,7 +734,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         playerDebugPanel.add(spiritDebug, gridBagConstraints);
 
@@ -648,7 +750,7 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         playerDebugPanel.add(qiDebug, gridBagConstraints);
 
@@ -664,13 +766,13 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         playerDebugPanel.add(bodyDebug, gridBagConstraints);
 
         multiplierDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         multiplierDebug.setMaximumSize(getPreferredSize());
-        multiplierDebug.setMinimumSize(new java.awt.Dimension(0, 25));
+        multiplierDebug.setMinimumSize(new java.awt.Dimension(85, 25));
         multiplierDebug.setPreferredSize(new java.awt.Dimension(0, 25));
         multiplierDebug.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -680,9 +782,41 @@ public class GameInterface extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         playerDebugPanel.add(multiplierDebug, gridBagConstraints);
+
+        toggleUpgradeQi.setText("Upgrade Stats");
+        toggleUpgradeQi.setFocusable(false);
+        toggleUpgradeQi.setMaximumSize(getPreferredSize());
+        toggleUpgradeQi.setMinimumSize(new java.awt.Dimension(125, 25));
+        toggleUpgradeQi.setPreferredSize(new java.awt.Dimension(125, 25));
+        toggleUpgradeQi.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                toggleUpgradeQiItemStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDebugPanel.add(toggleUpgradeQi, gridBagConstraints);
+
+        toggleUpgradeBody.setText("Upgrade Stats");
+        toggleUpgradeBody.setFocusable(false);
+        toggleUpgradeBody.setMaximumSize(getPreferredSize());
+        toggleUpgradeBody.setMinimumSize(new java.awt.Dimension(125, 25));
+        toggleUpgradeBody.setPreferredSize(new java.awt.Dimension(125, 25));
+        toggleUpgradeBody.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                toggleUpgradeBodyItemStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDebugPanel.add(toggleUpgradeBody, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -701,6 +835,12 @@ public class GameInterface extends javax.swing.JFrame {
         system.cultivate();
         levelUpButton.setEnabled(system.canLevel());
         expData.setText(String.valueOf(system.getPlayerExp()));
+
+        if (system.checkTribulation()) {
+            levelUpButton.setText("Ascend");
+        } else {
+            levelUpButton.setText("Level Up");
+        }
     }//GEN-LAST:event_cultivateButtonActionPerformed
 
     private void levelUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_levelUpButtonActionPerformed
@@ -708,7 +848,9 @@ public class GameInterface extends javax.swing.JFrame {
         exploreButton.setEnabled(false);
         cultivateButton.setEnabled(false);
         levelUpButton.setEnabled(false);
-        upgradeDialog.setVisible(true);
+        tribulationDialog.setVisible(system.isTribulationDue());
+        upgradeDialog.setVisible(!system.isTribulationDue());
+
     }//GEN-LAST:event_levelUpButtonActionPerformed
 
     private void upgradeBodyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upgradeBodyButtonActionPerformed
@@ -767,7 +909,11 @@ public class GameInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
-                system.setPlayerQi(Integer.valueOf(qiDebug.getText()));
+                if (!system.isToggleQiUpgrade()) {
+                    system.setPlayerQi(Integer.valueOf(qiDebug.getText()));
+                } else {
+                    system.upgradePlayerQi(Integer.valueOf(qiDebug.getText()));
+                }
                 system.checkPlayerRealm();
                 updateData();
             } catch (NumberFormatException e) {
@@ -780,7 +926,11 @@ public class GameInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
-                system.setPlayerBody(Integer.valueOf(bodyDebug.getText()));
+                if (!system.isToggleBodyUpgrade()) {
+                    system.setPlayerBody(Integer.valueOf(bodyDebug.getText()));
+                } else {
+                    system.upgradePlayerBody(Integer.valueOf(bodyDebug.getText()));
+                }
                 system.checkPlayerRealm();
                 updateData();
             } catch (NumberFormatException e) {
@@ -825,6 +975,38 @@ public class GameInterface extends javax.swing.JFrame {
         getEvent();
     }//GEN-LAST:event_eventDialogComponentShown
 
+    private void noAscendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noAscendButtonActionPerformed
+        // TODO add your handling code here:
+        tribulationDialog.setVisible(false);
+        closePopUpDialog();
+    }//GEN-LAST:event_noAscendButtonActionPerformed
+
+    private void yesAscendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesAscendButtonActionPerformed
+        // TODO add your handling code here:
+        ((CardLayout) tribulationDialog.getContentPane().getLayout()).next(tribulationDialog.getContentPane());
+        tribulationResultLabel.setText(system.triggerTribulation());
+    }//GEN-LAST:event_yesAscendButtonActionPerformed
+
+    private void tribulationDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tribulationDialogComponentHidden
+        // TODO add your handling code here:
+        closePopUpDialog();
+    }//GEN-LAST:event_tribulationDialogComponentHidden
+
+    private void tribulationDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tribulationDialogComponentShown
+        // TODO add your handling code here:
+        ((CardLayout) tribulationDialog.getContentPane().getLayout()).show(tribulationDialog.getContentPane(), "card1");
+    }//GEN-LAST:event_tribulationDialogComponentShown
+
+    private void toggleUpgradeQiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_toggleUpgradeQiItemStateChanged
+        // TODO add your handling code here:
+        system.setToggleQiUpgrade(!system.isToggleQiUpgrade());
+    }//GEN-LAST:event_toggleUpgradeQiItemStateChanged
+
+    private void toggleUpgradeBodyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_toggleUpgradeBodyItemStateChanged
+        // TODO add your handling code here:
+        system.setToggleBodyUpgrade(!system.isToggleBodyUpgrade());
+    }//GEN-LAST:event_toggleUpgradeBodyItemStateChanged
+
     public void getEvent() {
         Event event = system.getEvent();
         while (event.getEventName().equals(eventTitle.getText())) {
@@ -846,21 +1028,21 @@ public class GameInterface extends javax.swing.JFrame {
             @Override
             public void run() {
                 exploreButton.setEnabled(true);
-                timer = null;
+                system.setTimer(null);
             }
         };
 
         Timer localTimer = new Timer();
         localTimer.schedule(timerTask, 10 * 1000);
 
-        timer = localTimer;
+        system.setTimer(localTimer);
 
         return localTimer;
     }
 
     public void closePopUpDialog() {
         upgradeDialog.setVisible(false);
-        exploreButton.setEnabled((timer == null));
+        exploreButton.setEnabled((system.getTimer() == null));
         cultivateButton.setEnabled(true);
         levelUpButton.setEnabled(system.canLevel());
         updateData();
@@ -881,10 +1063,16 @@ public class GameInterface extends javax.swing.JFrame {
         qiDebug.setText(String.valueOf(system.getPlayerQi().getRank()));
         bodyDebug.setText(String.valueOf(system.getPlayerBody().getRank()));
         multiplierDebug.setText(String.valueOf(system.getPlayerExpMultiplier()));
+        if (system.checkTribulation()) {
+            levelUpButton.setText("Ascend");
+        } else {
+            levelUpButton.setText("Level Up");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionPanel;
+    private javax.swing.JLabel ascendChoiceLabel;
     private javax.swing.JLabel attackData;
     private javax.swing.JLabel attackLabel;
     private javax.swing.JLabel bodyData;
@@ -918,6 +1106,7 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JTextField multiplierDebug;
     private javax.swing.JLabel multiplierDebugLabel;
     private javax.swing.JLabel multiplierLabel;
+    private javax.swing.JButton noAscendButton;
     private javax.swing.JPanel playerDataPanel;
     private javax.swing.JPanel playerDebugPanel;
     private javax.swing.JPanel playerStatusPanel;
@@ -929,10 +1118,17 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JTextField spiritDebug;
     private javax.swing.JLabel spiritDebugLabel;
     private javax.swing.JLabel spiritLabel;
+    private javax.swing.JToggleButton toggleUpgradeBody;
+    private javax.swing.JToggleButton toggleUpgradeQi;
+    private javax.swing.JDialog tribulationDialog;
+    private javax.swing.JPanel tribulationPanel;
+    private javax.swing.JLabel tribulationResultLabel;
+    private javax.swing.JPanel tribulationResultPanel;
     private javax.swing.JButton upgradeBodyButton;
     private javax.swing.JLabel upgradeChoiceLabel;
     private javax.swing.JDialog upgradeDialog;
     private javax.swing.JPanel upgradePanel;
     private javax.swing.JButton upgradeQiButton;
+    private javax.swing.JButton yesAscendButton;
     // End of variables declaration//GEN-END:variables
 }

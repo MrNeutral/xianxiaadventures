@@ -107,5 +107,53 @@ public final class EventManager {
         return event;
 
     }
-    
+
+    public String triggerTribulation() {
+        Random random = new Random();
+        int tribulationStrength;
+        switch (system.getPlayerRealm()) {
+            case CORE_FORMATION_REALM:
+                tribulationStrength = random.nextInt(TRIBULATION.MINOR_3_TRIBULATIONS.getDifficulty() + 1);
+                if (system.getPlayerHealth() - tribulationStrength * 300 > 0) {
+                    system.setPlayerHealth(system.getPlayerHealth() - tribulationStrength * 300);
+                    system.upgradePlayerBody(system.getPlayerBody().getRank() + 1);
+                    system.upgradePlayerQi(system.getPlayerQi().getRank() + 1);
+                    system.setTribulationDue(false);
+                    return "You managed to survive the 3 Minor Tribulations";
+                } else {
+                    EventFlag.CRIPPLED.setTriggered(true);
+                    system.setPlayerHealth(1);
+                    system.setPlayerSpirit(0);
+                    system.setPlayerBody(0);
+                    system.setPlayerQi(0);
+                    system.setPlayerMaxHealth(10);
+                    system.setPlayerMaxSpirit(0);
+                    system.setTribulationDue(false);
+                    return "You fail to surpass the 3 Minor Tribulations";
+                }
+            case SAGE_REALM:
+                tribulationStrength = random.nextInt(TRIBULATION.LESSER_6_TRIBULATIONS.getDifficulty() + 1);
+                if (system.getPlayerHealth() - tribulationStrength * 600 > 0) {
+                    system.setPlayerHealth(system.getPlayerHealth() - tribulationStrength * 600);
+                    system.upgradePlayerBody(system.getPlayerBody().getRank() + 1);
+                    system.upgradePlayerQi(system.getPlayerQi().getRank() + 1);
+                    system.setTribulationDue(false);
+                    return "You managed to survive the 6 Lesser Tribulations";
+                } else {
+                    EventFlag.CRIPPLED.setTriggered(true);
+                    system.setPlayerHealth(1);
+                    system.setPlayerSpirit(0);
+                    system.setPlayerBody(28);
+                    system.setPlayerQi(28);
+                    system.setPlayerMaxHealth(1000);
+                    system.setPlayerMaxSpirit(1000);
+                    system.setTribulationDue(false);
+                    return "You fail to surpass the 6 Lesser Tribulations";
+                }
+            default:
+                system.setTribulationDue(false);
+                return "You fail to surpass the tribulation and turn to dust";
+        }
+    }
+
 }
