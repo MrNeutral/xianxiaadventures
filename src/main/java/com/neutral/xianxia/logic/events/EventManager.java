@@ -29,11 +29,11 @@ import java.util.Random;
  */
 public final class EventManager {
 
-    private final System SYSTEM;
-     final static Random RANDOM = new Random();
+    private final System system;
+    final static Random RANDOM = new Random();
 
     public EventManager(System system) {
-        this.SYSTEM = system;
+        this.system = system;
     }
 
     public static boolean getFlag(EventFlag flag) {
@@ -57,7 +57,7 @@ public final class EventManager {
     }
 
     public void checkAllowedEvents(List<Event> events) {
-        if (SYSTEM.getPlayerRealm().getRank() < 19) {
+        if (system.getPlayerRealm().getRank() < 19) {
             events.remove(SYSTEM_DESTROYED);
         }
 
@@ -107,5 +107,5 @@ public final class EventManager {
         return event;
 
     }
-
+    
 }
