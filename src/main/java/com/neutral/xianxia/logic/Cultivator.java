@@ -16,9 +16,9 @@
  */
 package com.neutral.xianxia.logic;
 
-import com.neutral.xianxia.logic.System.BODY_LEVEL;
-import com.neutral.xianxia.logic.System.CULTIVATION_LEVEL;
-import com.neutral.xianxia.logic.System.QI_LEVEL;
+import com.neutral.xianxia.logic.levels.BodyLevel;
+import com.neutral.xianxia.logic.levels.CultivationLevel;
+import com.neutral.xianxia.logic.levels.QiLevel;
 
 /**
  *
@@ -27,34 +27,40 @@ import com.neutral.xianxia.logic.System.QI_LEVEL;
 public abstract class Cultivator {
 
     private int health;
+    private int maxHealth;
     private int spirit;
+    private int maxSpirit;
     private int exp;
     private int powerLevel;
-    private BODY_LEVEL bodyLevel;
-    private QI_LEVEL qiLevel;
-    private CULTIVATION_LEVEL cultivationRealm;
+    private BodyLevel bodyLevel;
+    private QiLevel qiLevel;
+    private CultivationLevel cultivationRealm;
 
     public Cultivator() {
         this.health = 10;
+        this.maxHealth = 10;
+        this.maxSpirit = 0;
         this.spirit = 0;
         this.exp = 0;
         this.powerLevel = 1;
-        this.bodyLevel = BODY_LEVEL.MORTAL_BODY;
-        this.qiLevel = QI_LEVEL.MORTAL_SPIRIT;
-        this.cultivationRealm = CULTIVATION_LEVEL.MORTAL_REALM;
+        this.bodyLevel = BodyLevel.MORTAL_BODY;
+        this.qiLevel = QiLevel.MORTAL_SPIRIT;
+        this.cultivationRealm = CultivationLevel.MORTAL_REALM;
     }
 
-    public Cultivator(int health, int spirit, int exp, int powerLevel, BODY_LEVEL bodyLevel, QI_LEVEL qiLevel) {
+    public Cultivator(int health, int maxHealth, int spirit, int maxSpirit, int exp, int powerLevel, BodyLevel bodyLevel, QiLevel qiLevel) {
         this.health = health;
+        this.maxHealth = health;
+        this.maxSpirit = maxSpirit;
         this.spirit = spirit;
         this.exp = exp;
         this.powerLevel = powerLevel;
         this.bodyLevel = bodyLevel;
         this.qiLevel = qiLevel;
-        this.cultivationRealm = CULTIVATION_LEVEL.MORTAL_REALM;
+        this.cultivationRealm = CultivationLevel.MORTAL_REALM;
     }
 
-    public CULTIVATION_LEVEL getCultivationRealm() {
+    public CultivationLevel getCultivationRealm() {
         return cultivationRealm;
     }
 
@@ -69,16 +75,18 @@ public abstract class Cultivator {
     }
 
     public void levelBody() {
-        setHealth(health + System.getNextLevel(bodyLevel).getRank() * 10);
+        setMaxHealth(maxHealth + System.getNextLevel(bodyLevel).getRank() * 10);
+        setHealth(maxHealth);
         setBodyLevel(System.getNextLevel(bodyLevel));
     }
 
-    public void setCultivationRealm(CULTIVATION_LEVEL cultivationRealm) {
+    public void setCultivationRealm(CultivationLevel cultivationRealm) {
         this.cultivationRealm = cultivationRealm;
     }
 
     public void levelQi() {
-        setSpirit(spirit + System.getNextLevel(qiLevel).getRank() * 5);
+        setSpirit(maxSpirit + System.getNextLevel(qiLevel).getRank() * 5);
+        setSpirit(maxSpirit);
         setQiLevel(System.getNextLevel(qiLevel));
     }
 
@@ -110,11 +118,27 @@ public abstract class Cultivator {
         return health;
     }
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
     /**
      * @return the spirit
      */
     public int getSpirit() {
         return spirit;
+    }
+    
+    public int getMaxSpirit() {
+        return maxSpirit;
+    }
+
+    public void setMaxSpirit(int maxSpirit) {
+        this.maxSpirit = maxSpirit;
     }
 
     /**
@@ -134,14 +158,14 @@ public abstract class Cultivator {
     /**
      * @return the bodyLevel
      */
-    public BODY_LEVEL getBodyLevel() {
+    public BodyLevel getBodyLevel() {
         return bodyLevel;
     }
 
     /**
      * @return the qiLevel
      */
-    public QI_LEVEL getQiLevel() {
+    public QiLevel getQiLevel() {
         return qiLevel;
     }
 
@@ -162,14 +186,14 @@ public abstract class Cultivator {
     /**
      * @param bodyLevel the bodyLevel to set
      */
-    public void setBodyLevel(BODY_LEVEL bodyLevel) {
+    public void setBodyLevel(BodyLevel bodyLevel) {
         this.bodyLevel = bodyLevel;
     }
 
     /**
      * @param qiLevel the qiLevel to set
      */
-    public void setQiLevel(QI_LEVEL qiLevel) {
+    public void setQiLevel(QiLevel qiLevel) {
         this.qiLevel = qiLevel;
     }
 

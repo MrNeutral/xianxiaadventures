@@ -20,9 +20,9 @@ package com.neutral.xianxia.logic;
  *
  * @author Mr.Neutral
  */
-import static com.neutral.xianxia.logic.System.CULTIVATION_LEVEL.getRealm;
+import static com.neutral.xianxia.logic.levels.CultivationLevel.getRealm;
 
-public class Player extends Cultivator {
+public final class Player extends Cultivator {
 
     private double expMultiplier = 1.0;
 
