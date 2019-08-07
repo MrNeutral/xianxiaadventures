@@ -68,7 +68,10 @@ public enum Event {
     NEIGHBOR_BBQ(0, -450, "Your neighboring cultivator, who has an unusual love for peppers, invites you to a BBQ.\nYou are full of hopes and expect greatness.\nIt tastes terrible and you dont dare to complain, since he isn't good with criticism.\nSo you endure it and when you return home, you cough blood and faint.", "BBQ"),
     AUCTION_BEAT_UP(0.2, -250, "You ended up bidding at an auction and managed to win item you wanted, but little did you know, the Chosen One wanted the item too.\nHe beat you up and stole the item.\nYou cough blood in humiliation.", "Auction item stolen"),
     PRAY_EXP_SUCCESS(0, 2000, "You sit down and pray to the God of Exp.\nThe prayer intrigues the God and he grants you divine knowledge.", "Prayer to God of Exp"),
-    PRAY_EXP_FAILURE(0.1, -2000, "You sit down and lazily pray to the God of Exp.\nHe is angered by this and has you struck by Heavenly Tribulation.", "Lazy Prayer to God of Exp");
+    PRAY_EXP_FAILURE(0.1, -2000, "You sit down and lazily pray to the God of Exp.\nHe is angered by this and has you struck by Heavenly Tribulation.", "Lazy Prayer to God of Exp"),
+    EASY_BATTLE(0.3, 0, "A junior cultivator challenges you to a battle, this should be easy.", "Easy Battle"),
+    AVERAGE_BATTLE(0.7, 0, "A fellow cultivator challenges you to a battle, this should help you improve your skills.", "Average Battle"),
+    HARD_BATTLE(0.1, 0, "A senior challenges you to a battle losing face. Why would he do this ?", "Hard Battle");
     //</editor-fold>
     private final double rarity;
 

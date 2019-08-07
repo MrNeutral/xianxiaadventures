@@ -105,6 +105,11 @@ public enum EventType {
     USERS(
             PRAY_EXP_SUCCESS,
             PRAY_EXP_FAILURE
+    ),
+    BATTLE(
+            EASY_BATTLE,
+            AVERAGE_BATTLE,
+            HARD_BATTLE
     );
     //</editor-fold>
 

@@ -1,7 +1,6 @@
 package com.neutral.xianxia;
 
 
-import com.neutral.xianxia.logic.System;
 import com.neutral.xianxia.ui.GameInterface;
 
 
@@ -58,7 +57,7 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new GameInterface(new System()).setVisible(true);
+                new GameInterface().setVisible(true);
             }
         });
     }

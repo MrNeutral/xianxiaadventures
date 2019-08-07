@@ -1,6 +1,8 @@
 package com.neutral.xianxia.ui;
 
+import com.neutral.xianxia.logic.Player;
 import com.neutral.xianxia.logic.System;
+import com.neutral.xianxia.logic.battle.Enemy;
 import com.neutral.xianxia.logic.events.Event;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -32,10 +34,7 @@ public class GameInterface extends javax.swing.JFrame {
     /**
      * Creates new form GameInterface
      */
-    private final System system;
-
-    public GameInterface(System system) {
-        this.system = system;
+    public GameInterface() {
         initComponents();
         updateData();
     }
@@ -69,6 +68,43 @@ public class GameInterface extends javax.swing.JFrame {
         ascendChoiceLabel = new javax.swing.JLabel();
         tribulationResultPanel = new javax.swing.JPanel();
         tribulationResultLabel = new javax.swing.JLabel();
+        battleDialog = new javax.swing.JDialog(this);
+        battleDataPanel = new javax.swing.JPanel();
+        enemyDataPanel = new javax.swing.JPanel();
+        enemyNameData = new javax.swing.JLabel();
+        enemyBodyData = new javax.swing.JLabel();
+        enemyQiData = new javax.swing.JLabel();
+        enemyCultivationData = new javax.swing.JLabel();
+        enemyHealthData = new javax.swing.JLabel();
+        enemySpiritData = new javax.swing.JLabel();
+        enemyNameLabel = new javax.swing.JLabel();
+        enemyBodyLabel = new javax.swing.JLabel();
+        enemyQiLabel = new javax.swing.JLabel();
+        enemyCultivationLabel = new javax.swing.JLabel();
+        enemyHealthLabel = new javax.swing.JLabel();
+        enemySpiritLabel = new javax.swing.JLabel();
+        playerDataBattlePanel = new javax.swing.JPanel();
+        playerNameData = new javax.swing.JLabel();
+        playerBodyData = new javax.swing.JLabel();
+        playerQiData = new javax.swing.JLabel();
+        playerCultivationData = new javax.swing.JLabel();
+        playerHealthData = new javax.swing.JLabel();
+        playerSpiritData = new javax.swing.JLabel();
+        playerNameLabel = new javax.swing.JLabel();
+        playerBodyLabel = new javax.swing.JLabel();
+        playerQiLabel = new javax.swing.JLabel();
+        playerCultivationLabel = new javax.swing.JLabel();
+        playerHealthLabel = new javax.swing.JLabel();
+        playerSpiritLabel = new javax.swing.JLabel();
+        battlehistoryPane = new javax.swing.JScrollPane();
+        battleHistoryTextArea = new javax.swing.JTextArea();
+        battleButtonsPanel = new javax.swing.JPanel();
+        physicalAttackButton = new javax.swing.JButton();
+        spiritAttackButton = new javax.swing.JButton();
+        physicalDefenseButton = new javax.swing.JButton();
+        spiritDefenseButton = new javax.swing.JButton();
+        retreatButton = new javax.swing.JButton();
+        surrenderButton = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         actionPanel = new javax.swing.JPanel();
         playerStatusPanel = new javax.swing.JPanel();
@@ -115,7 +151,6 @@ public class GameInterface extends javax.swing.JFrame {
         upgradeDialog.setMinimumSize(getPreferredSize());
         upgradeDialog.setModal(true);
         upgradeDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        upgradeDialog.setPreferredSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setResizable(false);
         upgradeDialog.setSize(new java.awt.Dimension(250, 120));
         upgradeDialog.setLocationRelativeTo(actionPanel);
@@ -277,7 +312,6 @@ public class GameInterface extends javax.swing.JFrame {
         tribulationDialog.setMinimumSize(new java.awt.Dimension(340, 120));
         tribulationDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         tribulationDialog.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        tribulationDialog.setPreferredSize(new java.awt.Dimension(340, 120));
         tribulationDialog.setResizable(false);
         tribulationDialog.setSize(new java.awt.Dimension(350, 120));
         tribulationDialog.setLocationRelativeTo(actionPanel);
@@ -360,10 +394,305 @@ public class GameInterface extends javax.swing.JFrame {
 
         tribulationDialog.getContentPane().add(tribulationResultPanel, "card2");
 
+        battleDialog.setTitle("XianxiaAdventures");
+        battleDialog.setAlwaysOnTop(true);
+        battleDialog.setFocusable(false);
+        battleDialog.setMinimumSize(getPreferredSize());
+        battleDialog.setModal(true);
+        battleDialog.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        battleDialog.setResizable(false);
+        battleDialog.setSize(new java.awt.Dimension(850, 500));
+        battleDialog.setLocationRelativeTo(actionPanel);
+        battleDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                battleDialogComponentHidden(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                battleDialogComponentShown(evt);
+            }
+        });
+
+        battleDataPanel.setMinimumSize(new java.awt.Dimension(850, 250));
+        battleDataPanel.setPreferredSize(new java.awt.Dimension(850, 250));
+        battleDataPanel.setLayout(new java.awt.BorderLayout());
+
+        enemyDataPanel.setMaximumSize(getPreferredSize());
+        enemyDataPanel.setMinimumSize(getPreferredSize());
+        enemyDataPanel.setPreferredSize(new java.awt.Dimension(400, 250));
+        java.awt.GridBagLayout eventPanel1Layout = new java.awt.GridBagLayout();
+        eventPanel1Layout.columnWidths = new int[] {0, 25, 0};
+        eventPanel1Layout.rowHeights = new int[] {0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0};
+        enemyDataPanel.setLayout(eventPanel1Layout);
+
+        enemyNameData.setText("Junior Cultivator");
+        enemyNameData.setToolTipText(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyNameData, gridBagConstraints);
+
+        enemyBodyData.setText("Foundation Establishment Body 2nd Stage");
+        enemyBodyData.setToolTipText(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyBodyData, gridBagConstraints);
+
+        enemyQiData.setText("Foundation Establishment Spirit 2nd Stage");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyQiData, gridBagConstraints);
+
+        enemyCultivationData.setText("Foundation Establishment");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyCultivationData, gridBagConstraints);
+
+        enemyHealthData.setText("2000/2000");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyHealthData, gridBagConstraints);
+
+        enemySpiritData.setText("500/500");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemySpiritData, gridBagConstraints);
+
+        enemyNameLabel.setText("Name:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyNameLabel, gridBagConstraints);
+
+        enemyBodyLabel.setText("Body Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyBodyLabel, gridBagConstraints);
+
+        enemyQiLabel.setText("Qi Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyQiLabel, gridBagConstraints);
+
+        enemyCultivationLabel.setText("Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyCultivationLabel, gridBagConstraints);
+
+        enemyHealthLabel.setText("Health:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemyHealthLabel, gridBagConstraints);
+
+        enemySpiritLabel.setText("Spirit:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        enemyDataPanel.add(enemySpiritLabel, gridBagConstraints);
+
+        battleDataPanel.add(enemyDataPanel, java.awt.BorderLayout.WEST);
+
+        playerDataBattlePanel.setMaximumSize(getPreferredSize());
+        playerDataBattlePanel.setMinimumSize(getPreferredSize());
+        playerDataBattlePanel.setPreferredSize(new java.awt.Dimension(400, 250));
+        java.awt.GridBagLayout playerDataBattlePanelLayout = new java.awt.GridBagLayout();
+        playerDataBattlePanelLayout.columnWidths = new int[] {0, 25, 0};
+        playerDataBattlePanelLayout.rowHeights = new int[] {0, 25, 0, 25, 0, 25, 0, 25, 0, 25, 0};
+        playerDataBattlePanel.setLayout(playerDataBattlePanelLayout);
+
+        playerNameData.setText("Player");
+        playerNameData.setToolTipText(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerNameData, gridBagConstraints);
+
+        playerBodyData.setText("Foundation Establishment Body 2nd Stage");
+        playerBodyData.setToolTipText(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerBodyData, gridBagConstraints);
+
+        playerQiData.setText("Foundation Establishment Spirit 2nd Stage");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerQiData, gridBagConstraints);
+
+        playerCultivationData.setText("Foundation Establishment");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerCultivationData, gridBagConstraints);
+
+        playerHealthData.setText("2000/2000");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerHealthData, gridBagConstraints);
+
+        playerSpiritData.setText("500/500");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerSpiritData, gridBagConstraints);
+
+        playerNameLabel.setText("Name:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerNameLabel, gridBagConstraints);
+
+        playerBodyLabel.setText("Body Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerBodyLabel, gridBagConstraints);
+
+        playerQiLabel.setText("Qi Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerQiLabel, gridBagConstraints);
+
+        playerCultivationLabel.setText("Level:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerCultivationLabel, gridBagConstraints);
+
+        playerHealthLabel.setText("Health:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerHealthLabel, gridBagConstraints);
+
+        playerSpiritLabel.setText("Spirit:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        playerDataBattlePanel.add(playerSpiritLabel, gridBagConstraints);
+
+        battleDataPanel.add(playerDataBattlePanel, java.awt.BorderLayout.EAST);
+
+        battleDialog.getContentPane().add(battleDataPanel, java.awt.BorderLayout.NORTH);
+
+        battlehistoryPane.setMinimumSize(new java.awt.Dimension(850, 100));
+        battlehistoryPane.setPreferredSize(new java.awt.Dimension(850, 100));
+
+        battleHistoryTextArea.setEditable(false);
+        battleHistoryTextArea.setColumns(20);
+        battleHistoryTextArea.setLineWrap(true);
+        battleHistoryTextArea.setRows(5);
+        battleHistoryTextArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        battleHistoryTextArea.setFocusable(false);
+        battleHistoryTextArea.setMinimumSize(new java.awt.Dimension(850, 100));
+        battleHistoryTextArea.setOpaque(false);
+        battlehistoryPane.setViewportView(battleHistoryTextArea);
+
+        battleDialog.getContentPane().add(battlehistoryPane, java.awt.BorderLayout.CENTER);
+
+        battleButtonsPanel.setMinimumSize(new java.awt.Dimension(850, 50));
+        battleButtonsPanel.setPreferredSize(new java.awt.Dimension(850, 50));
+        java.awt.GridBagLayout battleButtonsPanelLayout = new java.awt.GridBagLayout();
+        battleButtonsPanelLayout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0};
+        battleButtonsPanelLayout.rowHeights = new int[] {0};
+        battleButtonsPanel.setLayout(battleButtonsPanelLayout);
+
+        physicalAttackButton.setText("Phys Attack");
+        physicalAttackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                physicalAttackButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        battleButtonsPanel.add(physicalAttackButton, gridBagConstraints);
+
+        spiritAttackButton.setText("Sp Attack");
+        spiritAttackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spiritAttackButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        battleButtonsPanel.add(spiritAttackButton, gridBagConstraints);
+
+        physicalDefenseButton.setText("Phys Def");
+        physicalDefenseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                physicalDefenseButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        battleButtonsPanel.add(physicalDefenseButton, gridBagConstraints);
+
+        spiritDefenseButton.setText("Sp Def");
+        spiritDefenseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spiritDefenseButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        battleButtonsPanel.add(spiritDefenseButton, gridBagConstraints);
+
+        retreatButton.setText("Retreat");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 30;
+        gridBagConstraints.gridy = 0;
+        battleButtonsPanel.add(retreatButton, gridBagConstraints);
+
+        surrenderButton.setText("Surrender");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 32;
+        gridBagConstraints.gridy = 0;
+        battleButtonsPanel.add(surrenderButton, gridBagConstraints);
+
+        battleDialog.getContentPane().add(battleButtonsPanel, java.awt.BorderLayout.SOUTH);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XianxiaAdventures");
         setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        setPreferredSize(new java.awt.Dimension(330, 230));
         setResizable(false);
         setSize(getPreferredSize());
 
@@ -832,11 +1161,11 @@ public class GameInterface extends javax.swing.JFrame {
 
     private void cultivateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cultivateButtonActionPerformed
         // TODO add your handling code here:
-        system.cultivate();
-        levelUpButton.setEnabled(system.canLevel());
-        expData.setText(String.valueOf(system.getPlayerExp()));
+        System.cultivate();
+        levelUpButton.setEnabled(System.canLevel());
+        expData.setText(String.valueOf(System.getPlayerExp()));
 
-        if (system.checkTribulation()) {
+        if (System.checkTribulation()) {
             levelUpButton.setText("Ascend");
         } else {
             levelUpButton.setText("Level Up");
@@ -848,20 +1177,20 @@ public class GameInterface extends javax.swing.JFrame {
         exploreButton.setEnabled(false);
         cultivateButton.setEnabled(false);
         levelUpButton.setEnabled(false);
-        tribulationDialog.setVisible(system.isTribulationDue());
-        upgradeDialog.setVisible(!system.isTribulationDue());
+        tribulationDialog.setVisible(System.isTribulationDue());
+        upgradeDialog.setVisible(!System.isTribulationDue());
 
     }//GEN-LAST:event_levelUpButtonActionPerformed
 
     private void upgradeBodyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upgradeBodyButtonActionPerformed
         // TODO add your handling code here:
-        system.attemptLevelUp("Body");
+        System.attemptLevelUp("Body");
         closePopUpDialog();
     }//GEN-LAST:event_upgradeBodyButtonActionPerformed
 
     private void upgradeQiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upgradeQiButtonActionPerformed
         // TODO add your handling code here:
-        system.attemptLevelUp("Qi");
+        System.attemptLevelUp("Qi");
         closePopUpDialog();
     }//GEN-LAST:event_upgradeQiButtonActionPerformed
 
@@ -872,8 +1201,8 @@ public class GameInterface extends javax.swing.JFrame {
 
     private void upgradeDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_upgradeDialogComponentShown
         // TODO add your handling code here:
-        upgradeBodyButton.setEnabled(system.canLevel("Body"));
-        upgradeQiButton.setEnabled(system.canLevel("Qi"));
+        upgradeBodyButton.setEnabled(System.canLevel("Body"));
+        upgradeQiButton.setEnabled(System.canLevel("Qi"));
     }//GEN-LAST:event_upgradeDialogComponentShown
 
     private void upgradeDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_upgradeDialogComponentHidden
@@ -885,7 +1214,7 @@ public class GameInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
-                system.setPlayerHealth(Integer.valueOf(healthDebug.getText()));
+                System.setPlayerHealth(Integer.valueOf(healthDebug.getText()));
                 updateData();
             } catch (NumberFormatException e) {
                 healthDebug.setText("Invalid");
@@ -897,7 +1226,7 @@ public class GameInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
-                system.setPlayerSpirit(Integer.valueOf(spiritDebug.getText()));
+                System.setPlayerSpirit(Integer.valueOf(spiritDebug.getText()));
                 updateData();
             } catch (NumberFormatException e) {
                 spiritDebug.setText("Invalid");
@@ -909,12 +1238,12 @@ public class GameInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
-                if (!system.isToggleQiUpgrade()) {
-                    system.setPlayerQi(Integer.valueOf(qiDebug.getText()));
+                if (!System.isToggleQiUpgrade()) {
+                    System.setPlayerQi(Integer.valueOf(qiDebug.getText()));
                 } else {
-                    system.upgradePlayerQi(Integer.valueOf(qiDebug.getText()));
+                    System.upgradePlayerQi(Integer.valueOf(qiDebug.getText()));
                 }
-                system.checkPlayerRealm();
+                System.checkPlayerRealm();
                 updateData();
             } catch (NumberFormatException e) {
                 qiDebug.setText("Invalid");
@@ -926,12 +1255,12 @@ public class GameInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
-                if (!system.isToggleBodyUpgrade()) {
-                    system.setPlayerBody(Integer.valueOf(bodyDebug.getText()));
+                if (!System.isToggleBodyUpgrade()) {
+                    System.setPlayerBody(Integer.valueOf(bodyDebug.getText()));
                 } else {
-                    system.upgradePlayerBody(Integer.valueOf(bodyDebug.getText()));
+                    System.upgradePlayerBody(Integer.valueOf(bodyDebug.getText()));
                 }
-                system.checkPlayerRealm();
+                System.checkPlayerRealm();
                 updateData();
             } catch (NumberFormatException e) {
                 bodyDebug.setText("Invalid");
@@ -943,7 +1272,7 @@ public class GameInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             try {
-                system.setPlayerExpMultiplier(Integer.valueOf(multiplierDebug.getText()));
+                System.setPlayerExpMultiplier(Integer.valueOf(multiplierDebug.getText()));
                 updateData();
             } catch (NumberFormatException e) {
                 multiplierDebug.setText("Invalid");
@@ -984,7 +1313,7 @@ public class GameInterface extends javax.swing.JFrame {
     private void yesAscendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesAscendButtonActionPerformed
         // TODO add your handling code here:
         ((CardLayout) tribulationDialog.getContentPane().getLayout()).next(tribulationDialog.getContentPane());
-        tribulationResultLabel.setText(system.triggerTribulation());
+        tribulationResultLabel.setText(System.triggerTribulation());
     }//GEN-LAST:event_yesAscendButtonActionPerformed
 
     private void tribulationDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tribulationDialogComponentHidden
@@ -999,23 +1328,142 @@ public class GameInterface extends javax.swing.JFrame {
 
     private void toggleUpgradeQiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_toggleUpgradeQiItemStateChanged
         // TODO add your handling code here:
-        system.setToggleQiUpgrade(!system.isToggleQiUpgrade());
+        System.setToggleQiUpgrade(!System.isToggleQiUpgrade());
     }//GEN-LAST:event_toggleUpgradeQiItemStateChanged
 
     private void toggleUpgradeBodyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_toggleUpgradeBodyItemStateChanged
         // TODO add your handling code here:
-        system.setToggleBodyUpgrade(!system.isToggleBodyUpgrade());
+        System.setToggleBodyUpgrade(!System.isToggleBodyUpgrade());
     }//GEN-LAST:event_toggleUpgradeBodyItemStateChanged
 
-    public void getEvent() {
-        Event event = system.getEvent();
-        while (event.getEventName().equals(eventTitle.getText())) {
-            event = system.getEvent();
+    private void battleDialogComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_battleDialogComponentHidden
+        // TODO add your handling code here:
+        System.resetBattle();
+        battleHistoryTextArea.setText("");
+        closePopUpDialog();
+    }//GEN-LAST:event_battleDialogComponentHidden
+
+    private void battleDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_battleDialogComponentShown
+        // TODO add your handling code here:
+        if (!System.initBattle()) {
+            System.nextTurn();
         }
-        eventTitle.setText(event.getEventName());
-        eventText.setText(event.getEventText());
-        eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
-        system.grantExp(event.getExpEffect());
+        updateBattleStats();
+    }//GEN-LAST:event_battleDialogComponentShown
+
+    private void physicalAttackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_physicalAttackButtonActionPerformed
+        // TODO add your handling code here:
+        if (!System.isBattleFinished()) {
+            System.physicalAttackEnemy();
+            updateBattleStats();
+            System.nextTurn();
+            System.getPLAYER().setDefendingWithBody(false);
+            System.getPLAYER().setDefendingWithQi(false);
+        }
+        updateBattleStats();
+    }//GEN-LAST:event_physicalAttackButtonActionPerformed
+
+    private void spiritAttackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spiritAttackButtonActionPerformed
+        // TODO add your handling code here:
+        if (!System.isBattleFinished()) {
+            System.spiritAttackEnemy();
+            updateBattleStats();
+            System.nextTurn();
+            System.getPLAYER().setDefendingWithBody(false);
+            System.getPLAYER().setDefendingWithQi(false);
+        }
+        updateBattleStats();
+    }//GEN-LAST:event_spiritAttackButtonActionPerformed
+
+    private void physicalDefenseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_physicalDefenseButtonActionPerformed
+        // TODO add your handling code here:
+        if (!System.isBattleFinished()) {
+            System.defendWithBody();
+            updateBattleStats();
+            System.nextTurn();
+            System.getPLAYER().setDefendingWithBody(false);
+            System.getPLAYER().setDefendingWithQi(false);
+        }
+        updateBattleStats();
+    }//GEN-LAST:event_physicalDefenseButtonActionPerformed
+
+    private void spiritDefenseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spiritDefenseButtonActionPerformed
+        // TODO add your handling code here:
+        if (!System.isBattleFinished()) {
+            System.defendWithSpirit();
+            updateBattleStats();
+            System.nextTurn();
+            System.getPLAYER().setDefendingWithBody(false);
+            System.getPLAYER().setDefendingWithQi(false);
+        }
+        updateBattleStats();
+    }//GEN-LAST:event_spiritDefenseButtonActionPerformed
+
+    public boolean battleDone() {
+        if (System.isPlayerWon()) {
+            int xp = System.calculateBattleExp();
+            System.setBattleAction("You managed to defeat the enemy. You gain " + xp + " exp.");
+            System.grantExp(xp);
+            return true;
+        } else if (System.isBattleFinished()) {
+            int xp = System.calculateBattleExp();
+            System.setBattleAction("You lost and for some reason the enemy decides to spare your pathetic life. You lose " + Math.round(xp * 0.5) + " exp.");
+            System.grantExp((int) -Math.round(xp * 0.5));
+            return true;
+        }
+        return false;
+    }
+
+    public void updateBattleStats() {
+
+        physicalAttackButton.setEnabled(!System.isBattleFinished());
+        physicalDefenseButton.setEnabled(!System.isBattleFinished());
+        if (System.getPLAYER().getQiLevel().getRank() == 0) {
+            spiritAttackButton.setEnabled(false);
+            spiritDefenseButton.setEnabled(false);
+        } else {
+            spiritAttackButton.setEnabled(!System.isBattleFinished());
+            spiritDefenseButton.setEnabled(!System.isBattleFinished());
+        }
+        retreatButton.setEnabled(!System.isBattleFinished());
+        surrenderButton.setEnabled(!System.isBattleFinished());
+
+        Enemy enemy = System.getEnemy();
+        Player player = System.getPLAYER();
+        enemyBodyData.setText(enemy.getBodyLevel().getName());
+        enemyQiData.setText(enemy.getQiLevel().getName());
+        enemyCultivationData.setText(enemy.getCultivationRealm().getName());
+        enemyHealthData.setText(enemy.getHealth() + "/" + enemy.getMaxHealth());
+        enemySpiritData.setText(enemy.getSpirit() + "/" + enemy.getMaxSpirit());
+
+        playerBodyData.setText(player.getBodyLevel().getName());
+        playerQiData.setText(player.getQiLevel().getName());
+        playerCultivationData.setText(player.getCultivationRealm().getName());
+        playerHealthData.setText(player.getHealth() + "/" + player.getMaxHealth());
+        playerSpiritData.setText(player.getSpirit() + "/" + player.getMaxSpirit());
+        if (!System.getBattleAction().isEmpty()) {
+            battleHistoryTextArea.append(System.getBattleAction() + "\n");
+        }
+        if (battleDone()) {
+            battleHistoryTextArea.append(System.getBattleAction() + "\n");
+        }
+    }
+
+    public void getEvent() {
+        Event event = System.getEvent();
+//        while (event.getEventName().equals(eventTitle.getText())) {
+//            event = System.getEvent();
+//        }
+        if (event.getEventName().contains("Battle")) {
+            eventDialog.setVisible(false);
+            battleHistoryTextArea.append(event.getEventText() + "\n\n");
+            battleDialog.setVisible(true);
+        } else {
+            eventTitle.setText(event.getEventName());
+            eventText.setText(event.getEventText());
+            eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
+            System.grantExp(event.getExpEffect());
+        }
     }
 
 //    public void resetTimer(){
@@ -1028,42 +1476,42 @@ public class GameInterface extends javax.swing.JFrame {
             @Override
             public void run() {
                 exploreButton.setEnabled(true);
-                system.setTimer(null);
+                System.setTimer(null);
             }
         };
 
         Timer localTimer = new Timer();
         localTimer.schedule(timerTask, 10 * 1000);
 
-        system.setTimer(localTimer);
+        System.setTimer(localTimer);
 
         return localTimer;
     }
 
     public void closePopUpDialog() {
         upgradeDialog.setVisible(false);
-        exploreButton.setEnabled((system.getTimer() == null));
+        exploreButton.setEnabled((System.getTimer() == null));
         cultivateButton.setEnabled(true);
-        levelUpButton.setEnabled(system.canLevel());
+        levelUpButton.setEnabled(System.canLevel());
         updateData();
     }
 
     private void updateData() {
-        levelData.setText(system.getPlayerRealm().getName());
-        bodyData.setText(system.getPlayerBody().getName());
-        qiData.setText(system.getPlayerQi().getName());
-        expData.setText(String.valueOf(system.getPlayerExp()));
-        healthData.setText(String.valueOf(system.getPlayerHealth()));
-        spiritData.setText(String.valueOf(system.getPlayerSpirit()));
-        attackData.setText(String.valueOf(system.getPlayerAttack()));
-        defenceData.setText(String.valueOf(system.getPlayerDefence()));
-        multiplierData.setText(String.valueOf(system.getPlayerExpMultiplier()));
-        healthDebug.setText(String.valueOf(system.getPlayerHealth()));
-        spiritDebug.setText(String.valueOf(system.getPlayerSpirit()));
-        qiDebug.setText(String.valueOf(system.getPlayerQi().getRank()));
-        bodyDebug.setText(String.valueOf(system.getPlayerBody().getRank()));
-        multiplierDebug.setText(String.valueOf(system.getPlayerExpMultiplier()));
-        if (system.checkTribulation()) {
+        levelData.setText(System.getPlayerRealm().getName());
+        bodyData.setText(System.getPlayerBody().getName());
+        qiData.setText(System.getPlayerQi().getName());
+        expData.setText(String.valueOf(System.getPlayerExp()));
+        healthData.setText(String.valueOf(System.getPlayerHealth()));
+        spiritData.setText(String.valueOf(System.getPlayerSpirit()));
+        attackData.setText(String.valueOf(System.getPlayerAttack()));
+        defenceData.setText(String.valueOf(System.getPlayerDefence()));
+        multiplierData.setText(String.valueOf(System.getPlayerExpMultiplier()));
+        healthDebug.setText(String.valueOf(System.getPlayerHealth()));
+        spiritDebug.setText(String.valueOf(System.getPlayerSpirit()));
+        qiDebug.setText(String.valueOf(System.getPlayerQi().getRank()));
+        bodyDebug.setText(String.valueOf(System.getPlayerBody().getRank()));
+        multiplierDebug.setText(String.valueOf(System.getPlayerExpMultiplier()));
+        if (System.checkTribulation()) {
             levelUpButton.setText("Ascend");
         } else {
             levelUpButton.setText("Level Up");
@@ -1075,6 +1523,11 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JLabel ascendChoiceLabel;
     private javax.swing.JLabel attackData;
     private javax.swing.JLabel attackLabel;
+    private javax.swing.JPanel battleButtonsPanel;
+    private javax.swing.JPanel battleDataPanel;
+    private javax.swing.JDialog battleDialog;
+    private javax.swing.JTextArea battleHistoryTextArea;
+    private javax.swing.JScrollPane battlehistoryPane;
     private javax.swing.JLabel bodyData;
     private javax.swing.JTextField bodyDebug;
     private javax.swing.JLabel bodyDebugLabel;
@@ -1086,6 +1539,19 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JPanel debugPanel;
     private javax.swing.JLabel defenceData;
     private javax.swing.JLabel defenceLabel;
+    private javax.swing.JLabel enemyBodyData;
+    private javax.swing.JLabel enemyBodyLabel;
+    private javax.swing.JLabel enemyCultivationData;
+    private javax.swing.JLabel enemyCultivationLabel;
+    private javax.swing.JPanel enemyDataPanel;
+    private javax.swing.JLabel enemyHealthData;
+    private javax.swing.JLabel enemyHealthLabel;
+    private javax.swing.JLabel enemyNameData;
+    private javax.swing.JLabel enemyNameLabel;
+    private javax.swing.JLabel enemyQiData;
+    private javax.swing.JLabel enemyQiLabel;
+    private javax.swing.JLabel enemySpiritData;
+    private javax.swing.JLabel enemySpiritLabel;
     private javax.swing.JDialog eventDialog;
     private javax.swing.JLabel eventExp;
     private javax.swing.JPanel eventPanel;
@@ -1107,17 +1573,36 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JLabel multiplierDebugLabel;
     private javax.swing.JLabel multiplierLabel;
     private javax.swing.JButton noAscendButton;
+    private javax.swing.JButton physicalAttackButton;
+    private javax.swing.JButton physicalDefenseButton;
+    private javax.swing.JLabel playerBodyData;
+    private javax.swing.JLabel playerBodyLabel;
+    private javax.swing.JLabel playerCultivationData;
+    private javax.swing.JLabel playerCultivationLabel;
+    private javax.swing.JPanel playerDataBattlePanel;
     private javax.swing.JPanel playerDataPanel;
     private javax.swing.JPanel playerDebugPanel;
+    private javax.swing.JLabel playerHealthData;
+    private javax.swing.JLabel playerHealthLabel;
+    private javax.swing.JLabel playerNameData;
+    private javax.swing.JLabel playerNameLabel;
+    private javax.swing.JLabel playerQiData;
+    private javax.swing.JLabel playerQiLabel;
+    private javax.swing.JLabel playerSpiritData;
+    private javax.swing.JLabel playerSpiritLabel;
     private javax.swing.JPanel playerStatusPanel;
     private javax.swing.JLabel qiData;
     private javax.swing.JTextField qiDebug;
     private javax.swing.JLabel qiDebugLabel;
     private javax.swing.JLabel qiLabel;
+    private javax.swing.JButton retreatButton;
+    private javax.swing.JButton spiritAttackButton;
     private javax.swing.JLabel spiritData;
     private javax.swing.JTextField spiritDebug;
     private javax.swing.JLabel spiritDebugLabel;
+    private javax.swing.JButton spiritDefenseButton;
     private javax.swing.JLabel spiritLabel;
+    private javax.swing.JButton surrenderButton;
     private javax.swing.JToggleButton toggleUpgradeBody;
     private javax.swing.JToggleButton toggleUpgradeQi;
     private javax.swing.JDialog tribulationDialog;

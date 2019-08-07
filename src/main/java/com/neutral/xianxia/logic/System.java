@@ -16,11 +16,14 @@
  */
 package com.neutral.xianxia.logic;
 
+import com.neutral.xianxia.logic.battle.BattleManager;
+import com.neutral.xianxia.logic.battle.Enemy;
 import com.neutral.xianxia.logic.events.Event;
 import com.neutral.xianxia.logic.events.EventManager;
 import com.neutral.xianxia.logic.levels.BodyLevel;
 import com.neutral.xianxia.logic.levels.CultivationLevel;
 import com.neutral.xianxia.logic.levels.QiLevel;
+import java.util.Random;
 import java.util.Timer;
 
 /**
@@ -29,30 +32,35 @@ import java.util.Timer;
  */
 public final class System {
 
-    private final EventManager eventManager = new EventManager(this);
-    private final Player player = new Player();
-    private boolean tribulationDue = false;
-    private boolean toggleQiUpgrade = false;
-    private boolean toggleBodyUpgrade = false;
-    private Timer timer = null;
+    private static final EventManager EVENT_MANAGER = new EventManager();
+    private static final Player PLAYER = new Player();
+    private static final BattleManager BATTLE_MANAGER = new BattleManager();
+    private static boolean tribulationDue = false;
+    private static String battleAction = "";
+    private static boolean toggleQiUpgrade = false;
+    private static boolean toggleBodyUpgrade = false;
+    private static Timer timer = null;
 
-    public final void cultivate() {
-        player.cultivate();
+    private System() {
     }
 
-    public final Event getEvent() {
-        return eventManager.getRandomEvent();
+    public static final void cultivate() {
+        PLAYER.cultivate();
     }
 
-    public final static QiLevel[] getQiLevels() {
+    public static final Event getEvent() {
+        return EVENT_MANAGER.getRandomEvent();
+    }
+
+    public static final QiLevel[] getQiLevels() {
         return QiLevel.values();
     }
 
-    public final static BodyLevel[] getBodyLevels() {
+    public static final BodyLevel[] getBodyLevels() {
         return BodyLevel.values();
     }
 
-    public final static BodyLevel getNextLevel(BodyLevel currLevel) {
+    public static final BodyLevel getNextLevel(BodyLevel currLevel) {
         BodyLevel[] levels = BodyLevel.values();
         for (int i = 0; i < levels.length; ++i) {
             if (currLevel == levels[i] && i + 1 < levels.length) {
@@ -62,7 +70,7 @@ public final class System {
         return null;
     }
 
-    public final static QiLevel getNextLevel(QiLevel currLevel) {
+    public static final QiLevel getNextLevel(QiLevel currLevel) {
         QiLevel[] levels = QiLevel.values();
         for (int i = 0; i < levels.length; ++i) {
             if (currLevel == levels[i] && i + 1 < levels.length) {
@@ -72,7 +80,7 @@ public final class System {
         return null;
     }
 
-    public final static CultivationLevel getNextLevel(CultivationLevel currLevel) {
+    public static final CultivationLevel getNextLevel(CultivationLevel currLevel) {
         CultivationLevel[] levels = CultivationLevel.values();
         for (int i = 0; i < levels.length; ++i) {
             if (currLevel == levels[i] && i + 1 < levels.length) {
@@ -82,185 +90,185 @@ public final class System {
         return null;
     }
 
-    public final void attemptLevelUp(String target) {
+    public static final void attemptLevelUp(String target) {
 
         int cost;
         if (getUpgradeCost(target) == null) {
             return;
         }
         cost = getUpgradeCost(target);
-        if (cost <= player.getExp()) {
-            player.grantExp(-cost);
+        if (cost <= PLAYER.getExp()) {
+            PLAYER.grantExp(-cost);
             if (target.equals("Body")) {
-                player.levelBody();
+                PLAYER.levelBody();
             } else {
-                player.levelQi();
+                PLAYER.levelQi();
             }
-            player.checkRealm();
+            PLAYER.checkRealm();
         }
     }
 
-    public final void checkPlayerRealm() {
-        player.checkRealm();
+    public static final void checkPlayerRealm() {
+        PLAYER.checkRealm();
     }
 
-    public final Integer getUpgradeCost(String target) {
+    public static final Integer getUpgradeCost(String target) {
         switch (target) {
             case "Body":
-                if (getNextLevel(player.getBodyLevel()) == null) {
+                if (getNextLevel(PLAYER.getBodyLevel()) == null) {
                     return null;
                 }
-                return getNextLevel(player.getBodyLevel()).getCost();
+                return getNextLevel(PLAYER.getBodyLevel()).getCost();
             case "Qi":
-                if (getNextLevel(player.getQiLevel()) == null) {
+                if (getNextLevel(PLAYER.getQiLevel()) == null) {
                     return null;
                 }
-                return getNextLevel(player.getQiLevel()).getCost();
+                return getNextLevel(PLAYER.getQiLevel()).getCost();
         }
         return null;
     }
 
-    public final int getPlayerExp() {
-        return player.getExp();
+    public static final int getPlayerExp() {
+        return PLAYER.getExp();
     }
 
-    public final int getPlayerHealth() {
-        return player.getHealth();
+    public static final int getPlayerHealth() {
+        return PLAYER.getHealth();
     }
 
-    public final int getPlayerSpirit() {
-        return player.getSpirit();
+    public static final int getPlayerSpirit() {
+        return PLAYER.getSpirit();
     }
 
-    public final int getPlayerMaxHealth() {
-        return player.getMaxHealth();
+    public static final int getPlayerMaxHealth() {
+        return PLAYER.getMaxHealth();
     }
 
-    public final int getPlayerMaxSpirit() {
-        return player.getMaxSpirit();
+    public static final int getPlayerMaxSpirit() {
+        return PLAYER.getMaxSpirit();
     }
 
-    public final double getPlayerAttack() {
-        return player.getAttack();
+    public static final double getPlayerAttack() {
+        return PLAYER.getPhysicalAttack();
     }
 
-    public final double getPlayerDefence() {
-        return player.getDefence();
+    public static final double getPlayerDefence() {
+        return PLAYER.getPhysicalDefence();
     }
 
-    public final double getPlayerExpMultiplier() {
-        return player.getExpMultiplier();
+    public static final double getPlayerExpMultiplier() {
+        return PLAYER.getExpMultiplier();
     }
 
-    public final void setPlayerHealth(int health) {
-        player.setHealth(health);
+    public static final void setPlayerHealth(int health) {
+        PLAYER.setHealth(health);
     }
 
-    public final void setPlayerSpirit(int spirit) {
-        player.setSpirit(spirit);
+    public static final void setPlayerSpirit(int spirit) {
+        PLAYER.setSpirit(spirit);
     }
 
-    public final void setPlayerMaxHealth(int health) {
-        player.setMaxHealth(health);
+    public static final void setPlayerMaxHealth(int health) {
+        PLAYER.setMaxHealth(health);
     }
 
-    public final void setPlayerMaxSpirit(int spirit) {
-        player.setMaxSpirit(spirit);
+    public static final void setPlayerMaxSpirit(int spirit) {
+        PLAYER.setMaxSpirit(spirit);
     }
 
-    public final void setPlayerExpMultiplier(double multiplier) {
-        player.setExpMultiplier(multiplier);
+    public static final void setPlayerExpMultiplier(double multiplier) {
+        PLAYER.setExpMultiplier(multiplier);
     }
 
-    public final void setPlayerBody(int level) {
-        player.setBodyLevel(BodyLevel.getRealm(level));
+    public static final void setPlayerBody(int level) {
+        PLAYER.setBodyLevel(BodyLevel.getRealm(level));
     }
 
-    public final void upgradePlayerBody(int level) {
-        while (level > player.getBodyLevel().getRank()) {
-            player.levelBody();
-            if (getNextLevel(player.getBodyLevel()) == null) {
+    public static final void upgradePlayerBody(int level) {
+        while (level > PLAYER.getBodyLevel().getRank()) {
+            PLAYER.levelBody();
+            if (getNextLevel(PLAYER.getBodyLevel()) == null) {
                 break;
             }
         }
     }
 
-    public final void setPlayerQi(int level) {
-        player.setQiLevel(QiLevel.getRealm(level));
+    public static final void setPlayerQi(int level) {
+        PLAYER.setQiLevel(QiLevel.getRealm(level));
     }
 
-    public final void upgradePlayerQi(int level) {
-        while (level > player.getQiLevel().getRank()) {
-            player.levelQi();
-            if (getNextLevel(player.getQiLevel()) == null) {
+    public static final void upgradePlayerQi(int level) {
+        while (level > PLAYER.getQiLevel().getRank()) {
+            PLAYER.levelQi();
+            if (getNextLevel(PLAYER.getQiLevel()) == null) {
                 break;
             }
         }
     }
 
-    public final CultivationLevel getPlayerRealm() {
-        return player.getCultivationRealm();
+    public static final CultivationLevel getPlayerRealm() {
+        return PLAYER.getCultivationRealm();
     }
 
-    public final BodyLevel getPlayerBody() {
-        return player.getBodyLevel();
+    public static final BodyLevel getPlayerBody() {
+        return PLAYER.getBodyLevel();
     }
 
-    public final QiLevel getPlayerQi() {
-        return player.getQiLevel();
+    public static final QiLevel getPlayerQi() {
+        return PLAYER.getQiLevel();
     }
 
-    public final void grantExp(int exp) {
-        player.grantExp(exp);
+    public static final void grantExp(int exp) {
+        PLAYER.grantExp(exp);
     }
 
-    public final boolean canTribulationUpgrade(String target) {
+    public static final boolean canTribulationUpgrade(String target) {
         if (!tribulationDue && getUpgradeCost(target) != null) {
             switch (target) {
                 case "Body":
-                    if (player.getCultivationRealm() == CultivationLevel.CORE_FORMATION_REALM && player.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9) {
+                    if (PLAYER.getCultivationRealm() == CultivationLevel.CORE_FORMATION_REALM && PLAYER.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9) {
                         return false;
-                    } else if (player.getCultivationRealm() == CultivationLevel.SAGE_REALM && player.getBodyLevel() == BodyLevel.SAGE_BODY_STAGE_9) {
+                    } else if (PLAYER.getCultivationRealm() == CultivationLevel.SAGE_REALM && PLAYER.getBodyLevel() == BodyLevel.SAGE_BODY_STAGE_9) {
                         return false;
                     }
-                    return true;
+                    return getUpgradeCost(target) <= PLAYER.getExp();
                 case "Qi":
-                    if (player.getCultivationRealm() == CultivationLevel.CORE_FORMATION_REALM && player.getQiLevel() == QiLevel.CORE_FORMATION_SPIRIT_STAGE_9) {
+                    if (PLAYER.getCultivationRealm() == CultivationLevel.CORE_FORMATION_REALM && PLAYER.getQiLevel() == QiLevel.CORE_FORMATION_SPIRIT_STAGE_9) {
                         return false;
-                    } else if (player.getCultivationRealm() == CultivationLevel.SAGE_REALM && player.getQiLevel() == QiLevel.SAGE_SPIRIT_STAGE_9) {
+                    } else if (PLAYER.getCultivationRealm() == CultivationLevel.SAGE_REALM && PLAYER.getQiLevel() == QiLevel.SAGE_SPIRIT_STAGE_9) {
                         return false;
                     }
-                    return true;
+                    return getUpgradeCost(target) <= PLAYER.getExp();
                 default:
-                    return true;
+                    return getUpgradeCost(target) <= PLAYER.getExp();
             }
         }
-        return true;
+        return getUpgradeCost(target) <= PLAYER.getExp();
     }
 
-    public final boolean canLevel() {
+    public static final boolean canLevel() {
         if (getUpgradeCost("Body") != null || getUpgradeCost("Qi") != null) {
             return (canTribulationUpgrade("Body")) ? true : canTribulationUpgrade("Qi");
         }
         return false;
     }
 
-    public final boolean canLevel(String target) {
+    public static final boolean canLevel(String target) {
         if (getUpgradeCost(target) != null) {
-            return (canTribulationUpgrade(target)) ? getUpgradeCost(target) <= player.getExp() : false;
+            return canTribulationUpgrade(target);
         }
         return false;
     }
 
-    public final boolean checkTribulation() {
-        CultivationLevel realm = player.getCultivationRealm();
+    public static final boolean checkTribulation() {
+        CultivationLevel realm = PLAYER.getCultivationRealm();
         if (realm == CultivationLevel.CORE_FORMATION_REALM) {
-            if (player.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9 && player.getQiLevel() == QiLevel.CORE_FORMATION_SPIRIT_STAGE_9) {
+            if (PLAYER.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9 && PLAYER.getQiLevel() == QiLevel.CORE_FORMATION_SPIRIT_STAGE_9) {
                 tribulationDue = true;
                 return true;
             }
         } else if (realm == CultivationLevel.SAGE_REALM) {
-            if (player.getBodyLevel() == BodyLevel.SAGE_BODY_STAGE_9 && player.getQiLevel() == QiLevel.SAGE_SPIRIT_STAGE_9) {
+            if (PLAYER.getBodyLevel() == BodyLevel.SAGE_BODY_STAGE_9 && PLAYER.getQiLevel() == QiLevel.SAGE_SPIRIT_STAGE_9) {
                 tribulationDue = true;
                 return true;
             }
@@ -268,61 +276,118 @@ public final class System {
         return false;
     }
 
-    public final String triggerTribulation() {
-        return eventManager.triggerTribulation();
+    public static final String triggerTribulation() {
+        return EVENT_MANAGER.triggerTribulation();
     }
 
-    public final boolean isTribulationDue() {
+    public static final boolean isTribulationDue() {
         return tribulationDue;
     }
 
     /**
      * @param tribulationDue the tribulationDue to set
      */
-    public void setTribulationDue(boolean tribulationDue) {
-        this.tribulationDue = tribulationDue;
+    public static final void setTribulationDue(boolean tribulationDue) {
+        System.tribulationDue = tribulationDue;
     }
 
     /**
      * @return the toggleQiUpgrade
      */
-    public boolean isToggleQiUpgrade() {
+    public static final boolean isToggleQiUpgrade() {
         return toggleQiUpgrade;
     }
 
     /**
      * @param toggleQiUpgrade the toggleQiUpgrade to set
      */
-    public void setToggleQiUpgrade(boolean toggleQiUpgrade) {
-        this.toggleQiUpgrade = toggleQiUpgrade;
+    public static final void setToggleQiUpgrade(boolean toggleQiUpgrade) {
+        System.toggleQiUpgrade = toggleQiUpgrade;
     }
 
     /**
      * @return the toggleBodyUpgrade
      */
-    public boolean isToggleBodyUpgrade() {
+    public static final boolean isToggleBodyUpgrade() {
         return toggleBodyUpgrade;
     }
 
     /**
      * @param toggleBodyUpgrade the toggleBodyUpgrade to set
      */
-    public void setToggleBodyUpgrade(boolean toggleBodyUpgrade) {
-        this.toggleBodyUpgrade = toggleBodyUpgrade;
+    public static final void setToggleBodyUpgrade(boolean toggleBodyUpgrade) {
+        System.toggleBodyUpgrade = toggleBodyUpgrade;
     }
 
     /**
      * @return the timer
      */
-    public Timer getTimer() {
+    public static final Timer getTimer() {
         return timer;
     }
 
     /**
      * @param timer the timer to set
      */
-    public void setTimer(Timer timer) {
-        this.timer = timer;
+    public static final void setTimer(Timer timer) {
+        System.timer = timer;
     }
 
+    public static final boolean initBattle() {
+        return BATTLE_MANAGER.initBattle();
+    }
+
+    public static final void physicalAttackEnemy() {
+        BATTLE_MANAGER.physicalAttackEnemy();
+    }
+
+    public static final Player getPLAYER() {
+        return PLAYER;
+    }
+
+    public static final void spiritAttackEnemy() {
+        BATTLE_MANAGER.spiritAttackEnemy();
+    }
+
+    public static final void defendWithBody() {
+        PLAYER.setDefendingWithBody(true);
+        System.setBattleAction("You prepare to defend against a physical attack.");
+    }
+
+    public static final void defendWithSpirit() {
+        PLAYER.setDefendingWithQi(true);
+        System.setBattleAction("You prepare to defend against a spiritual attack.");
+    }
+
+    public static final void nextTurn() {
+        BATTLE_MANAGER.nextTurn();
+    }
+
+    public static final Enemy getEnemy() {
+        return BATTLE_MANAGER.getEnemy();
+    }
+
+    public static final void setBattleAction(String string) {
+        System.battleAction = string;
+    }
+
+    public static final String getBattleAction() {
+        return battleAction;
+    }
+
+    public static final boolean isBattleFinished() {
+        return BATTLE_MANAGER.isBattleFinished();
+    }
+
+    public static final void resetBattle() {
+        BATTLE_MANAGER.resetBattle();
+    }
+
+    public static final boolean isPlayerWon() {
+        return BATTLE_MANAGER.isPlayerWon();
+    }
+
+    public static final int calculateBattleExp() {
+        return BATTLE_MANAGER.getEnemy().getMaxHealth() * 2 + BATTLE_MANAGER.getEnemy().getMaxSpirit() * 2 + new Random().nextInt(101);
+    }
 }

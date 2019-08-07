@@ -20,7 +20,6 @@ package com.neutral.xianxia.logic;
  *
  * @author Mr.Neutral
  */
-import static com.neutral.xianxia.logic.levels.CultivationLevel.getRealm;
 
 public final class Player extends Cultivator {
 
@@ -32,10 +31,6 @@ public final class Player extends Cultivator {
 
     public void cultivate() {
         grantExp((int) (((Math.random() + 0.1) * 10) * expMultiplier));
-    }
-
-    void checkRealm() {
-        setCultivationRealm((getBodyLevel().getRank() > getQiLevel().getRank()) ? getRealm(getBodyLevel().getRank()) : getRealm(getQiLevel().getRank()));
     }
 
     public double getExpMultiplier() {
