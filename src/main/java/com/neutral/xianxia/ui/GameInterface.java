@@ -168,6 +168,7 @@ public class GameInterface extends javax.swing.JFrame {
         upgradePanel.setLayout(new java.awt.GridBagLayout());
 
         upgradeQiButton.setText("Qi");
+        upgradeQiButton.setToolTipText(null);
         upgradeQiButton.setFocusable(false);
         upgradeQiButton.setMaximumSize(new java.awt.Dimension(100, 31));
         upgradeQiButton.setMinimumSize(new java.awt.Dimension(75, 31));
@@ -185,6 +186,7 @@ public class GameInterface extends javax.swing.JFrame {
         upgradePanel.add(upgradeQiButton, gridBagConstraints);
 
         upgradeBodyButton.setText("Body");
+        upgradeBodyButton.setToolTipText(null);
         upgradeBodyButton.setFocusable(false);
         upgradeBodyButton.setMaximumSize(new java.awt.Dimension(100, 31));
         upgradeBodyButton.setMinimumSize(new java.awt.Dimension(75, 31));
@@ -202,6 +204,7 @@ public class GameInterface extends javax.swing.JFrame {
         upgradePanel.add(upgradeBodyButton, gridBagConstraints);
 
         cancelUpgradeButton.setText("Cancel");
+        cancelUpgradeButton.setToolTipText(null);
         cancelUpgradeButton.setFocusable(false);
         cancelUpgradeButton.setMaximumSize(new java.awt.Dimension(100, 31));
         cancelUpgradeButton.setMinimumSize(new java.awt.Dimension(75, 31));
@@ -266,6 +269,7 @@ public class GameInterface extends javax.swing.JFrame {
         eventText.setColumns(20);
         eventText.setLineWrap(true);
         eventText.setRows(6);
+        eventText.setToolTipText(null);
         eventText.setWrapStyleWord(true);
         eventText.setBorder(null);
         eventText.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -290,6 +294,7 @@ public class GameInterface extends javax.swing.JFrame {
         eventPanel.add(eventExp, gridBagConstraints);
 
         closeEventDialog.setText("Return");
+        closeEventDialog.setToolTipText(null);
         closeEventDialog.setFocusable(false);
         closeEventDialog.setMaximumSize(new java.awt.Dimension(144, 31));
         closeEventDialog.setMinimumSize(new java.awt.Dimension(144, 31));
@@ -333,6 +338,7 @@ public class GameInterface extends javax.swing.JFrame {
         tribulationPanel.setLayout(upgradePanel1Layout);
 
         noAscendButton.setText("No");
+        noAscendButton.setToolTipText(null);
         noAscendButton.setFocusable(false);
         noAscendButton.setMaximumSize(new java.awt.Dimension(75, 31));
         noAscendButton.setMinimumSize(new java.awt.Dimension(75, 31));
@@ -349,6 +355,7 @@ public class GameInterface extends javax.swing.JFrame {
         tribulationPanel.add(noAscendButton, gridBagConstraints);
 
         yesAscendButton.setText("Yes");
+        yesAscendButton.setToolTipText(null);
         yesAscendButton.setFocusable(false);
         yesAscendButton.setMaximumSize(new java.awt.Dimension(75, 31));
         yesAscendButton.setMinimumSize(new java.awt.Dimension(75, 31));
@@ -441,6 +448,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyBodyData, gridBagConstraints);
 
         enemyQiData.setText("Foundation Establishment Spirit 2nd Stage");
+        enemyQiData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -448,6 +456,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyQiData, gridBagConstraints);
 
         enemyCultivationData.setText("Foundation Establishment");
+        enemyCultivationData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -455,6 +464,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyCultivationData, gridBagConstraints);
 
         enemyHealthData.setText("2000/2000");
+        enemyHealthData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
@@ -462,6 +472,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyHealthData, gridBagConstraints);
 
         enemySpiritData.setText("500/500");
+        enemySpiritData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 10;
@@ -469,6 +480,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemySpiritData, gridBagConstraints);
 
         enemyNameLabel.setText("Name:");
+        enemyNameLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -476,6 +488,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyNameLabel, gridBagConstraints);
 
         enemyBodyLabel.setText("Body Level:");
+        enemyBodyLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -483,6 +496,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyBodyLabel, gridBagConstraints);
 
         enemyQiLabel.setText("Qi Level:");
+        enemyQiLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -490,6 +504,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyQiLabel, gridBagConstraints);
 
         enemyCultivationLabel.setText("Level:");
+        enemyCultivationLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -497,6 +512,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyCultivationLabel, gridBagConstraints);
 
         enemyHealthLabel.setText("Health:");
+        enemyHealthLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -504,6 +520,7 @@ public class GameInterface extends javax.swing.JFrame {
         enemyDataPanel.add(enemyHealthLabel, gridBagConstraints);
 
         enemySpiritLabel.setText("Spirit:");
+        enemySpiritLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
@@ -537,6 +554,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerBodyData, gridBagConstraints);
 
         playerQiData.setText("Foundation Establishment Spirit 2nd Stage");
+        playerQiData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -544,6 +562,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerQiData, gridBagConstraints);
 
         playerCultivationData.setText("Foundation Establishment");
+        playerCultivationData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -551,6 +570,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerCultivationData, gridBagConstraints);
 
         playerHealthData.setText("2000/2000");
+        playerHealthData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
@@ -558,6 +578,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerHealthData, gridBagConstraints);
 
         playerSpiritData.setText("500/500");
+        playerSpiritData.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 10;
@@ -565,6 +586,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerSpiritData, gridBagConstraints);
 
         playerNameLabel.setText("Name:");
+        playerNameLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -572,6 +594,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerNameLabel, gridBagConstraints);
 
         playerBodyLabel.setText("Body Level:");
+        playerBodyLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -579,6 +602,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerBodyLabel, gridBagConstraints);
 
         playerQiLabel.setText("Qi Level:");
+        playerQiLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -586,6 +610,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerQiLabel, gridBagConstraints);
 
         playerCultivationLabel.setText("Level:");
+        playerCultivationLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -593,6 +618,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerCultivationLabel, gridBagConstraints);
 
         playerHealthLabel.setText("Health:");
+        playerHealthLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -600,6 +626,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDataBattlePanel.add(playerHealthLabel, gridBagConstraints);
 
         playerSpiritLabel.setText("Spirit:");
+        playerSpiritLabel.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
@@ -617,6 +644,7 @@ public class GameInterface extends javax.swing.JFrame {
         battleHistoryTextArea.setColumns(20);
         battleHistoryTextArea.setLineWrap(true);
         battleHistoryTextArea.setRows(5);
+        battleHistoryTextArea.setToolTipText(null);
         battleHistoryTextArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         battleHistoryTextArea.setFocusable(false);
         battleHistoryTextArea.setMinimumSize(new java.awt.Dimension(850, 100));
@@ -633,6 +661,7 @@ public class GameInterface extends javax.swing.JFrame {
         battleButtonsPanel.setLayout(battleButtonsPanelLayout);
 
         physicalAttackButton.setText("Phys Attack");
+        physicalAttackButton.setToolTipText(null);
         physicalAttackButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 physicalAttackButtonActionPerformed(evt);
@@ -644,6 +673,7 @@ public class GameInterface extends javax.swing.JFrame {
         battleButtonsPanel.add(physicalAttackButton, gridBagConstraints);
 
         spiritAttackButton.setText("Sp Attack");
+        spiritAttackButton.setToolTipText(null);
         spiritAttackButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 spiritAttackButtonActionPerformed(evt);
@@ -655,6 +685,7 @@ public class GameInterface extends javax.swing.JFrame {
         battleButtonsPanel.add(spiritAttackButton, gridBagConstraints);
 
         physicalDefenseButton.setText("Phys Def");
+        physicalDefenseButton.setToolTipText(null);
         physicalDefenseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 physicalDefenseButtonActionPerformed(evt);
@@ -666,6 +697,7 @@ public class GameInterface extends javax.swing.JFrame {
         battleButtonsPanel.add(physicalDefenseButton, gridBagConstraints);
 
         spiritDefenseButton.setText("Sp Def");
+        spiritDefenseButton.setToolTipText(null);
         spiritDefenseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 spiritDefenseButtonActionPerformed(evt);
@@ -677,12 +709,14 @@ public class GameInterface extends javax.swing.JFrame {
         battleButtonsPanel.add(spiritDefenseButton, gridBagConstraints);
 
         retreatButton.setText("Retreat");
+        retreatButton.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 30;
         gridBagConstraints.gridy = 0;
         battleButtonsPanel.add(retreatButton, gridBagConstraints);
 
         surrenderButton.setText("Surrender");
+        surrenderButton.setToolTipText(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 32;
         gridBagConstraints.gridy = 0;
@@ -813,6 +847,7 @@ public class GameInterface extends javax.swing.JFrame {
         actionPanel.add(playerStatusPanel, gridBagConstraints);
 
         cultivateButton.setText("Cultivate");
+        cultivateButton.setToolTipText(null);
         cultivateButton.setFocusable(false);
         cultivateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -826,6 +861,7 @@ public class GameInterface extends javax.swing.JFrame {
         actionPanel.add(cultivateButton, gridBagConstraints);
 
         levelUpButton.setText("Level Up");
+        levelUpButton.setToolTipText(null);
         levelUpButton.setFocusable(false);
         levelUpButton.setEnabled(false);
         levelUpButton.addActionListener(new java.awt.event.ActionListener() {
@@ -839,6 +875,7 @@ public class GameInterface extends javax.swing.JFrame {
         actionPanel.add(levelUpButton, gridBagConstraints);
 
         exploreButton.setText("Explore");
+        exploreButton.setToolTipText(null);
         exploreButton.setFocusable(false);
         exploreButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1036,6 +1073,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(multiplierDebugLabel, gridBagConstraints);
 
         healthDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        healthDebug.setToolTipText(null);
         healthDebug.setMaximumSize(getPreferredSize());
         healthDebug.setMinimumSize(new java.awt.Dimension(0, 25));
         healthDebug.setPreferredSize(new java.awt.Dimension(0, 25));
@@ -1052,6 +1090,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(healthDebug, gridBagConstraints);
 
         spiritDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        spiritDebug.setToolTipText(null);
         spiritDebug.setMaximumSize(getPreferredSize());
         spiritDebug.setMinimumSize(new java.awt.Dimension(0, 25));
         spiritDebug.setPreferredSize(new java.awt.Dimension(0, 25));
@@ -1068,6 +1107,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(spiritDebug, gridBagConstraints);
 
         qiDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        qiDebug.setToolTipText(null);
         qiDebug.setMaximumSize(getPreferredSize());
         qiDebug.setMinimumSize(new java.awt.Dimension(0, 25));
         qiDebug.setPreferredSize(new java.awt.Dimension(0, 25));
@@ -1084,6 +1124,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(qiDebug, gridBagConstraints);
 
         bodyDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        bodyDebug.setToolTipText(null);
         bodyDebug.setMaximumSize(getPreferredSize());
         bodyDebug.setMinimumSize(new java.awt.Dimension(0, 25));
         bodyDebug.setPreferredSize(new java.awt.Dimension(0, 25));
@@ -1100,6 +1141,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(bodyDebug, gridBagConstraints);
 
         multiplierDebug.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        multiplierDebug.setToolTipText(null);
         multiplierDebug.setMaximumSize(getPreferredSize());
         multiplierDebug.setMinimumSize(new java.awt.Dimension(85, 25));
         multiplierDebug.setPreferredSize(new java.awt.Dimension(0, 25));
@@ -1116,6 +1158,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(multiplierDebug, gridBagConstraints);
 
         toggleUpgradeQi.setText("Upgrade Stats");
+        toggleUpgradeQi.setToolTipText(null);
         toggleUpgradeQi.setFocusable(false);
         toggleUpgradeQi.setMaximumSize(getPreferredSize());
         toggleUpgradeQi.setMinimumSize(new java.awt.Dimension(125, 25));
@@ -1132,6 +1175,7 @@ public class GameInterface extends javax.swing.JFrame {
         playerDebugPanel.add(toggleUpgradeQi, gridBagConstraints);
 
         toggleUpgradeBody.setText("Upgrade Stats");
+        toggleUpgradeBody.setToolTipText(null);
         toggleUpgradeBody.setFocusable(false);
         toggleUpgradeBody.setMaximumSize(getPreferredSize());
         toggleUpgradeBody.setMinimumSize(new java.awt.Dimension(125, 25));
