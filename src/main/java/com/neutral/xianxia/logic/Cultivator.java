@@ -87,13 +87,13 @@ public abstract class Cultivator implements Fightable {
 
     @Override
     public double getPhysicalAttack() {
-        return (getBodyLevel().getRank() * 1.5) * getCultivationRealm().getRank() + 1;
+        return (getBodyLevel().getRank() * 1.5) * ((getCultivationRealm().getRank() == 0) ? 1 : getCultivationRealm().getRank());
         // 1 * 1.5 * 1 + 1 = 2.5 
     }
 
     @Override
     public double getSpiritAttack() {
-        return (getQiLevel().getRank() * 2.5) * getCultivationRealm().getRank() + 1;
+        return (getQiLevel().getRank() * 2.5) * ((getCultivationRealm().getRank() == 0) ? 1 : getCultivationRealm().getRank());
         // 1 * 3.5 + 1 = 4.5
     }
 
@@ -212,7 +212,7 @@ public abstract class Cultivator implements Fightable {
     public void setHealth(int health) {
         if (health <= 0) {
             this.health = 0;
-        } else if (health > maxHealth){
+        } else if (health > maxHealth) {
             this.health = maxHealth;
         } else {
             this.health = health;
@@ -230,7 +230,7 @@ public abstract class Cultivator implements Fightable {
     public void setSpirit(int spirit) {
         if (spirit <= 0) {
             this.spirit = 0;
-        } else if (spirit > maxSpirit){
+        } else if (spirit > maxSpirit) {
             this.spirit = maxSpirit;
         } else {
             this.spirit = spirit;

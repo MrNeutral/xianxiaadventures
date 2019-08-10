@@ -149,11 +149,11 @@ public final class System {
     }
 
     public static final double getPlayerAttack() {
-        return PLAYER.getPhysicalAttack();
+        return PLAYER.getPhysicalAttack() + PLAYER.getSpiritAttack();
     }
 
     public static final double getPlayerDefence() {
-        return PLAYER.getPhysicalDefence();
+        return PLAYER.getPhysicalDefence() + PLAYER.getSpiritDefense();
     }
 
     public static final double getPlayerExpMultiplier() {

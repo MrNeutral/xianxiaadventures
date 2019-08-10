@@ -29,6 +29,8 @@ public enum EventType {
     //<editor-fold defaultstate="collapsed" desc="Event types">
     SECT(
             SECT_MEMBER_DIES,
+            SENIOR_ADVISES,
+            ADMIRER_GIFTS,
             SECT_DESTOYED
     ),
     MYSTICAL_BEAST(
@@ -39,12 +41,16 @@ public enum EventType {
             PET_FOUND_MATE,
             PET_STOLEN,
             PET_ATE_TREASURE,
+            PET_FINDS_TREASURE,
             FAILED_TO_TAME_PET,
             PET_TAMED_BY_OTHER
     ),
     PILL_CONSUMPTION(
             PILL_COUGH_BLOOD,
             PILL_IMPURE_CURE,
+            PILL_PURE,
+            PILL_CULTIVATION,
+            PILL_GODLY,
             PILL_FAINT,
             PILL_SHRINK,
             PILL_GROW,
@@ -53,6 +59,7 @@ public enum EventType {
     ),
     GAMBLING(
             GAMBLING_FAIL,
+            GAMBLING_SUCCESS,
             CASINO_CHEAT_FOUND
     ),
     AMBUSH(
@@ -64,6 +71,7 @@ public enum EventType {
     ),
     SHOP(
             SHOP_ROBBED,
+            SHOP_PROFITS,
             SHOPKEEPER_STEALS_EVERYTHING
     ),
     CHOSEN_ONE(
@@ -84,23 +92,28 @@ public enum EventType {
             CAVE_STOLEN
     ),
     INHERITANCE(
-            INHERITANCE_CLAIMED
+            INHERITANCE_ALREADY_CLAIMED,
+            INHERITANCE_FOUND
     ),
     DISCIPLE(
-            DISCIPLE_BETRAYS
+            DISCIPLE_BETRAYS,
+            LOYAL_DISCIPLE
     ),
     CULTIVATION(
-            SYSTEM_DESTROYED
+            SYSTEM_DESTROYED,
+            ENLIGHTENMENT
     ),
     ALCHEMY(
             CAULDRON_EXPLODES,
+            PILL_SUCCESS,
             PILL_RUINED
     ),
     CULTIVATORS(
             NEIGHBOR_BBQ
     ),
     AUCTION(
-            AUCTION_BEAT_UP
+            AUCTION_BEAT_UP,
+            AUCTION_GET_TREASURE
     ),
     USERS(
             PRAY_EXP_SUCCESS,

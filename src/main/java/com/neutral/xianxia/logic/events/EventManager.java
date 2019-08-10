@@ -52,7 +52,7 @@ public final class EventManager {
     }
 
     public void checkAllowedEvents(List<Event> events) {
-        if (System.getPlayerRealm().getRank() < 19) {
+        if (System.getPlayerRealm().getRank() < 19 || EventFlag.CRIPPLED.isTriggered()) {
             events.remove(SYSTEM_DESTROYED);
         }
 
@@ -64,14 +64,26 @@ public final class EventManager {
     public void triggerEventFlags(Event event) {
         if (event == JOIN_SECT) {
             EventFlag.JOINED_SECT.setTriggered(true);
+            System.setPlayerExpMultiplier(System.getPlayerExpMultiplier() + 0.5);
         }
 
         if (event == GOT_PET) {
             EventFlag.HAS_PET.setTriggered(true);
+            System.setPlayerExpMultiplier(System.getPlayerExpMultiplier() + 0.2);
+        }
+
+        if (event == ENLIGHTENMENT) {
+            System.setPlayerExpMultiplier(System.getPlayerExpMultiplier() + 1);
+        }
+
+        if (event == SYSTEM_DESTROYED) {
+            EventFlag.CRIPPLED.setTriggered(true);
+            System.setPlayerExpMultiplier(System.getPlayerExpMultiplier() - 1);
         }
 
         if (event == PET_DIED || event == PET_POISONED || event == PET_FOUND_MATE || event == PET_KILLED || event == PET_STOLEN || event == PET_TAMED_BY_OTHER) {
             EventFlag.HAS_PET.setTriggered(false);
+            System.setPlayerExpMultiplier(System.getPlayerExpMultiplier() - 0.2);
         }
     }
 

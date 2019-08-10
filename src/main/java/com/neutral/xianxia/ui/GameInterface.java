@@ -1503,10 +1503,11 @@ public class GameInterface extends javax.swing.JFrame {
             battleHistoryTextArea.append(event.getEventText() + "\n\n");
             battleDialog.setVisible(true);
         } else {
+            int exp = (int) Math.round((System.getPlayerExp() + 10) * event.getExpEffect());
             eventTitle.setText(event.getEventName());
             eventText.setText(event.getEventText());
-            eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(event.getExpEffect()) + " exp.");
-            System.grantExp(event.getExpEffect());
+            eventExp.setText("You " + ((event.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(exp) + " exp.");
+            System.grantExp(exp);
         }
     }
 
@@ -1547,8 +1548,8 @@ public class GameInterface extends javax.swing.JFrame {
         expData.setText(String.valueOf(System.getPlayerExp()));
         healthData.setText(String.valueOf(System.getPlayerHealth()));
         spiritData.setText(String.valueOf(System.getPlayerSpirit()));
-        attackData.setText(String.valueOf(System.getPlayerAttack()));
-        defenceData.setText(String.valueOf(System.getPlayerDefence()));
+        attackData.setText(String.format("%.1f", System.getPlayerAttack()));
+        defenceData.setText(String.format("%.1f", System.getPlayerDefence()));
         multiplierData.setText(String.valueOf(System.getPlayerExpMultiplier()));
         healthDebug.setText(String.valueOf(System.getPlayerHealth()));
         spiritDebug.setText(String.valueOf(System.getPlayerSpirit()));
