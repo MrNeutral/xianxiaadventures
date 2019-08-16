@@ -14,14 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic;
+package com.neutral.xianxia.bot.ids;
 
 /**
  *
  * @author Mr.Neutral
  */
-public interface Level {
-    String getName();
-    int getRank();
-    abstract int getCost();
+public enum ID {
+    ID_NEUTRAL("272493736187920384"),
+    ID_GENERAL_CBT("597532360522596368"),
+    ID_CULTIVATOR("609732842192109589");
+    private final String ID;
+
+    private ID(String id) {
+        ID = id;
+    }
+
+    public String getID() {
+        return ID;
+    }
+    
+    
+    
+    
 }

@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic.levels;
+package com.neutral.xianxia.game.logic.levels;
 
-import com.neutral.xianxia.logic.Level;
+import com.neutral.xianxia.game.logic.Level;
 
 /**
  *

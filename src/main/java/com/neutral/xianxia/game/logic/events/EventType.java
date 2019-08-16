@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic.events;
+package com.neutral.xianxia.game.logic.events;
 
-import static com.neutral.xianxia.logic.events.Event.*;
+import static com.neutral.xianxia.game.logic.events.GameEvent.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
  * @author Mr.Neutral
  */
 public enum EventType {
-    //<editor-fold defaultstate="collapsed" desc="Event types">
+    //<editor-fold defaultstate="collapsed" desc="GameEvent types">
     SECT(
             SECT_MEMBER_DIES,
             SENIOR_ADVISES,
@@ -126,17 +126,17 @@ public enum EventType {
     );
     //</editor-fold>
 
-    List<Event> events = new ArrayList<>();
+    List<GameEvent> events = new ArrayList<>();
 
-    private EventType(Event... event) {
+    private EventType(GameEvent... event) {
         this.events.addAll(Arrays.asList(event));
     }
 
-    Event getRandomEvent() {
+    GameEvent getRandomEvent() {
         return events.get(EventManager.RANDOM.nextInt((events.size() - 1 > 0) ? events.size() - 1 : 1));
     }
 
-    List<Event> getEvents() {
+    List<GameEvent> getEvents() {
         return this.events;
     }
 

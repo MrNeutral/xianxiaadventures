@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic.events;
+package com.neutral.xianxia.game.logic.events;
 
 /**
  *
  * @author Mr.Neutral
  */
-public enum Event {
+public enum GameEvent {
     //<editor-fold defaultstate="collapsed" desc="Events">
     SECT_MEMBER_DIES(0.2, -0.3, "While you were exploring a member of your Sect you were close to died.\nYou cough blood in grief.", "Sect Member Dies"),
     SECT_DESTOYED(0, -1, "While you were exploring, your Sect got destroyed by the Demon Sect.\nYou cough out blood in helplessness.", "Sect Destroyed"),
@@ -91,7 +91,7 @@ public enum Event {
     private final String eventText;
     private final String eventName;
 
-    private Event(double rarity, double expEffect, String eventText, String eventName) {
+    private GameEvent(double rarity, double expEffect, String eventText, String eventName) {
         this.rarity = rarity;
         this.expEffect = expEffect;
         this.eventText = eventText;

@@ -3,9 +3,34 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.neutral</groupId>
     <artifactId>XianxiaGame</artifactId>
-    <version>1.4.1</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>com.jagrosh</groupId>
+            <artifactId>jda-utilities</artifactId>
+            <version>3.0.1</version>
+            <scope>compile</scope>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>4.BETA.0_38</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+
+    </dependencies>
     <repositories>
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter-bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
         <repository>
             <id>unknown-jars-temp-repo</id>
             <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
@@ -27,7 +52,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.neutral.xianxia.Main</mainClass>
+                            <mainClass>com.neutral.xianxia.Bot</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

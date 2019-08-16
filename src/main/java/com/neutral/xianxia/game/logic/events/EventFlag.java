@@ -14,35 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic;
+package com.neutral.xianxia.game.logic.events;
 
 /**
  *
  * @author Mr.Neutral
  */
-
-public final class Player extends Cultivator {
-
-    private double expMultiplier = 1.0;
-
-    public Player() {
-        super();
-    }
-
-    public void cultivate() {
-        grantExp((int) (((Math.random() + 0.1) * 10) * expMultiplier));
-    }
-
-    public double getExpMultiplier() {
-        return this.expMultiplier;
-    }
-
-    public void changeExpMultiplier(double amount) {
-        this.expMultiplier += amount;
-    }
-
-    public void setExpMultiplier(double expMultiplier) {
-        this.expMultiplier = expMultiplier;
-    }
-
+public enum EventFlag {
+    JOINED_SECT,
+    CRIPPLED,
+    HAS_PET,
+    FOUND_INHERITANCE,
+    PASSED_TRIBULATION,
+    FAILED_TRIBULATION;
 }

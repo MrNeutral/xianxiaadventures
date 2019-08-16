@@ -14,14 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic;
+package com.neutral.xianxia.game.logic;
 
-import com.neutral.xianxia.logic.battle.Enemy;
-import com.neutral.xianxia.logic.battle.Fightable;
-import com.neutral.xianxia.logic.levels.BodyLevel;
-import com.neutral.xianxia.logic.levels.CultivationLevel;
-import static com.neutral.xianxia.logic.levels.CultivationLevel.getRealm;
-import com.neutral.xianxia.logic.levels.QiLevel;
+import com.neutral.xianxia.game.logic.battle.Battle;
+import com.neutral.xianxia.game.logic.battle.Enemy;
+import com.neutral.xianxia.game.logic.battle.Fightable;
+import com.neutral.xianxia.game.logic.levels.BodyLevel;
+import com.neutral.xianxia.game.logic.levels.CultivationLevel;
+import static com.neutral.xianxia.game.logic.levels.CultivationLevel.getRealm;
+import com.neutral.xianxia.game.logic.levels.QiLevel;
 
 /**
  *
@@ -47,27 +48,15 @@ public abstract class Cultivator implements Fightable {
         this.maxSpirit = 0;
         this.spirit = 0;
         this.exp = 0;
-        this.powerLevel = 1;
+        this.powerLevel = 0;
         this.bodyLevel = BodyLevel.MORTAL_BODY;
         this.qiLevel = QiLevel.MORTAL_SPIRIT;
         this.cultivationRealm = CultivationLevel.MORTAL_REALM;
     }
 
-    public Cultivator(int health, int maxHealth, int spirit, int maxSpirit, int exp, int powerLevel, BodyLevel bodyLevel, QiLevel qiLevel) {
-        this.health = health;
-        this.maxHealth = health;
-        this.maxSpirit = maxSpirit;
-        this.spirit = spirit;
-        this.exp = exp;
-        this.powerLevel = powerLevel;
-        this.bodyLevel = bodyLevel;
-        this.qiLevel = qiLevel;
-        this.cultivationRealm = CultivationLevel.MORTAL_REALM;
-    }
-
     public Cultivator(int health, int maxHealth, int spirit, int maxSpirit, int exp, int powerLevel, BodyLevel bodyLevel, QiLevel qiLevel, CultivationLevel cultivationRealm) {
         this.health = health;
-        this.maxHealth = health;
+        this.maxHealth = maxHealth;
         this.maxSpirit = maxSpirit;
         this.spirit = spirit;
         this.exp = exp;
@@ -75,6 +64,18 @@ public abstract class Cultivator implements Fightable {
         this.bodyLevel = bodyLevel;
         this.qiLevel = qiLevel;
         this.cultivationRealm = cultivationRealm;
+    }
+
+    public Cultivator(int health, int spirit, int qiLevel, int bodyLevel, int cultivationRealm, int powerLevel, int exp, double expMult) {
+        this.health = health;
+        this.maxHealth = 10;
+        this.maxSpirit = 0;
+        this.spirit = spirit;
+        this.exp = exp;
+        this.powerLevel = powerLevel;
+        this.bodyLevel = BodyLevel.getRealm(bodyLevel);
+        this.qiLevel = QiLevel.getRealm(qiLevel);
+        this.cultivationRealm = CultivationLevel.getRealm(cultivationRealm);
     }
 
     public void checkRealm() {
@@ -87,7 +88,7 @@ public abstract class Cultivator implements Fightable {
 
     @Override
     public double getPhysicalAttack() {
-        return (getBodyLevel().getRank() * 1.5) * ((getCultivationRealm().getRank() == 0) ? 1 : getCultivationRealm().getRank());
+        return (getBodyLevel().getRank() * 1.5) * ((getCultivationRealm().getRank() == 0) ? 1 : getCultivationRealm().getRank()) + 1;
         // 1 * 1.5 * 1 + 1 = 2.5 
     }
 
@@ -112,10 +113,10 @@ public abstract class Cultivator implements Fightable {
     }
 
     public void levelBody() {
-        if (System.getNextLevel(bodyLevel) != null) {
-            setMaxHealth(maxHealth + System.getNextLevel(bodyLevel).getRank() * 10);
+        if (GameSystem.getNextLevel(bodyLevel) != null) {
+            setMaxHealth(maxHealth + GameSystem.getNextLevel(bodyLevel).getRank() * 10);
             setHealth(maxHealth);
-            setBodyLevel(System.getNextLevel(bodyLevel));
+            setBodyLevel(GameSystem.getNextLevel(bodyLevel));
         }
     }
 
@@ -124,10 +125,10 @@ public abstract class Cultivator implements Fightable {
     }
 
     public void levelQi() {
-        if (System.getNextLevel(qiLevel) != null) {
-            setMaxSpirit(maxSpirit + System.getNextLevel(qiLevel).getRank() * 5);
+        if (GameSystem.getNextLevel(qiLevel) != null) {
+            setMaxSpirit(maxSpirit + GameSystem.getNextLevel(qiLevel).getRank() * 5);
             setSpirit(maxSpirit);
-            setQiLevel(System.getNextLevel(qiLevel));
+            setQiLevel(GameSystem.getNextLevel(qiLevel));
         }
     }
 
@@ -252,38 +253,38 @@ public abstract class Cultivator implements Fightable {
     }
 
     @Override
-    public void defendSimpleFromSpirit(Fightable cultivator) {
+    public void defendSimpleFromSpirit(Fightable cultivator, Battle battle) {
         double potentialDamage = cultivator.getSpiritAttack();
         if (potentialDamage <= 0) {
             potentialDamage = 0;
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you but " : "You use your Qi to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You are too strong." : "The enemy is too strong."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you but " : "You use your Qi to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You are too strong." : "The enemy is too strong."));
         } else {
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you for " : "You use your Qi to attack him for ") + Math.round(potentialDamage) + " point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage.");
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you for **" : "You use your Qi to attack him for **") + Math.round(potentialDamage) + "** point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage.");
         }
         ((Cultivator) cultivator).changeSpirit((int) -Math.round(cultivator.getSpiritAttack() / 4));
         changeHealth((int) ((health - potentialDamage > 0) ? -Math.round(potentialDamage) : -health));
     }
 
     @Override
-    public void defendSimpleFromPhysical(Fightable cultivator) {
+    public void defendSimpleFromPhysical(Fightable cultivator, Battle battle) {
         double potentialDamage = cultivator.getPhysicalAttack();
         if (potentialDamage <= 0) {
             potentialDamage = 0;
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you but " : "You use your Body to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You are too strong." : "The enemy is too strong."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you but " : "You use your Body to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You are too strong." : "The enemy is too strong."));
         } else {
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you for " : "You use your Body to attack him for ") + Math.round(potentialDamage) + " point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage.");
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you for **" : "You use your Body to attack him for **") + Math.round(potentialDamage) + "** point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage.");
         }
         changeHealth((int) ((health - potentialDamage > 0) ? -Math.round(potentialDamage) : -health));
     }
 
     @Override
-    public void spiritDefendFromSpirit(Fightable cultivator) {
+    public void spiritDefendFromSpirit(Fightable cultivator, Battle battle) {
         double potentialDamage = cultivator.getSpiritAttack() - getSpiritDefense() * 1.25;
         if (potentialDamage <= 0) {
             potentialDamage = 0;
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you but " : "You use your Qi to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Qi to fully block it." : "The enemy used his Qi to fully block it."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you but " : "You use your Qi to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Qi to fully block it." : "The enemy used his Qi to fully block it."));
         } else {
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you for " : "You use your Qi to attack him for ") + Math.round(potentialDamage) + " point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your own Qi to defend." : "The enemy uses his Qi to defend."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you for **" : "You use your Qi to attack him for **") + Math.round(potentialDamage) + "** point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your own Qi to defend." : "The enemy uses his Qi to defend."));
         }
         ((Cultivator) cultivator).changeSpirit((int) -Math.round(cultivator.getSpiritAttack() / 4));
         changeSpirit((int) Math.round(-potentialDamage / 2));
@@ -292,13 +293,13 @@ public abstract class Cultivator implements Fightable {
     }
 
     @Override
-    public void spiritDefendFromPhysical(Fightable cultivator) {
+    public void spiritDefendFromPhysical(Fightable cultivator, Battle battle) {
         double potentialDamage = cultivator.getPhysicalAttack() - getSpiritDefense() * 0.75;
         if (potentialDamage <= 0) {
             potentialDamage = 0;
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you but " : "You use your Body to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Qi to fully block it." : "The enemy used his Qi to fully block it."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you but " : "You use your Body to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Qi to fully block it." : "The enemy used his Qi to fully block it."));
         } else {
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you for " : "You use your Body to attack him for ") + Math.round(potentialDamage) + " point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your Qi to defend." : "The enemy uses his Qi to defend."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you for **" : "You use your Body to attack him for **") + Math.round(potentialDamage) + "** point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your Qi to defend." : "The enemy uses his Qi to defend."));
         }
         ((Cultivator) cultivator).setDefendingWithQi(false);
         changeSpirit((int) Math.round(-potentialDamage / 2));
@@ -306,13 +307,13 @@ public abstract class Cultivator implements Fightable {
     }
 
     @Override
-    public void physicalDefendFromSpirit(Fightable cultivator) {
+    public void physicalDefendFromSpirit(Fightable cultivator, Battle battle) {
         double potentialDamage = cultivator.getSpiritAttack() - getPhysicalDefence() * 0.75;
         if (potentialDamage <= 0) {
             potentialDamage = 0;
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you but " : "You use your Qi to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Body to fully block it." : "The enemy used his Body to fully block it."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you but " : "You use your Qi to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Body to fully block it." : "The enemy used his Body to fully block it."));
         } else {
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you for " : "You use your Qi to attack him for ") + Math.round(potentialDamage) + " point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your Body to defend." : "The enemy uses his Body to defend."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Qi to attack you for **" : "You use your Qi to attack him for **") + Math.round(potentialDamage) + "** point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your Body to defend." : "The enemy uses his Body to defend."));
         }
         ((Cultivator) cultivator).changeSpirit((int) -Math.round(cultivator.getSpiritAttack() / 4));
         ((Cultivator) cultivator).setDefendingWithBody(false);
@@ -320,13 +321,13 @@ public abstract class Cultivator implements Fightable {
     }
 
     @Override
-    public void physicalDefendFromPhysical(Fightable cultivator) {
+    public void physicalDefendFromPhysical(Fightable cultivator, Battle battle) {
         double potentialDamage = cultivator.getPhysicalAttack() - getPhysicalDefence() * 0.75;
         if (potentialDamage <= 0) {
             potentialDamage = 0;
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you but " : "You use your Body to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Body to fully block it." : "The enemy used his Body to fully block it."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you but " : "You use your Body to attack him but ") + "it does no damage. " + ((cultivator instanceof Enemy) ? "You used your own Body to fully block it." : "The enemy used his Body to fully block it."));
         } else {
-            System.setBattleAction(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you for " : "You use your Body to attack him for ") + Math.round(potentialDamage) + " point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your Body to defend." : "The enemy uses his Body to defend."));
+            battle.addToBattleHistory(((cultivator instanceof Enemy) ? "The enemy uses his Body to attack you for **" : "You use your Body to attack him for **") + Math.round(potentialDamage) + "** point" + ((Math.round(potentialDamage) > 1) ? "s" : "") + " of damage. " + ((cultivator instanceof Enemy) ? "You use your Body to defend." : "The enemy uses his Body to defend."));
         }
         ((Cultivator) cultivator).setDefendingWithBody(false);
         changeHealth((int) ((health - potentialDamage > 0) ? -Math.round(potentialDamage) : -health));
@@ -362,34 +363,34 @@ public abstract class Cultivator implements Fightable {
     }
 
     @Override
-    public void attackPhysical(Fightable cultivator) {
-        cultivator.defendPhysical(this);
+    public void attackPhysical(Fightable cultivator, Battle battle) {
+        cultivator.defendPhysical(this, battle);
     }
 
     @Override
-    public void attackSpirit(Fightable cultivator) {
-        cultivator.defendSpirit(this);
+    public void attackSpirit(Fightable cultivator, Battle battle) {
+        cultivator.defendSpirit(this, battle);
     }
 
     @Override
-    public void defendSpirit(Fightable cultivator) {
+    public void defendSpirit(Fightable cultivator, Battle battle) {
         if (isDefendingWithBody()) {
-            physicalDefendFromSpirit(cultivator);
+            physicalDefendFromSpirit(cultivator, battle);
         } else if (isDefendingWithQi()) {
-            spiritDefendFromSpirit(cultivator);
+            spiritDefendFromSpirit(cultivator, battle);
         } else {
-            defendSimpleFromSpirit(cultivator);
+            defendSimpleFromSpirit(cultivator, battle);
         }
     }
 
     @Override
-    public void defendPhysical(Fightable cultivator) {
+    public void defendPhysical(Fightable cultivator, Battle battle) {
         if (isDefendingWithBody()) {
-            physicalDefendFromPhysical(cultivator);
+            physicalDefendFromPhysical(cultivator, battle);
         } else if (isDefendingWithQi()) {
-            spiritDefendFromPhysical(cultivator);
+            spiritDefendFromPhysical(cultivator, battle);
         } else {
-            defendSimpleFromPhysical(cultivator);
+            defendSimpleFromPhysical(cultivator, battle);
         }
     }
 

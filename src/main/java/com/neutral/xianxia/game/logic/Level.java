@@ -14,32 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic.events;
+package com.neutral.xianxia.game.logic;
 
 /**
  *
  * @author Mr.Neutral
  */
-public enum EventFlag {
-    JOINED_SECT(false),
-    CRIPPLED(false),
-    HAS_PET(false),
-    FOUND_INHERITANCE(false),
-    PASSED_TRIBULATION(false),
-    FAILED_TRIBULATION(false);
-
-    private boolean triggered;
-
-    private EventFlag(boolean triggered) {
-        this.triggered = triggered;
-    }
-
-    boolean isTriggered() {
-        return triggered;
-    }
-
-    void setTriggered(boolean triggered) {
-        this.triggered = triggered;
-    }
-
+public interface Level {
+    String getName();
+    int getRank();
+    abstract int getCost();
 }

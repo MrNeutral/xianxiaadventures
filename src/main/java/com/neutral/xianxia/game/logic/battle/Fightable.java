@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.neutral.xianxia.logic.battle;
+package com.neutral.xianxia.game.logic.battle;
 
 /**
  *
@@ -30,23 +30,23 @@ public interface Fightable {
 
     public double getSpiritDefense();
 
-    public void attackSpirit(Fightable cultivator);
+    public void attackSpirit(Fightable cultivator, Battle battle);
 
-    public void defendSpirit(Fightable cultivator);
+    public void defendSpirit(Fightable cultivator, Battle battle);
 
-    public void defendSimpleFromSpirit(Fightable cultivator);
+    public void defendSimpleFromSpirit(Fightable cultivator, Battle battle);
 
-    public void attackPhysical(Fightable cultivator);
+    public void attackPhysical(Fightable cultivator, Battle battle);
 
-    public void defendPhysical(Fightable cultivator);
+    public void defendPhysical(Fightable cultivator, Battle battle);
 
-    public void defendSimpleFromPhysical(Fightable cultivator);
+    public void defendSimpleFromPhysical(Fightable cultivator, Battle battle);
 
-    public void spiritDefendFromSpirit(Fightable cultivator);
+    public void spiritDefendFromSpirit(Fightable cultivator, Battle battle);
 
-    public void spiritDefendFromPhysical(Fightable cultivator);
+    public void spiritDefendFromPhysical(Fightable cultivator, Battle battle);
 
-    public void physicalDefendFromSpirit(Fightable cultivator);
+    public void physicalDefendFromSpirit(Fightable cultivator, Battle battle);
 
-    public void physicalDefendFromPhysical(Fightable cultivator);
+    public void physicalDefendFromPhysical(Fightable cultivator, Battle battle);
 }
