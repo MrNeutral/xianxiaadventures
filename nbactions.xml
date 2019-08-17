@@ -12,6 +12,7 @@
             <properties>
                 <exec.args>-classpath %classpath com.neutral.xianxia.Bot</exec.args>
                 <exec.executable>java</exec.executable>
+                <Env.DATABASE_URL>postgres://vvdjqnfqfwdvil:9aae73205cbb08392b59ba5797b35709b8307b16c1882fc47e764e07dadf78c0@ec2-54-217-206-65.eu-west-1.compute.amazonaws.com:5432/ddn3vv8iunrqeo</Env.DATABASE_URL>
             </properties>
         </action>
         <action>
@@ -24,7 +25,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.5.0:exec</goal>
             </goals>
             <properties>
-                <exec.args>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath com.neutral.xianxia.Bot</exec.args>
+                <exec.args>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address} -classpath %classpath com.neutral.xianxia.Bot Env.DATABASE_URL=postgres://vvdjqnfqfwdvil:9aae73205cbb08392b59ba5797b35709b8307b1</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -39,7 +40,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.5.0:exec</goal>
             </goals>
             <properties>
-                <exec.args>-classpath %classpath com.neutral.xianxia.Bot</exec.args>
+                <exec.args>-classpath %classpath com.neutral.xianxia.Bot Env.DATABASE_URL=postgres://vvdjqnfqfwdvil:9aae73205cbb08392b59ba5797b35709b8307b1</exec.args>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>

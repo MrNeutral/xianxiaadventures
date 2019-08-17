@@ -37,7 +37,11 @@ public class Storage {
 
     static {
         try {
-            conn = DriverManager.getConnection("jdbc:postgresql://ec2-54-217-206-65.eu-west-1.compute.amazonaws.com:5432/ddn3vv8iunrqeo?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory", "vvdjqnfqfwdvil", "9aae73205cbb08392b59ba5797b35709b8307b16c1882fc47e764e07dadf78c0");
+            String[] db = System.getenv("DATABASE_URL").split("//")[1].split("@");
+            String dbUser = db[0].split(":")[0];
+            String dbPass = db[0].split(":")[1];
+            String dbLink = db[1];
+            conn = DriverManager.getConnection("jdbc:postgresql://" + dbLink + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory", dbUser, dbPass);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

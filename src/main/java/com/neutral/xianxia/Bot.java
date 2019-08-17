@@ -65,6 +65,7 @@ public class Bot extends ListenerAdapter {
                 e.reactWarning();
                 e.getJDA().shutdown();
                 System.out.println("Bot shut down");
+                System.exit(0);
             }
         }, new SetExpMultCommand(), new TribulationCommand(), new ResetCommand(), new HealCommand(), new CheckUpgradeCommand());
         // Note: It is important to register your Bot before building
