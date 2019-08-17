@@ -25,12 +25,13 @@ import com.neutral.xianxia.game.logic.Player;
  *
  * @author Mr.Neutral
  */
-public class LevelBody extends Command{
-    
+public class LevelBody extends Command {
+
     public LevelBody() {
         super.name = "levelbody";
         super.help = "Attempt to level up Body.";
         super.requiredRole = "Cultivator";
+        super.cooldown = 5;
     }
 
     @Override
@@ -47,12 +48,13 @@ public class LevelBody extends Command{
             } else {
                 e.reply("You have reached the peak and can go no further.");
             }
-        } else if (GameSystem.isTribulationDue()) {
+        } else if (GameSystem.isTribulationDue(player)) {
             e.reply("You cannot increase your Body any further unless you face tribulation.");
         } else {
-            player.changeHealth((int) -Math.round(player.getMaxHealth() * 0.2));
+            int damage = (int) -Math.round(player.getMaxHealth() * 0.2);
+            e.reply("You do not have enough exp to break through and trying to do so damages you. You lose " + damage + " health.");
+            player.changeHealth(damage);
         }
     }
-    
-    
+
 }

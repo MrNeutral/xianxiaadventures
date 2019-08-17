@@ -27,6 +27,7 @@ import java.util.Map;
 public final class Player extends Cultivator {
 
     private double expMultiplier = 1.0;
+    private boolean tribulationDue = false;
     private final String ID;
     private String name;
     private final Map<EventFlag, Boolean> flags = new HashMap<>();
@@ -42,8 +43,8 @@ public final class Player extends Cultivator {
         this.name = name;
     }
 
-    public Player(String ID, String name, int health, int spirit, int qiLevel, int bodyLevel, int cultivationRealm, int powerLevel, int exp, double expMult, boolean hasPet, boolean joinedSect, boolean crippled) {
-        super(health, spirit, qiLevel, bodyLevel, cultivationRealm, powerLevel, exp, expMult);
+    public Player(String ID, String name, int health, int spirit, int qi, int body, int realm, int powerlevel, int exp, double expMult, boolean hasPet, boolean joinedSect, boolean crippled) {
+        super(health, spirit, qi, body, realm, powerlevel, exp, expMult);
         this.ID = ID;
         this.name = name;
         flags.put(EventFlag.JOINED_SECT, joinedSect);
@@ -53,10 +54,20 @@ public final class Player extends Cultivator {
         flags.put(EventFlag.PASSED_TRIBULATION, Boolean.FALSE);
     }
 
-    public void cultivate() {
-        int exp = (int) (((Math.random() + 0.1) * 10) * expMultiplier);
+    public int cultivate() {
+        int exp = (int) (((Math.random() + 0.1) * 10) * expMultiplier
+                * ((getCultivationRealm().getRank() > 0) ? getCultivationRealm().getRank() : 1));
         System.out.println("Gained XP: " + exp);
         grantExp(exp);
+        return exp;
+    }
+
+    public boolean isTribulationDue() {
+        return tribulationDue;
+    }
+
+    public void setTribulationDue(boolean tribulationDue) {
+        this.tribulationDue = tribulationDue;
     }
 
     public Map<EventFlag, Boolean> getFlags() {
@@ -65,6 +76,10 @@ public final class Player extends Cultivator {
 
     public boolean getFlag(EventFlag flag) {
         return flags.get(flag);
+    }
+
+    public boolean setFlag(EventFlag flag, boolean status) {
+        return flags.replace(flag, status);
     }
 
     public double getExpMultiplier() {
@@ -85,6 +100,10 @@ public final class Player extends Cultivator {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

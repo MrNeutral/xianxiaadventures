@@ -32,6 +32,18 @@ public class BattleManager {
     private final Random random = new Random();
     private final Map<String, Battle> battles = new HashMap<>();
 
+    public boolean initBattle(Player player, Player enemyPlayer) {
+        if (battles.size() > 10) {
+            battles.clear();
+        }
+        
+        Battle battle = new Battle(player, enemyPlayer);
+        battle.setHandicap(100);
+        battles.remove(player.getID());
+        battles.put(player.getID(), battle);
+        return random.nextBoolean();
+    }
+
     public boolean initBattle(Player player) {
         if (battles.size() > 10) {
             battles.clear();

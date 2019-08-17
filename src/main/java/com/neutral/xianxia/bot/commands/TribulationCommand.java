@@ -20,43 +20,38 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import com.neutral.xianxia.game.logic.GameSystem;
 import com.neutral.xianxia.game.logic.Player;
+import com.neutral.xianxia.game.logic.levels.BodyLevel;
+import com.neutral.xianxia.game.logic.levels.QiLevel;
 
 /**
  *
  * @author Mr.Neutral
  */
-public class GrantExp extends Command {
+public class TribulationCommand extends Command {
 
-    public GrantExp() {
-        super.name = "xp";
-        super.help = "Grant exp.";
-        super.arguments = "[@target] [amount]";
-        super.ownerCommand = true;
-        super.hidden = true;
+    public TribulationCommand() {
+        super.name = "tribulation";
+        super.help = "Face tribulation to ascend";
         super.requiredRole = "Cultivator";
+        super.cooldown = 10;
     }
 
     @Override
     protected void execute(CommandEvent e) {
-        String[] args = e.getArgs().split(" ");
-        if(args.length == 1 && args[0].equals("")){
-            e.reply("Please enter an amount and optionally a target");
+
+        Player player = GameSystem.getPlayer(e.getMember().getId());
+        if (!GameSystem.isTribulationDue(player)) {
+            e.reply("You don't need to face tribulation.");
             return;
         }
-        if (!e.getMessage().getMentionedMembers().isEmpty()) {
-            try {
-                Player target = GameSystem.getPlayer(e.getMessage().getMentionedMembers().get(0).getId());
-                GameSystem.grantExp(Integer.valueOf(args[1]), target);
-            } catch (NumberFormatException ex) {
-                e.reply("Invalid amount.");
-            }
+        int tribulationCost
+                = GameSystem.getNextLevel(BodyLevel.getRealm(player.getBodyLevel().getRank())).getCost()
+                + GameSystem.getNextLevel(QiLevel.getRealm(player.getQiLevel().getRank())).getCost();
+
+        if (player.getExp() - tribulationCost >= 0) {
+            e.reply(GameSystem.triggerTribulation(player));
         } else {
-            try {
-                Player player = GameSystem.getPlayer(e.getMember().getId());
-                GameSystem.grantExp(Integer.valueOf(args[0]), player);
-            } catch (NumberFormatException ex) {
-                e.reply("Invalid amount.");
-            }
+            e.reply("You don't have enough exp to face tribulation. You need " + tribulationCost + ".");
         }
     }
 

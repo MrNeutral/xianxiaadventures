@@ -18,7 +18,6 @@ package com.neutral.xianxia.bot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
-import static com.neutral.xianxia.bot.ids.ID.ID_CULTIVATOR;
 import com.neutral.xianxia.bot.sql.Storage;
 import com.neutral.xianxia.game.logic.GameSystem;
 import com.neutral.xianxia.game.logic.Player;
@@ -33,7 +32,7 @@ public class RegisterCommand extends Command {
     public RegisterCommand() {
         super.name = "register";
         super.help = "Grants Cultivator role and registers you to the bot";
-        super.ownerCommand = true;
+//        super.ownerCommand = true;
     }
     
     @Override
@@ -43,7 +42,7 @@ public class RegisterCommand extends Command {
             if (!Storage.isCultivator(e.getMember().getId())) {
                 try {
                     Player player = new Player(e.getMember().getId(), e.getMember().getEffectiveName());
-                    guild.addRoleToMember(e.getMember(), guild.getRoleById(ID_CULTIVATOR.getID())).queue();
+                    guild.addRoleToMember(e.getMember(), guild.getRolesByName("Cultivator", false).get(0)).queue();
                     GameSystem.addPlayer(player);
                     Storage.registerPlayer(player);
                     e.reply("Granted Cultivator role");

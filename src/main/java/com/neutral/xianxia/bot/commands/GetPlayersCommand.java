@@ -27,13 +27,14 @@ import java.util.List;
  * @author Mr.Neutral
  */
 public class GetPlayersCommand extends Command {
-    
+
     public GetPlayersCommand() {
         super.name = "getPlayers";
         super.help = "Print list of players and some data from DB";
         super.requiredRole = "Cultivator";
+        super.ownerCommand = true;
     }
-    
+
     @Override
     protected void execute(CommandEvent e) {
         List<Player> players = Storage.getPlayers();
@@ -45,9 +46,10 @@ public class GetPlayersCommand extends Command {
                     .append("\t")
                     .append(player.getQiLevel().getName())
                     .append("\t")
-                    .append(player.getExp());
+                    .append(player.getExp())
+                    .append("\n");
         }
         e.reply(message.toString());
     }
-    
+
 }

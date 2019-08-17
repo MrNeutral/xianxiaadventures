@@ -45,36 +45,111 @@ public class Storage {
         }
     }
 
+    public static final void updatePlayer(Player player) {
+        updatePlayerName(player);
+        updatePlayerLevel(player);
+        updatePlayerStats(player);
+        updatePlayerFlags(player);
+    }
+
+    private static final void updatePlayerName(Player player) {
+        try (Statement statement = conn.createStatement()) {
+            statement.execute("UPDATE cultivator_name SET name = '"
+                    + player.getName()
+                    + "' WHERE _id = '"
+                    + player.getID() + "'");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static final void updatePlayerLevel(Player player) {
+        try (Statement statement = conn.createStatement()) {
+            statement.execute("UPDATE cultivator_level SET qi = '"
+                    + player.getQiLevel().getRank()
+                    + "', body = '"
+                    + player.getBodyLevel().getRank()
+                    + "', realm = '"
+                    + player.getCultivationRealm().getRank()
+                    + "', powerlevel = '"
+                    + player.getPowerLevel()
+                    + "' WHERE _id = '"
+                    + player.getID()
+                    + "'");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static final void updatePlayerStats(Player player) {
+        try (Statement statement = conn.createStatement()) {
+            statement.execute("UPDATE cultivator_stats SET health = '"
+                    + player.getHealth()
+                    + "', spirit = '"
+                    + player.getSpirit()
+                    + "', exp = '"
+                    + player.getExp()
+                    + "', exp_mult = '"
+                    + player.getExpMultiplier()
+                    + "' WHERE _id = '"
+                    + player.getID()
+                    + "'");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static final void updatePlayerFlags(Player player) {
+        try (Statement statement = conn.createStatement()) {
+            statement.execute("UPDATE cultivator_flags SET has_pet = '"
+                    + player.getFlag(EventFlag.HAS_PET)
+                    + "', joined_sect = '"
+                    + player.getFlag(EventFlag.JOINED_SECT)
+                    + "', crippled = '"
+                    + player.getFlag(EventFlag.CRIPPLED)
+                    + "', tribulation_due = '"
+                    + player.isTribulationDue()
+                    + "' WHERE _id = '"
+                    + player.getID()
+                    + "'");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public static final List<Player> getPlayers() {
         List<Player> players = new ArrayList<>();
 
-        try ( Statement statement = conn.createStatement();  ResultSet results = statement.executeQuery(
-                "SELECT cultivator_name._id, name, health, spirit, qi, body, realm, powerlevel, exp, exp_mult, has_pet, joined_sect, crippled "
-                + "FROM cultivator_name "
-                + "INNER JOIN cultivator_flags "
-                + "ON cultivator_flags._id = cultivator_name._id "
-                + "INNER JOIN cultivator_level "
-                + "ON cultivator_level._id = cultivator_name._id "
-                + "INNER JOIN cultivator_stats "
-                + "ON cultivator_stats._id = cultivator_name._id")) {
+        try (Statement statement = conn.createStatement(); ResultSet results = statement.executeQuery(
+                "SELECT * FROM alldata")) {
 
             while (results.next()) {
-                players.add(new Player(String.valueOf(
-                        results.getLong(1)),
-                        results.getString(2),
-                        results.getInt(3),
-                        results.getInt(4),
-                        results.getInt(5),
-                        results.getInt(6),
-                        results.getInt(7),
-                        results.getInt(8),
-                        results.getInt(9),
-                        results.getDouble(10),
-                        results.getBoolean(11),
-                        results.getBoolean(12),
-                        results.getBoolean(13)
-                )
+                Player player = new Player(String.valueOf(
+                        results.getLong(1)), //id
+                        results.getString(2), //name
+                        results.getInt(3), //health
+                        results.getInt(4), //spirit
+                        0, //qi
+                        0, //body
+                        0, //realm
+                        0, //powerlevel
+                        results.getInt(9), //exp
+                        results.getDouble(10), //exp_mult
+                        results.getBoolean(11), //has_pet
+                        results.getBoolean(12), //joined_sect
+                        results.getBoolean(13) //crippled
                 );
+                GameSystem.upgradePlayerQi(results.getInt(5), player); //qi
+                GameSystem.upgradePlayerBody(results.getInt(6), player); //body
+                player.checkRealm();
+                player.updatePowerLevel();
+                player.setTribulationDue(results.getBoolean(14)); // tribulation due
+                System.out.println("Loaded " + player.getName());
+                players.add(player);
             }
 
         } catch (SQLException e) {
@@ -86,19 +161,14 @@ public class Storage {
     }
 
     public static final void registerPlayer(Player player) {
-        try ( Statement statement = conn.createStatement()) {
-            registerPlayerName(player);
-            registerPlayerStats(player);
-            registerPlayerLevel(player);
-            registerPlayerFlags(player);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+        registerPlayerName(player);
+        registerPlayerStats(player);
+        registerPlayerLevel(player);
+        registerPlayerFlags(player);
     }
 
     public static final boolean isCultivator(String id) {
-        try ( Statement statement = conn.createStatement();  ResultSet result = statement.executeQuery("SELECT name FROM cultivator_name where _id = '" + id + "'")) {
+        try (Statement statement = conn.createStatement(); ResultSet result = statement.executeQuery("SELECT name FROM cultivator_name WHERE _id = '" + id + "'")) {
             return result.next();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -108,7 +178,7 @@ public class Storage {
     }
 
     private static final void registerPlayerName(Player player) {
-        try ( Statement statement = conn.createStatement()) {
+        try (Statement statement = conn.createStatement()) {
             statement.execute("INSERT INTO cultivator_name VALUES('"
                     + player.getID() + "', '"
                     + player.getName() + "')");
@@ -119,7 +189,7 @@ public class Storage {
     }
 
     private static final void registerPlayerStats(Player player) {
-        try ( Statement statement = conn.createStatement()) {
+        try (Statement statement = conn.createStatement()) {
             statement.execute("INSERT INTO cultivator_stats VALUES('"
                     + player.getID() + "', '"
                     + player.getHealth() + "', '"
@@ -133,7 +203,7 @@ public class Storage {
     }
 
     private static final void registerPlayerLevel(Player player) {
-        try ( Statement statement = conn.createStatement()) {
+        try (Statement statement = conn.createStatement()) {
             statement.execute("INSERT INTO cultivator_level VALUES('"
                     + player.getID() + "', '"
                     + player.getQiLevel().getRank() + "', '"
@@ -147,7 +217,7 @@ public class Storage {
     }
 
     private static final void registerPlayerFlags(Player player) {
-        try ( Statement statement = conn.createStatement()) {
+        try (Statement statement = conn.createStatement()) {
             statement.execute("INSERT INTO cultivator_flags VALUES('"
                     + player.getID() + "', '"
                     + player.getFlag(EventFlag.HAS_PET) + "', '"
@@ -160,11 +230,11 @@ public class Storage {
     }
 
     public static final void deletePlayer(String id) {
-        try ( Statement statement = conn.createStatement()) {
-            statement.execute("delete FROM cultivator_name where _id = '" + id + "'");
-            statement.execute("delete FROM cultivator_flags where _id = '" + id + "'");
-            statement.execute("delete FROM cultivator_level where _id = '" + id + "'");
-            statement.execute("delete FROM cultivator_stats where _id = '" + id + "'");
+        try (Statement statement = conn.createStatement()) {
+            statement.execute("DELETE FROM cultivator_name WHERE _id = '" + id + "'");
+            statement.execute("DELETE FROM cultivator_flags WHERE _id = '" + id + "'");
+            statement.execute("DELETE FROM cultivator_level WHERE _id = '" + id + "'");
+            statement.execute("DELETE FROM cultivator_stats WHERE _id = '" + id + "'");
             GameSystem.deletePlayer(id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -173,7 +243,7 @@ public class Storage {
     }
 
     public static final void selectNames() {
-        try ( Statement statement = conn.createStatement();  ResultSet results = statement.executeQuery("SELECT * FROM cultivator_name")) {
+        try (Statement statement = conn.createStatement(); ResultSet results = statement.executeQuery("SELECT * FROM cultivator_name")) {
             System.out.println("printing names");
             while (results.next()) {
                 System.out.println("id: " + results.getLong(1));

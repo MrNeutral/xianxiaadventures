@@ -25,11 +25,11 @@ import com.neutral.xianxia.game.logic.Player;
  *
  * @author Mr.Neutral
  */
-public class LevelQi extends Command {
+public class CheckUpgradeCommand extends Command {
 
-    public LevelQi() {
-        super.name = "levelqi";
-        super.help = "Attempt to level up Qi.";
+    public CheckUpgradeCommand() {
+        super.name = "check";
+        super.help = "Check exp needed for leveling Qi and Body and tribulations";
         super.requiredRole = "Cultivator";
         super.cooldown = 5;
     }
@@ -37,23 +37,10 @@ public class LevelQi extends Command {
     @Override
     protected void execute(CommandEvent e) {
         Player player = GameSystem.getPlayer(e.getMember().getId());
-
-        if (GameSystem.canTribulationUpgrade("Qi", player)) {
-            if (GameSystem.getNextLevel(player.getQiLevel()) != null) {
-                e.reply("You used " + GameSystem.getNextLevel(player.getQiLevel()).getCost() + " exp to break through. Health and Spirit are set to max.");
-                GameSystem.attemptLevelUp("Qi", player);
-                if (GameSystem.checkTribulation(player)) {
-                    e.reply("You cannot increase your Qi further unless you face tribulation");
-                }
-            } else {
-                e.reply("You have reached the peak and can go no further.");
-            }
-        } else if (GameSystem.isTribulationDue(player)) {
-            e.reply("You cannot increase your Qi any further unless you face tribulation.");
-        } else {
-            int damage = (int) -Math.round(player.getMaxHealth() * 0.2);
-            e.reply("You do not have enough exp to break through and trying to do so damages you. You lose " + damage + " health.");
-            player.changeHealth(damage);
+        e.reply("You need " + GameSystem.getUpgradeCost("Qi", player) + " exp to upgrade Qi.");
+        e.reply("You need " + GameSystem.getUpgradeCost("Body", player) + " exp to upgrade Body.");
+        if (GameSystem.getPlayer(e.getMember().getId()).isTribulationDue()) {
+            e.reply("You need " + (GameSystem.getUpgradeCost("Body", player) + GameSystem.getUpgradeCost("Qi", player)) + " exp to face tribulation.");
         }
     }
 

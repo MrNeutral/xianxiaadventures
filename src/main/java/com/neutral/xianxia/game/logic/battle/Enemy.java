@@ -25,7 +25,7 @@ import com.neutral.xianxia.game.logic.levels.QiLevel;
  *
  * @author Mr.Neutral
  */
-public class Enemy extends Cultivator{
+public class Enemy extends Cultivator {
 
     public Enemy() {
         super();
@@ -34,16 +34,4 @@ public class Enemy extends Cultivator{
     public Enemy(int health, int maxHealth, int spirit, int maxSpirit, int exp, int powerLevel, BodyLevel bodyLevel, QiLevel qiLevel, CultivationLevel cultivationRealm) {
         super(health, maxHealth, spirit, maxSpirit, exp, powerLevel, bodyLevel, qiLevel, cultivationRealm);
     }
-    
-    public void resetValues(){
-        setMaxHealth(10);
-        setMaxSpirit(0);
-        setHealth(10);
-        setSpirit(0);
-        setBodyLevel(BodyLevel.MORTAL_BODY);
-        setQiLevel(QiLevel.MORTAL_SPIRIT);
-        setCultivationRealm(CultivationLevel.MORTAL_REALM);
-        checkRealm();
-    }
-
 }

@@ -16,6 +16,7 @@
  */
 package com.neutral.xianxia.game.logic.battle;
 
+import com.neutral.xianxia.game.logic.Cultivator;
 import com.neutral.xianxia.game.logic.Player;
 import java.util.Random;
 
@@ -29,12 +30,20 @@ public class Battle {
     private int handicap = 0;
     private boolean battleFinished = false;
     private boolean playerWon = false;
-    private final Enemy enemy = new Enemy();
+    private boolean playerBattle = false;
+    private final Cultivator enemy;
     private final Player player;
     private String battleHistory = "";
 
     public Battle(Player player) {
         this.player = player;
+        this.enemy = new Enemy();
+    }
+
+    public Battle(Player player, Player enemyPlayer) {
+        this.player = player;
+        this.enemy = enemyPlayer;
+        playerBattle = true;
     }
 
     public boolean isBattleFinished() {
@@ -48,7 +57,7 @@ public class Battle {
     public int getHandicap() {
         return handicap;
     }
-   
+
     public String getBattleHistory() {
         return battleHistory;
     }
@@ -69,7 +78,7 @@ public class Battle {
         return player;
     }
 
-    public Enemy getEnemy() {
+    public Cultivator getEnemy() {
         return enemy;
     }
 
@@ -79,10 +88,10 @@ public class Battle {
         if (random.nextInt(11) > 7) {
             if (random.nextBoolean() && enemy.getQiLevel().getRank() != 0 && enemy.getSpirit() > 0) {
                 enemy.setDefendingWithQi(true);
-                battleHistory += "The enemy prepares to defend against a spiritual attack.\n";
+                battleHistory += ((playerBattle) ? ((Player) enemy).getName() : "The enemy") + " prepares to defend against a spiritual attack.\n";
             } else {
                 enemy.setDefendingWithBody(true);
-                battleHistory += "The enemy prepares to defend against a physical attack.\n";
+                battleHistory += ((playerBattle) ? ((Player) enemy).getName() : "The enemy") + " prepares to defend against a physical attack.\n";
             }
         } else {
             if (random.nextBoolean() && enemy.getQiLevel().getRank() != 0 && enemy.getSpirit() > 0) {

@@ -25,39 +25,26 @@ import com.neutral.xianxia.game.logic.Player;
  *
  * @author Mr.Neutral
  */
-public class GrantExp extends Command {
+public class ResetCommand extends Command {
 
-    public GrantExp() {
-        super.name = "xp";
-        super.help = "Grant exp.";
-        super.arguments = "[@target] [amount]";
+    public ResetCommand() {
+        super.name = "reset";
+        super.arguments = "[@target]";
         super.ownerCommand = true;
         super.hidden = true;
-        super.requiredRole = "Cultivator";
     }
 
     @Override
     protected void execute(CommandEvent e) {
-        String[] args = e.getArgs().split(" ");
-        if(args.length == 1 && args[0].equals("")){
-            e.reply("Please enter an amount and optionally a target");
-            return;
-        }
-        if (!e.getMessage().getMentionedMembers().isEmpty()) {
-            try {
-                Player target = GameSystem.getPlayer(e.getMessage().getMentionedMembers().get(0).getId());
-                GameSystem.grantExp(Integer.valueOf(args[1]), target);
-            } catch (NumberFormatException ex) {
-                e.reply("Invalid amount.");
-            }
+        Player player;
+        if (e.getMessage().getMentionedMembers().size() == 1) {
+            player = GameSystem.getPlayer(e.getMessage().getMentionedMembers().get(0).getId());
         } else {
-            try {
-                Player player = GameSystem.getPlayer(e.getMember().getId());
-                GameSystem.grantExp(Integer.valueOf(args[0]), player);
-            } catch (NumberFormatException ex) {
-                e.reply("Invalid amount.");
-            }
+            player = GameSystem.getPlayer(e.getMember().getId());
         }
+        
+        GameSystem.resetPlayer(player);
+        e.reply(player.getName() + " was struck with Heavenly Tribulation and became a Mortal again.");
     }
 
 }

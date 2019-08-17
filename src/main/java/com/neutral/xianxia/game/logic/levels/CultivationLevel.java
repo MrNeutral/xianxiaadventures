@@ -27,7 +27,8 @@ public enum CultivationLevel {
     CORE_FORMATION_REALM("Core Formation", 19, 20, 21, 22, 23, 24, 25, 26, 27),
     NASCENT_SOUL_REALM("Nascent Soul", 28, 29, 30, 31, 32, 33, 34, 35, 36),
     SPIRIT_SEVERING_REALM("Spirit Severing", 37, 38, 39, 40, 41, 42, 43, 44, 45),
-    SAGE_REALM("Sage", 46, 47, 48, 49, 50, 51, 52, 53, 54);
+    SAGE_REALM("Sage", 46, 47, 48, 49, 50, 51, 52, 53, 54),
+    LESSER_ANCESTOR_REALM("Lesser Ancestor", 55);
 
     private final int[] ranks;
     private final String name;

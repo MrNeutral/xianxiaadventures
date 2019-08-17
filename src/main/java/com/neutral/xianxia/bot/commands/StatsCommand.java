@@ -60,7 +60,12 @@ public class StatsCommand extends Command {
     private final EmbedBuilder generateEmbed(EmbedBuilder em, User user, Player player, CommandEvent e) {
         em.setAuthor(e.getMember().getEffectiveName());
         em.setThumbnail((user.getAvatarUrl() == null) ? user.getDefaultAvatarUrl() : user.getAvatarUrl());
-        em.setTitle(player.getCultivationRealm().getName());
+        try {
+            em.setTitle(player.getCultivationRealm().getName());
+        } catch (NullPointerException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
         em.setDescription("**Player Stats**\n"
                 + "Health: " + player.getHealth() + "/" + player.getMaxHealth() + "\n"
                 + "Spirit: " + player.getSpirit() + "/" + player.getMaxSpirit() + "\n"

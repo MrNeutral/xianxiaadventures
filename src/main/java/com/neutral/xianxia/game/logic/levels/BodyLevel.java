@@ -78,7 +78,8 @@ public enum BodyLevel implements Level {
     SAGE_BODY_STAGE_6(51, 5100, "Sage Body 6th Stage"),
     SAGE_BODY_STAGE_7(52, 5200, "Sage Body 7th Stage"),
     SAGE_BODY_STAGE_8(53, 5300, "Sage Body 8th Stage"),
-    SAGE_BODY_STAGE_9(54, 5400, "Sage Body 9th Stage");
+    SAGE_BODY_STAGE_9(54, 5400, "Sage Body 9th Stage"),
+    LESSER_ANCESTOR_BODY_STAGE_1(55, 5500, "Lesser Ancestor Body 1st Stage");
 
     private final int rank;
     private final int cost;

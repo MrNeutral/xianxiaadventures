@@ -78,7 +78,8 @@ public enum QiLevel implements Level {
     SAGE_SPIRIT_STAGE_6(51, 5100, "Sage Spirit 6th Stage"),
     SAGE_SPIRIT_STAGE_7(52, 5200, "Sage Spirit 7th Stage"),
     SAGE_SPIRIT_STAGE_8(53, 5300, "Sage Spirit 8th Stage"),
-    SAGE_SPIRIT_STAGE_9(54, 5400, "Sage Spirit 9th Stage");
+    SAGE_SPIRIT_STAGE_9(54, 5400, "Sage Spirit 9th Stage"),
+    LESSER_ANCESTOR_SPIRIT_STAGE_1(55, 5500, "Lesser Ancestor Spirit 1st Stage");
 
     private final int rank;
 

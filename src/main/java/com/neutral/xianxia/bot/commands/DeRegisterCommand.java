@@ -18,7 +18,6 @@ package com.neutral.xianxia.bot.commands;
 
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
-import static com.neutral.xianxia.bot.ids.ID.ID_CULTIVATOR;
 import com.neutral.xianxia.bot.sql.Storage;
 import com.neutral.xianxia.game.logic.GameSystem;
 import net.dv8tion.jda.api.entities.Guild;
@@ -45,9 +44,9 @@ public class DeRegisterCommand extends Command {
 
         Storage.deletePlayer(id);
         GameSystem.deletePlayer(id);
-        
+
         try {
-            guild.removeRoleFromMember(e.getMember(), guild.getRoleById(ID_CULTIVATOR.getID())).queue();
+            guild.removeRoleFromMember(e.getMember(), guild.getRolesByName("Cultivator", false).get(0)).queue();
             e.reply("Success. You were removed from the DB.");
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());

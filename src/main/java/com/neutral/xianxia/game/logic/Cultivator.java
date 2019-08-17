@@ -78,6 +78,14 @@ public abstract class Cultivator implements Fightable {
         this.cultivationRealm = CultivationLevel.getRealm(cultivationRealm);
     }
 
+    public Cultivator(int health, int maxHealth, int spirit, int maxSpirit, int exp) {
+        this.maxHealth = maxHealth;
+        this.health = health;
+        this.maxSpirit = maxSpirit;
+        this.spirit = spirit;
+        this.exp = exp;
+    }
+
     public void checkRealm() {
         setCultivationRealm((getBodyLevel().getRank() > getQiLevel().getRank()) ? getRealm(getBodyLevel().getRank()) : getRealm(getQiLevel().getRank()));
     }

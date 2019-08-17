@@ -119,40 +119,46 @@ public final class EventManager {
                     GameSystem.setPlayerHealth(GameSystem.getPlayerHealth(player) - tribulationStrength * 300, player);
                     GameSystem.upgradePlayerBody(GameSystem.getPlayerBody(player).getRank() + 1, player);
                     GameSystem.upgradePlayerQi(GameSystem.getPlayerQi(player).getRank() + 1, player);
-                    GameSystem.setTribulationDue(false);
-                    return "You managed to survive the 3 Minor Tribulations";
+                    GameSystem.setTribulationDue(false, player);
+                    GameSystem.changeFlag(player, EventFlag.CRIPPLED, false);
+                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() * 2, player);
+                    return "The tribulation deals " + tribulationStrength * 1200 + " damage. You manage to survive the 3 Minor Tribulations. You are no longer crippled, if you were previously.";
                 } else {
                     player.getFlags().replace(EventFlag.CRIPPLED, true);
+                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() / 2, player);
                     GameSystem.setPlayerHealth(1, player);
                     GameSystem.setPlayerSpirit(0, player);
                     GameSystem.setPlayerBody(0, player);
                     GameSystem.setPlayerQi(0, player);
                     GameSystem.setPlayerMaxHealth(10, player);
                     GameSystem.setPlayerMaxSpirit(0, player);
-                    GameSystem.setTribulationDue(false);
-                    return "You fail to surpass the 3 Minor Tribulations";
+                    GameSystem.setTribulationDue(false, player);
+                    return "The tribulation deals " + tribulationStrength * 1200 + " damage. You failed to surpass the 3 Minor Tribulations. You are now crippled.";
                 }
             case SAGE_REALM:
                 tribulationStrength = random.nextInt(TRIBULATION.LESSER_6_TRIBULATIONS.getDifficulty() + 1);
-                if (GameSystem.getPlayerHealth(player) - tribulationStrength * 600 > 0) {
+                if (GameSystem.getPlayerHealth(player) - tribulationStrength * 2470 > 0) {
                     GameSystem.setPlayerHealth(GameSystem.getPlayerHealth(player) - tribulationStrength * 600, player);
                     GameSystem.upgradePlayerBody(GameSystem.getPlayerBody(player).getRank() + 1, player);
                     GameSystem.upgradePlayerQi(GameSystem.getPlayerQi(player).getRank() + 1, player);
-                    GameSystem.setTribulationDue(false);
-                    return "You managed to survive the 6 Lesser Tribulations";
+                    GameSystem.setTribulationDue(false, player);
+                    GameSystem.changeFlag(player, EventFlag.CRIPPLED, false);
+                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() * 2, player);
+                    return "The tribulation deals " + tribulationStrength * 710 + " damage. You managed to survive the 6 Lesser Tribulations. You are no longer crippled, if you were previously.";
                 } else {
                     player.getFlags().replace(EventFlag.CRIPPLED, true);
+                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() / 2, player);
                     GameSystem.setPlayerHealth(1, player);
                     GameSystem.setPlayerSpirit(0, player);
                     GameSystem.setPlayerBody(28, player);
                     GameSystem.setPlayerQi(28, player);
                     GameSystem.setPlayerMaxHealth(1000, player);
                     GameSystem.setPlayerMaxSpirit(1000, player);
-                    GameSystem.setTribulationDue(false);
-                    return "You fail to surpass the 6 Lesser Tribulations";
+                    GameSystem.setTribulationDue(false, player);
+                    return "The tribulation deals " + tribulationStrength * 2470 + " damage. You failed to surpass the 6 Lesser Tribulations";
                 }
             default:
-                GameSystem.setTribulationDue(false);
+                GameSystem.setTribulationDue(false, player);
                 return "You fail to surpass the tribulation and turn to dust";
         }
     }

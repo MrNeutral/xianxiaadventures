@@ -25,11 +25,11 @@ import com.neutral.xianxia.game.logic.Player;
  *
  * @author Mr.Neutral
  */
-public class SetBodyCommand extends Command {
+public class SetExpMultCommand extends Command {
 
-    public SetBodyCommand() {
-        super.name = "setbody";
-        super.help = "Upgrades Body increasing Health in the process";
+    public SetExpMultCommand() {
+        super.name = "setexpmult";
+        super.help = "Set exp multiplier";
         super.arguments = "[@target] [amount]";
         super.hidden = true;
         super.requiredRole = "Cultivator";
@@ -46,28 +46,14 @@ public class SetBodyCommand extends Command {
         if (!e.getMessage().getMentionedMembers().isEmpty()) {
             try {
                 Player target = GameSystem.getPlayer(e.getMessage().getMentionedMembers().get(0).getId());
-                if (args.length == 3 && args[2].equals("true")) {
-                    GameSystem.setPlayerBody(Integer.valueOf(args[1]), target);
-                    e.reply(target.getName() + "'s Body set to " + target.getBodyLevel().getName());
-                } else {
-                    GameSystem.upgradePlayerBody(Integer.valueOf(args[1]), target);
-                    e.reply(target.getName() + "'s Body leveled to " + target.getBodyLevel().getName());
-                }
-                GameSystem.checkTribulation(target);
+                GameSystem.setPlayerExpMultiplier(Double.valueOf(args[1]), target);
             } catch (NumberFormatException ex) {
                 e.reply("Invalid amount.");
             }
         } else {
             try {
                 Player player = GameSystem.getPlayer(e.getMember().getId());
-                if (args.length == 2 && args[1].equals("true")) {
-                    GameSystem.setPlayerBody(Integer.valueOf(args[0]), player);
-                    e.reply(player.getName() + "'s Body set to " + player.getBodyLevel().getName());
-                } else {
-                    GameSystem.upgradePlayerBody(Integer.valueOf(args[0]), player);
-                    e.reply(player.getName() + "'s Body leveled to " + player.getBodyLevel().getName());
-                }
-                GameSystem.checkTribulation(player);
+                GameSystem.setPlayerExpMultiplier(Double.valueOf(args[0]), player);
             } catch (NumberFormatException ex) {
                 e.reply("Invalid amount.");
             }

@@ -16,9 +16,10 @@
  */
 package com.neutral.xianxia.game.logic;
 
+import com.neutral.xianxia.bot.sql.Storage;
 import com.neutral.xianxia.game.logic.battle.Battle;
 import com.neutral.xianxia.game.logic.battle.BattleManager;
-import com.neutral.xianxia.game.logic.battle.Enemy;
+import com.neutral.xianxia.game.logic.events.EventFlag;
 import com.neutral.xianxia.game.logic.events.EventManager;
 import com.neutral.xianxia.game.logic.events.GameEvent;
 import com.neutral.xianxia.game.logic.levels.BodyLevel;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -36,18 +38,69 @@ import java.util.Timer;
 public final class GameSystem {
 
     private static final EventManager EVENT_MANAGER = new EventManager();
+    private static final Timer timer = new Timer();
     private static final BattleManager BATTLE_MANAGER = new BattleManager();
     private static List<Player> players = new ArrayList<>();
-    private static boolean tribulationDue = false;
     private static boolean toggleQiUpgrade = false;
     private static boolean toggleBodyUpgrade = false;
-    private static Timer timer = null;
 
     private GameSystem() {
     }
 
     public static final void addPlayer(Player player) {
         players.add(player);
+    }
+
+    public static final void dayTimer() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                for (Player player : players) {
+                    if (player.getFlag(EventFlag.CRIPPLED)) {
+                        player.changeHealth((int) Math.round(player.getMaxHealth() * 0.1));
+                        player.changeSpirit((int) Math.round(player.getMaxSpirit() * 0.1));
+                    } else {
+                        player.changeHealth((int) Math.round(player.getMaxHealth() * 0.3));
+                        player.changeSpirit((int) Math.round(player.getMaxSpirit() * 0.3));
+                    }
+                }
+            }
+        };
+        timer.schedule(task, 0, 900000);
+        //15 mins
+    }
+
+    public static final void updatePlayers() {
+        for (Player player : players) {
+            Storage.updatePlayer(player);
+        }
+    }
+
+    public static final void resetPlayer(Player player) {
+        player.setHealth(10);
+        player.setMaxHealth(10);
+        player.setMaxSpirit(0);
+        player.setSpirit(0);
+        player.grantExp(-10000000);
+        player.setBodyLevel(BodyLevel.MORTAL_BODY);;
+        player.setQiLevel(QiLevel.MORTAL_SPIRIT);
+        player.setCultivationRealm(CultivationLevel.MORTAL_REALM);
+        player.updatePowerLevel();
+    }
+
+    public static final void changeFlag(Player player, EventFlag flag, boolean status) {
+        player.setFlag(flag, status);
+    }
+
+    public static final void commitToStorage() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                updatePlayers();
+            }
+        };
+        timer.schedule(task, 0, 10000);
+        //10 secs
     }
 
     public static final void deletePlayer(String id) {
@@ -130,6 +183,7 @@ public final class GameSystem {
                 player.levelQi();
             }
             player.checkRealm();
+            player.updatePowerLevel();
         }
     }
 
@@ -207,6 +261,8 @@ public final class GameSystem {
 
     public static final void setPlayerBody(int level, Player player) {
         player.setBodyLevel(BodyLevel.getRealm(level));
+        player.checkRealm();
+        checkTribulation(player);
     }
 
     public static final void upgradePlayerBody(int level, Player player) {
@@ -216,10 +272,14 @@ public final class GameSystem {
                 break;
             }
         }
+        player.checkRealm();
+        checkTribulation(player);
     }
 
     public static final void setPlayerQi(int level, Player player) {
         player.setQiLevel(QiLevel.getRealm(level));
+        player.checkRealm();
+        checkTribulation(player);
     }
 
     public static final void upgradePlayerQi(int level, Player player) {
@@ -229,6 +289,8 @@ public final class GameSystem {
                 break;
             }
         }
+        player.checkRealm();
+        checkTribulation(player);
     }
 
     public static final CultivationLevel getPlayerRealm(Player player) {
@@ -248,7 +310,7 @@ public final class GameSystem {
     }
 
     public static final boolean canTribulationUpgrade(String target, Player player) {
-        if (!tribulationDue && getUpgradeCost(target, player) != null) {
+        if (!player.isTribulationDue() && getUpgradeCost(target, player) != null) {
             switch (target) {
                 case "Body":
                     if (player.getCultivationRealm() == CultivationLevel.CORE_FORMATION_REALM && player.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9) {
@@ -289,29 +351,29 @@ public final class GameSystem {
         CultivationLevel realm = player.getCultivationRealm();
         if (realm == CultivationLevel.CORE_FORMATION_REALM) {
             if (player.getBodyLevel() == BodyLevel.CORE_FORMATION_BODY_STAGE_9 && player.getQiLevel() == QiLevel.CORE_FORMATION_SPIRIT_STAGE_9) {
-                tribulationDue = true;
+                player.setTribulationDue(true);
             }
         } else if (realm == CultivationLevel.SAGE_REALM) {
             if (player.getBodyLevel() == BodyLevel.SAGE_BODY_STAGE_9 && player.getQiLevel() == QiLevel.SAGE_SPIRIT_STAGE_9) {
-                tribulationDue = true;
+                player.setTribulationDue(true);
             }
         }
-        return tribulationDue;
+        return player.isTribulationDue();
     }
 
     public static final String triggerTribulation(Player player) {
         return EVENT_MANAGER.triggerTribulation(player);
     }
 
-    public static final boolean isTribulationDue() {
-        return tribulationDue;
+    public static final boolean isTribulationDue(Player player) {
+        return player.isTribulationDue();
     }
 
     /**
      * @param tribulationDue the tribulationDue to set
      */
-    public static final void setTribulationDue(boolean tribulationDue) {
-        GameSystem.tribulationDue = tribulationDue;
+    public static final void setTribulationDue(boolean tribulationDue, Player player) {
+        player.setTribulationDue(tribulationDue);
     }
 
     /**
@@ -349,15 +411,12 @@ public final class GameSystem {
         return timer;
     }
 
-    /**
-     * @param timer the timer to set
-     */
-    public static final void setTimer(Timer timer) {
-        GameSystem.timer = timer;
-    }
-
     public static final boolean initBattle(Player player) {
         return BATTLE_MANAGER.initBattle(player);
+    }
+
+    public static final boolean initBattle(Player player, Player enemyPlayer) {
+        return BATTLE_MANAGER.initBattle(player, enemyPlayer);
     }
 
     public static final void physicalAttackEnemy(Player player) {
@@ -394,7 +453,7 @@ public final class GameSystem {
         BATTLE_MANAGER.getBattle(player.getID()).nextPlayerTurn(player);
     }
 
-    public static final Enemy getEnemy(Player player) {
+    public static final Cultivator getEnemy(Player player) {
         return BATTLE_MANAGER.getBattle(player.getID()).getEnemy();
     }
 
@@ -413,6 +472,26 @@ public final class GameSystem {
     public static final void fight(Player player) {
         Random random = new Random();
         initBattle(player);
+
+        if (random.nextBoolean()) {
+            nextTurn(player);
+        } else {
+            nextPlayerTurn(player);
+        }
+
+        if (isPlayerWon(player)) {
+            int xp = calculateBattleExp(player);
+            getBattle(player.getID()).addToBattleHistory("You managed to defeat the enemy.\nYou gain **" + xp + "** exp.");
+        } else {
+            int xp = calculateBattleExp(player);
+            getBattle(player.getID()).addToBattleHistory("You lost but for some reason the enemy decides to spare your pathetic life.\nYou lose " + Math.round(xp * 0.5) + " exp.");
+            grantExp((int) -Math.round(xp * 0.5), player);
+        }
+    }
+
+    public static final void fight(Player player, Player enemyPlayer) {
+        Random random = new Random();
+        initBattle(player, enemyPlayer);
 
         if (random.nextBoolean()) {
             nextTurn(player);

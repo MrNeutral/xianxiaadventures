@@ -22,8 +22,10 @@ package com.neutral.xianxia.bot.ids;
  */
 public enum ID {
     ID_NEUTRAL("272493736187920384"),
+    ID_BOT_TEST_LAND("612022850349695001"),
     ID_GENERAL_CBT("597532360522596368"),
-    ID_CULTIVATOR("609732842192109589");
+    ID_CULTIVATOR("612022624167395332"),
+    ID_CULTIVATOR_CBT("609732842192109589");
     private final String ID;
 
     private ID(String id) {
