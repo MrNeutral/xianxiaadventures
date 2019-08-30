@@ -40,7 +40,7 @@ public class LevelQi extends Command {
 
         if (GameSystem.canTribulationUpgrade("Qi", player)) {
             if (GameSystem.getNextLevel(player.getQiLevel()) != null) {
-                e.reply("You used " + GameSystem.getNextLevel(player.getQiLevel()).getCost() + " exp to break through. Health and Spirit are set to max.");
+                e.reply("You used " + GameSystem.getNextLevel(player.getQiLevel()).getCost() + " exp to break through. Spirit is set to max.");
                 GameSystem.attemptLevelUp("Qi", player);
                 if (GameSystem.checkTribulation(player)) {
                     e.reply("You cannot increase your Qi further unless you face tribulation");

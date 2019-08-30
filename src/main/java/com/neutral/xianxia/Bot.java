@@ -4,6 +4,7 @@ import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import com.jagrosh.jdautilities.examples.command.ShutdownCommand;
 import com.neutral.xianxia.bot.commands.BattleCommand;
+import com.neutral.xianxia.bot.commands.ChallengersCommand;
 import com.neutral.xianxia.bot.commands.CheckUpgradeCommand;
 import com.neutral.xianxia.bot.commands.CultivateCommand;
 import com.neutral.xianxia.bot.commands.DeRegisterCommand;
@@ -11,6 +12,7 @@ import com.neutral.xianxia.bot.commands.GetPlayersCommand;
 import com.neutral.xianxia.bot.commands.GrantExp;
 import com.neutral.xianxia.bot.commands.HealCommand;
 import com.neutral.xianxia.bot.commands.LevelBody;
+import com.neutral.xianxia.bot.commands.LevelCommand;
 import com.neutral.xianxia.bot.commands.LevelQi;
 import com.neutral.xianxia.bot.commands.RegisterCommand;
 import com.neutral.xianxia.bot.commands.ResetCommand;
@@ -67,7 +69,7 @@ public class Bot extends ListenerAdapter {
                 System.out.println("Bot shut down");
                 System.exit(0);
             }
-        }, new SetExpMultCommand(), new TribulationCommand(), new ResetCommand(), new HealCommand(), new CheckUpgradeCommand());
+        }, new SetExpMultCommand(), new TribulationCommand(), new ResetCommand(), new HealCommand(), new CheckUpgradeCommand(), new LevelCommand(), new ChallengersCommand());
         // Note: It is important to register your Bot before building
         JDA jda = new JDABuilder("NjA5NzIzOTY3MTQ5NzAzMTc4.XU645Q.fWDpsXAvOtMOdok9bd9g_H9wKRE")
                 .addEventListeners(new Bot(), client.build())

@@ -213,6 +213,8 @@ public abstract class Cultivator implements Fightable {
     public void changeHealth(int health) {
         if (this.health + health <= 0) {
             this.health = 0;
+        } else if (this.health + health > maxHealth) {
+            this.health = maxHealth;
         } else {
             this.health += health;
         }
@@ -231,6 +233,8 @@ public abstract class Cultivator implements Fightable {
     public void changeSpirit(int spirit) {
         if (this.spirit + spirit <= 0) {
             this.spirit = 0;
+        } else if (this.spirit + spirit > maxSpirit) {
+            this.spirit = maxSpirit;
         } else {
             this.spirit += spirit;
         }

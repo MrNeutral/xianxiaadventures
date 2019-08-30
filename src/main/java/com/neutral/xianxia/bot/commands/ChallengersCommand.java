@@ -20,39 +20,33 @@ import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import com.neutral.xianxia.game.logic.GameSystem;
 import com.neutral.xianxia.game.logic.Player;
-import com.neutral.xianxia.game.logic.levels.BodyLevel;
-import com.neutral.xianxia.game.logic.levels.QiLevel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Mr.Neutral
  */
-public class TribulationCommand extends Command {
+public class ChallengersCommand extends Command {
 
-    public TribulationCommand() {
-        super.name = "tribulation";
-        super.help = "Face tribulation to ascend";
+    public ChallengersCommand() {
+        super.name = "challengers";
+        super.help = "Lists all cultivators that you can fight";
         super.requiredRole = "Cultivator";
         super.cooldown = 10;
     }
 
     @Override
     protected void execute(CommandEvent e) {
-
-        Player player = GameSystem.getPlayer(e.getMember().getId());
-        if (!GameSystem.isTribulationDue(player)) {
-            e.reply("You don't need to face tribulation till you need to advance from Core Formation to Nascent Soul or from Sage to Lesser Ancestor.");
-            return;
+        List<Player> players = new ArrayList<>(GameSystem.getPlayers());
+        players.remove(GameSystem.getPlayer(e.getMember().getId()));
+        String challengers = "";
+        for (Player player : players) {
+            if (player.getCultivationRealm() == GameSystem.getPlayer(e.getMember().getId()).getCultivationRealm() && player.getHealth() > 0) {
+                challengers += player.getName() + "\n";
+            }
         }
-        int tribulationCost
-                = GameSystem.getNextLevel(BodyLevel.getRealm(player.getBodyLevel().getRank())).getCost()
-                + GameSystem.getNextLevel(QiLevel.getRealm(player.getQiLevel().getRank())).getCost();
-
-        if (player.getExp() - tribulationCost >= 0) {
-            e.reply(GameSystem.triggerTribulation(player));
-        } else {
-            e.reply("You don't have enough exp to face tribulation. You need " + tribulationCost + ".");
-        }
+        e.reply("You can fight against:\n" + challengers);
     }
 
 }

@@ -40,7 +40,7 @@ public class LevelBody extends Command {
 
         if (GameSystem.canTribulationUpgrade("Body", player)) {
             if (GameSystem.getNextLevel(player.getBodyLevel()) != null) {
-                e.reply("You used " + GameSystem.getNextLevel(player.getBodyLevel()).getCost() + " exp to break through. Health and Spirit are set to max.");
+                e.reply("You used " + GameSystem.getNextLevel(player.getBodyLevel()).getCost() + " exp to break through. Health is set to max.");
                 GameSystem.attemptLevelUp("Body", player);
                 if (GameSystem.checkTribulation(player)) {
                     e.reply("You cannot increase your Body further unless you face tribulation");

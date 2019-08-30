@@ -35,14 +35,17 @@ public final class EventManager {
     final static Random RANDOM = new Random();
 
     public void checkAllowedEventTypes(List<EventType> eventTypes, Player player) {
+        List<EventType> toRemove = new ArrayList<>();
         if (!player.getFlags().get(EventFlag.JOINED_SECT)) {
-            eventTypes.remove(EventType.SECT);
-            eventTypes.remove(EventType.DISCIPLE);
+            toRemove.add(EventType.SECT);
+            toRemove.add(EventType.DISCIPLE);
         }
 
         if (!player.getFlags().get(EventFlag.HAS_PET)) {
-            eventTypes.remove(EventType.MYSTICAL_BEAST);
+            toRemove.add(EventType.MYSTICAL_BEAST);
         }
+
+        eventTypes.removeAll(toRemove);
     }
 
     public void checkAllowedEvents(List<GameEvent> events, Player player) {
@@ -68,6 +71,7 @@ public final class EventManager {
 
         if (event == ENLIGHTENMENT) {
             GameSystem.setPlayerExpMultiplier(GameSystem.getPlayerExpMultiplier(player) + 1, player);
+            player.getFlags().replace(EventFlag.CRIPPLED, false);
         }
 
         if (event == SYSTEM_DESTROYED) {
@@ -121,7 +125,7 @@ public final class EventManager {
                     GameSystem.upgradePlayerQi(GameSystem.getPlayerQi(player).getRank() + 1, player);
                     GameSystem.setTribulationDue(false, player);
                     GameSystem.changeFlag(player, EventFlag.CRIPPLED, false);
-                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() * 2, player);
+                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() * 4, player);
                     return "The tribulation deals " + tribulationStrength * 1200 + " damage. You manage to survive the 3 Minor Tribulations. You are no longer crippled, if you were previously.";
                 } else {
                     player.getFlags().replace(EventFlag.CRIPPLED, true);
@@ -137,14 +141,15 @@ public final class EventManager {
                 }
             case SAGE_REALM:
                 tribulationStrength = random.nextInt(TRIBULATION.LESSER_6_TRIBULATIONS.getDifficulty() + 1);
+                System.out.println("Tribulation Strength: " + tribulationStrength);
                 if (GameSystem.getPlayerHealth(player) - tribulationStrength * 2470 > 0) {
                     GameSystem.setPlayerHealth(GameSystem.getPlayerHealth(player) - tribulationStrength * 600, player);
                     GameSystem.upgradePlayerBody(GameSystem.getPlayerBody(player).getRank() + 1, player);
                     GameSystem.upgradePlayerQi(GameSystem.getPlayerQi(player).getRank() + 1, player);
                     GameSystem.setTribulationDue(false, player);
                     GameSystem.changeFlag(player, EventFlag.CRIPPLED, false);
-                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() * 2, player);
-                    return "The tribulation deals " + tribulationStrength * 710 + " damage. You managed to survive the 6 Lesser Tribulations. You are no longer crippled, if you were previously.";
+                    GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() * 4, player);
+                    return "The tribulation deals " + tribulationStrength * 2470 + " damage. You managed to survive the 6 Lesser Tribulations. You are no longer crippled, if you were previously.";
                 } else {
                     player.getFlags().replace(EventFlag.CRIPPLED, true);
                     GameSystem.setPlayerExpMultiplier(player.getExpMultiplier() / 2, player);

@@ -139,5 +139,4 @@ public enum EventType {
     List<GameEvent> getEvents() {
         return this.events;
     }
-
 }

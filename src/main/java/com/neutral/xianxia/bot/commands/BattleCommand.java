@@ -45,8 +45,16 @@ public class BattleCommand extends Command {
     protected void execute(CommandEvent e) {
         if (e.getMessage().getMentionedMembers().size() == 1) {
             Player player = GameSystem.getPlayer(e.getMember().getId());
+            if (player.getHealth() == 0) {
+                e.reply("You are already near death. There would be no point to going out to fight.");
+                return;
+            }
             try {
                 Player enemyPlayer = GameSystem.getPlayer(e.getMessage().getMentionedMembers().get(0).getId());
+                if (enemyPlayer.getHealth() == 0) {
+                    e.reply("He is already near death. There would be no point to fighting him.");
+                    return;
+                }
                 if (enemyPlayer.getCultivationRealm().getRank() > player.getCultivationRealm().getRank()) {
                     e.reply("That would be suicide. Better not.");
                     return;
@@ -63,7 +71,7 @@ public class BattleCommand extends Command {
             }
         } else {
             Player player = GameSystem.getPlayer(e.getMember().getId());
-            GameSystem.fight(GameSystem.getPlayer(e.getMember().getId()));
+            GameSystem.fight(player);
             EmbedBuilder em = new EmbedBuilder();
             e.reply(generateEmbed(em, e, player).build());
         }
@@ -82,7 +90,7 @@ public class BattleCommand extends Command {
         int handicap = battle.getHandicap();
         if (handicap < 0) {
             emTitle += "a weaker cultivator";
-        } else if (handicap < 3) {
+        } else if (handicap < 2) {
             emTitle += "a fellow cultivator";
         } else if (handicap < 100) {
             emTitle += "a stronger cultivator";
@@ -92,9 +100,9 @@ public class BattleCommand extends Command {
 
         em.setTitle(emTitle);
 
-        em.setDescription("**Enemy Stats**\n"
-                + "Health: " + battle.getEnemy().getMaxHealth() + "\n"
-                + "Spirit: " + battle.getEnemy().getMaxSpirit() + "\n"
+        em.setDescription("**Enemy Stats After Battle**\n"
+                + "Health: " + battle.getEnemy().getHealth() + "/" + battle.getEnemy().getMaxHealth() + "\n"
+                + "Spirit: " + battle.getEnemy().getSpirit() + "/" + battle.getEnemy().getMaxSpirit() + "\n"
                 + "Body: " + battle.getEnemy().getBodyLevel().getName() + "\n"
                 + "Qi: " + battle.getEnemy().getQiLevel().getName());
 
@@ -102,7 +110,10 @@ public class BattleCommand extends Command {
             String line;
             int turn = 1;
             while ((line = reader.readLine()) != null) {
-                if (line.contains("You lost") || line.contains("You managed")) {
+                if (line.contains("You lost") || line.contains("You managed") || turn == 24) {
+                    while (!(line.contains("You lost") || line.contains("You managed"))) {
+                        line = reader.readLine();
+                    }
                     em.addField("Result:", line, false);
                     break;
                 } else {
@@ -118,7 +129,7 @@ public class BattleCommand extends Command {
         if (battle.isPlayerWon()) {
             em.addField("You gained:", String.valueOf(GameSystem.calculateBattleExp(player)) + " exp", false);
         } else {
-            em.addField("You lost:", String.valueOf(GameSystem.calculateBattleExp(player)) + " exp", false);
+            em.addField("You lost:", String.valueOf(Math.round(GameSystem.calculateBattleExp(player) / 2)) + " exp", false);
         }
 
         em.setFooter("BattleHistory");

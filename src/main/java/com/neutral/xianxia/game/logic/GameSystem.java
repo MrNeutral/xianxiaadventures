@@ -55,15 +55,17 @@ public final class GameSystem {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                for (Player player : players) {
+                players.forEach((player) -> {
                     if (player.getFlag(EventFlag.CRIPPLED)) {
                         player.changeHealth((int) Math.round(player.getMaxHealth() * 0.1));
                         player.changeSpirit((int) Math.round(player.getMaxSpirit() * 0.1));
+                        System.out.println(player.getName() + " restored " + (int) Math.round(player.getMaxSpirit() * 0.1) + " points.");
                     } else {
                         player.changeHealth((int) Math.round(player.getMaxHealth() * 0.3));
                         player.changeSpirit((int) Math.round(player.getMaxSpirit() * 0.3));
+                        System.out.println(player.getName() + " restored " + (int) Math.round(player.getMaxSpirit() * 0.3) + " points.");
                     }
-                }
+                });
             }
         };
         timer.schedule(task, 0, 900000);
@@ -270,6 +272,8 @@ public final class GameSystem {
             player.levelBody();
             if (getNextLevel(player.getBodyLevel()) == null) {
                 break;
+            } else if (getNextLevel(player.getBodyLevel()) == BodyLevel.NASCENT_SOUL_BODY_STAGE_1 || getNextLevel(player.getBodyLevel()) == BodyLevel.LESSER_ANCESTOR_BODY_STAGE_1) {
+                setPlayerExpMultiplier(player.getExpMultiplier() * 2, player);
             }
         }
         player.checkRealm();
@@ -287,6 +291,8 @@ public final class GameSystem {
             player.levelQi();
             if (getNextLevel(player.getQiLevel()) == null) {
                 break;
+            } else if (getNextLevel(player.getQiLevel()) == QiLevel.NASCENT_SOUL_SPIRIT_STAGE_1 || getNextLevel(player.getQiLevel()) == QiLevel.LESSER_ANCESTOR_SPIRIT_STAGE_1) {
+                setPlayerExpMultiplier(player.getExpMultiplier() * 2, player);
             }
         }
         player.checkRealm();
@@ -482,6 +488,7 @@ public final class GameSystem {
         if (isPlayerWon(player)) {
             int xp = calculateBattleExp(player);
             getBattle(player.getID()).addToBattleHistory("You managed to defeat the enemy.\nYou gain **" + xp + "** exp.");
+            grantExp(xp, player);
         } else {
             int xp = calculateBattleExp(player);
             getBattle(player.getID()).addToBattleHistory("You lost but for some reason the enemy decides to spare your pathetic life.\nYou lose " + Math.round(xp * 0.5) + " exp.");
@@ -502,6 +509,7 @@ public final class GameSystem {
         if (isPlayerWon(player)) {
             int xp = calculateBattleExp(player);
             getBattle(player.getID()).addToBattleHistory("You managed to defeat the enemy.\nYou gain **" + xp + "** exp.");
+            grantExp(xp, player);
         } else {
             int xp = calculateBattleExp(player);
             getBattle(player.getID()).addToBattleHistory("You lost but for some reason the enemy decides to spare your pathetic life.\nYou lose " + Math.round(xp * 0.5) + " exp.");

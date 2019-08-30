@@ -57,7 +57,7 @@ public final class Player extends Cultivator {
     public int cultivate() {
         int exp = (int) (((Math.random() + 0.1) * 10) * expMultiplier
                 * ((getCultivationRealm().getRank() > 0) ? getCultivationRealm().getRank() : 1));
-        System.out.println("Gained XP: " + exp);
+        System.out.println(name + " gained XP: " + exp);
         grantExp(exp);
         return exp;
     }
@@ -91,7 +91,11 @@ public final class Player extends Cultivator {
     }
 
     public void setExpMultiplier(double expMultiplier) {
-        this.expMultiplier = expMultiplier;
+        if (expMultiplier > 0) {
+            this.expMultiplier = Double.valueOf(String.format("%.1f", expMultiplier));
+        } else {
+            this.expMultiplier = 0.1;
+        }
     }
 
     public String getID() {

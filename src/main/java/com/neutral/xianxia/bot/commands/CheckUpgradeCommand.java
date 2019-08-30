@@ -37,8 +37,19 @@ public class CheckUpgradeCommand extends Command {
     @Override
     protected void execute(CommandEvent e) {
         Player player = GameSystem.getPlayer(e.getMember().getId());
-        e.reply("You need " + GameSystem.getUpgradeCost("Qi", player) + " exp to upgrade Qi.");
-        e.reply("You need " + GameSystem.getUpgradeCost("Body", player) + " exp to upgrade Body.");
+        int neededExpQi = 0;
+        try {
+            neededExpQi = GameSystem.getUpgradeCost("Qi", player) - player.getExp();
+        } catch (NullPointerException ex) {
+        }
+        int neededExpBody = 0;
+        try {
+            neededExpBody = GameSystem.getUpgradeCost("Body", player) - player.getExp();
+        } catch (NullPointerException ex) {
+        }
+
+        e.reply("You need " + ((neededExpQi > 0) ? neededExpQi + " more" : "no more") + " exp to upgrade Qi.");
+        e.reply("You need " + ((neededExpBody > 0) ? neededExpBody + " more" : "no more") + " exp to upgrade Body.");
         if (GameSystem.getPlayer(e.getMember().getId()).isTribulationDue()) {
             e.reply("You need " + (GameSystem.getUpgradeCost("Body", player) + GameSystem.getUpgradeCost("Qi", player)) + " exp to face tribulation.");
         }

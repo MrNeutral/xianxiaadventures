@@ -58,8 +58,12 @@ public class Storage {
 
     private static final void updatePlayerName(Player player) {
         try (Statement statement = conn.createStatement()) {
+            String name = player.getName();
+            if (name.length() > 25) {
+                name = name.substring(0, 25);
+            }
             statement.execute("UPDATE cultivator_name SET name = '"
-                    + player.getName()
+                    + name
                     + "' WHERE _id = '"
                     + player.getID() + "'");
         } catch (SQLException e) {

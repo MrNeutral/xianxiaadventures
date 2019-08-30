@@ -40,7 +40,7 @@ public enum GameEvent {
     PET_TAMED_BY_OTHER(0.3, -0.2, "You tried to tame your favourite mystical beast, but someone was faster.\nYou cough blood in anger.", "Mystical beasted tamed by other cultivator"),
     PILL_COUGH_BLOOD(0.2, -0.1, "Your body showed a strange reaction to a pill you just consumed.\nYou cough blood.", "Strange pill"),
     PILL_IMPURE_CURE(0.4, -0.3, "You buy some medicine from a shady dealer.\nYou are desperate to cure your wounds...\nThe medicine is really impure and your wounds get worse, you cough some blood in the aftermath.", "Impure medicine"),
-    PILL_PURE(0.6, 500, "You buy some medicine from a shady dealer.\nYou are desperate to cure your wounds...\nThe medicine is pure enough and your wounds get healed.", "Pure medicine"),
+    PILL_PURE(0.6, 0.2, "You buy some medicine from a shady dealer.\nYou are desperate to cure your wounds...\nThe medicine is pure enough and your wounds get healed.", "Pure medicine"),
     PILL_CULTIVATION(0.2, 0.5, "You buy some medicine from a shady dealer to increase your cultivation.\nThe pills increase the flow of your Qi and make it easier to cultivate.", "Cultivation medicine"),
     PILL_GODLY(0, 5, "Following scaterred clues from various ancient manuals you manage to find a godly pill.\nConsuming it causes your meridians to open, your cultivation base to skyrocket and enlightenment to become a common event.", "Godly Pill"),
     PILL_FAINT(0.5, -0.2, "You are consuming the pill you just concocted when you faint.\nAfter waking up you cough blood.", "Impure pill"),

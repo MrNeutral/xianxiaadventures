@@ -30,48 +30,73 @@ public class HealCommand extends Command {
 
     public HealCommand() {
         super.name = "heal";
-        super.arguments = "[@target]";
-        super.help = "Use Spirit to heal yourself. 20% of Spirit for 10% of health.";
+        super.arguments = "[@target] [free]";
+        super.help = "Use Spirit to heal yourself. 20% of Spirit for 10% of health. If target is included they are healed in your place.";
         super.requiredRole = "Cultivator";
         super.cooldown = 5;
     }
 
     @Override
     protected void execute(CommandEvent e) {
-        Player player;
-        if (e.getMessage().getMentionedMembers().size() == 1) {
-            player = GameSystem.getPlayer(e.getMessage().getMentionedMembers().get(0).getId());
-        } else {
-            player = GameSystem.getPlayer(e.getMember().getId());
+        Player target;
+        String[] args = e.getArgs().split("");
+        boolean cheating = false;
+        for (String string : args) {
+            if (string.equals("true")) {
+                cheating = true;
+            }
         }
 
-        int healCost = player.getMaxHealth() - player.getHealth() * 2;
-        if (e.getMessage().getMember().getId().equals(ID_NEUTRAL.getID())) {
+        if (e.getMessage().getMentionedMembers().size() == 1) {
+            target = GameSystem.getPlayer(e.getMessage().getMentionedMembers().get(0).getId());
+        } else {
+            target = GameSystem.getPlayer(e.getMember().getId());
+        }
+
+        if (GameSystem.getPlayer(e.getMember().getId()).getMaxSpirit() == 0) {
+            e.reply("You have no Spirit to heal yourself. You have to wait for your wounds to heal on their own.");
+        }
+
+        int healCost = (int) Math.round(target.getMaxHealth() - target.getHealth() * 1.25);
+        if (healCost < 0) {
             healCost = 0;
         }
-        if (player.getHealth() == player.getMaxHealth()) {
-            if (!player.getName().equals(GameSystem.getPlayer(e.getMember().getId()))) {
-                e.reply("You have no injuries.");
+        if (cheating && e.getMember().getId().equals(ID_NEUTRAL.getID())) {
+            healCost = 0;
+        }
+        if (target.getHealth() == target.getMaxHealth()) {
+            if (!target.getName().equals(GameSystem.getPlayer(e.getMember().getId()).getName())) {
+                e.reply(target.getName() + " has no injuries.");
             } else {
-                e.reply(player.getName() + "has no injuries.");
+                e.reply("You have no injuries.");
             }
-        } else if (player.getSpirit() - healCost >= 0) {
-            if (!player.getName().equals(GameSystem.getPlayer(e.getMember().getId()).getName())) {
-                e.reply("It costs you " + healCost + " Spirit to fully heal " + player.getName() + ".");
+        } else if (target.getSpirit() - healCost >= 0) {
+            if (!target.getName().equals(GameSystem.getPlayer(e.getMember().getId()).getName())) {
+                e.reply("It costs you " + healCost + " Spirit to fully heal " + target.getName() + ".");
             } else {
                 e.reply("It costs you " + healCost + " Spirit to fully heal yourself.");
             }
-            player.changeHealth(Math.round(healCost / 2));
-            player.changeSpirit(-healCost);
+            if (cheating && e.getMember().getId().equals(ID_NEUTRAL.getID())) {
+                target.changeHealth(target.getMaxHealth());
+            } else {
+                target.changeHealth(Math.round(healCost / 2));
+            }
+            target.changeSpirit(-healCost);
         } else {
-            int healAmount = Math.round((healCost + (player.getSpirit() - healCost)) / 2);
-            if (!player.getName().equals(GameSystem.getPlayer(e.getMember().getId()).getName())) {
-                e.reply("You use all of your Spirit to heal " + player.getName() + " " + healAmount + " points.");
+            int healAmount = 0;
+            if (cheating) {
+                healAmount = target.getMaxHealth();
+            }
+            if (!cheating || !e.getMessage().getMember().getId().equals(ID_NEUTRAL.getID())) {
+                healAmount = Math.round((healCost + (target.getSpirit() - healCost)) / 2);
+            }
+            if (!target.getName().equals(GameSystem.getPlayer(e.getMember().getId()).getName())) {
+                e.reply("You use all of your Spirit to heal " + target.getName() + " " + healAmount + " points.");
             } else {
                 e.reply("You use all of your Spirit to heal yourself " + healAmount + " points.");
             }
-            player.changeSpirit(-healCost);
-            player.changeHealth(healAmount);
+            target.changeSpirit(-healCost);
+            target.changeHealth(healAmount);
         }
     }
 

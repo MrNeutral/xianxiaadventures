@@ -47,17 +47,17 @@ public class CultivateCommand extends Command {
         }
 
         Player player = GameSystem.getPlayer(e.getMember().getId());
-        
-        if(player.getHealth() == 0){
+
+        if (player.getHealth() == 0) {
             e.reply("Your Health is too low to cultivate. Heal or wait it out.");
             return;
         }
-        
+
         int exp = player.cultivate();
 
         e.reply("*You gained **" + String.valueOf(exp) + "** exp.*");
 
-        if (new Random().nextInt(101) <= 20) {
+        if (new Random().nextInt(101) <= 10) {
 
             GameEvent ge = GameSystem.getEvent(player);
             String title = ge.getEventName();
@@ -71,6 +71,9 @@ public class CultivateCommand extends Command {
 
             } else {
                 exp = (int) Math.round((GameSystem.getPlayerExp(player) + 10) * ge.getExpEffect());
+		if(exp > 0){
+			exp *= player.getExpMultiplier();
+		}
 
                 String message = "**" + title + "**" + "\n" + text + "\n" + "*You " + ((ge.getExpEffect() >= 0) ? "gained " : "lost ") + String.valueOf(exp) + " exp.*";
 

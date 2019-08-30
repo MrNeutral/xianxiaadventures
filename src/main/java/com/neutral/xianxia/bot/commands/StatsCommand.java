@@ -34,6 +34,7 @@ public class StatsCommand extends Command {
         super.help = "Show stats";
         super.arguments = "[@target]";
         super.requiredRole = "Cultivator";
+        super.cooldown = 5;
     }
 
     @Override

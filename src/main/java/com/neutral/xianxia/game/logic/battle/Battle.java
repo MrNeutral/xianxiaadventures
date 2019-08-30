@@ -128,7 +128,6 @@ public class Battle {
         if (!battleFinished) {
             nextTurn(player);
         }
-
     }
 
     public void physicalAttackEnemy(Player player) {

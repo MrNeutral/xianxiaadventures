@@ -28,13 +28,13 @@ import net.dv8tion.jda.api.entities.Guild;
  * @author Mr.Neutral
  */
 public class RegisterCommand extends Command {
-    
+
     public RegisterCommand() {
         super.name = "register";
         super.help = "Grants Cultivator role and registers you to the bot";
-//        super.ownerCommand = true;
+        super.cooldown = 10;
     }
-    
+
     @Override
     protected void execute(CommandEvent e) {
         try {
@@ -58,5 +58,5 @@ public class RegisterCommand extends Command {
             System.out.println(ex);
         }
     }
-    
+
 }

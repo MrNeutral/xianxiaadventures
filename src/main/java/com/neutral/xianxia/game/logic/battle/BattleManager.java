@@ -71,7 +71,7 @@ public class BattleManager {
         battles.put(player.getID(), battle);
 
         while (battle.getEnemy()
-                .getQiLevel().getRank() < (GameSystem.getPlayerQi(player).getRank() - handicap)) {
+                .getQiLevel().getRank() < (GameSystem.getPlayerQi(player).getRank() + handicap)) {
             if (getNextLevel(battle.getEnemy().getQiLevel()) == null) {
                 break;
             }
@@ -79,7 +79,7 @@ public class BattleManager {
         }
 
         while (battle.getEnemy()
-                .getBodyLevel().getRank() < (GameSystem.getPlayerBody(player).getRank() - handicap)) {
+                .getBodyLevel().getRank() < (GameSystem.getPlayerBody(player).getRank() + handicap)) {
             if (getNextLevel(battle.getEnemy().getBodyLevel()) == null) {
                 break;
             }
